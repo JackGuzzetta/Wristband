@@ -1,5 +1,6 @@
 package y_t_b_4.user_access;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
+
 
 public class SetUser extends AppCompatActivity {
 
@@ -49,9 +53,19 @@ public class SetUser extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void buttonClick() {
-    //if()
+    public void buttonClick(View view) {
+        //Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText editText = (EditText) findViewById(R.id.kj);
+        String message = editText.getText().toString();
 
+        if(message.equals("password")){
+            Toast congrats = Toast.makeText(getApplicationContext(), "Correct!", Toast.LENGTH_LONG);
+            congrats.show();
+        }
+        else{
+            Toast fail = Toast.makeText(getApplicationContext(), "Wrong!", Toast.LENGTH_LONG);
+            fail.show();
+        }
     }
 
 }
