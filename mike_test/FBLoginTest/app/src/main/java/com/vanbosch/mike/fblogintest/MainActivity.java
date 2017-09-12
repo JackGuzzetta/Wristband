@@ -31,15 +31,16 @@ public class MainActivity extends AppCompatActivity {
     private void initializeControls() {
         callbackManager = CallbackManager.Factory.create();
         txtStatus = (TextView) findViewById(R.id.txtstatus);
+        txtStatus.setText("Please Log In");
         login_button = (LoginButton) findViewById(R.id.login_button);
-
     }
 
     private void loginWithFB() {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                txtStatus.setText("Login Success\n" + loginResult.getAccessToken());
+                txtStatus.setText("Login Successful\n" + "Facebook ID: " +
+                        loginResult.getAccessToken().getUserId() + "\n" + loginResult.getAccessToken().describeContents());
             }
 
             @Override
