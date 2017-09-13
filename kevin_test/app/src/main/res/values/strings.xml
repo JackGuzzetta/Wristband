@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">User_Access</string>
-    <string name="action_settings">Settings</string>
-    <string name="txtBox">Enter password:</string>
-    <string name="sub">Submit</string>
-</resources>
