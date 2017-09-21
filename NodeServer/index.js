@@ -23,6 +23,24 @@ con.connect(function(err) {
 //
 
 //endpoints
+app.get('/get_all_users', function(req, res) {
+    //get data from mysql database
+    console.log(req.params.uid);
+    con.query('SELECT * FROM wristband', req.params.uid, function(err, result) {
+        if (err) {
+            res.json({
+                err
+            })
+            console.log("error: ", err);
+        } else {
+            res.json({
+                result
+            })
+            console.log(result);
+        }
+    });
+});
+
 app.get('/get_user/:uid', function(req, res) {
     //get data from mysql database
     console.log(req.params.uid);
