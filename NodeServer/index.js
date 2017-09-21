@@ -33,9 +33,7 @@ app.get('/get_all_users', function(req, res) {
             })
             console.log("error: ", err);
         } else {
-            res.json({
-                result
-            })
+            res.json({all: result})
             console.log(result);
         }
     });
@@ -51,9 +49,7 @@ app.get('/get_user/:uid', function(req, res) {
             })
             console.log("error: ", err);
         } else {
-            res.json({
-                result
-            })
+            res.json({user: result})
             console.log(result);
         }
     });
