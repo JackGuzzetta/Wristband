@@ -1,0 +1,15 @@
+{
+  "name": "webapi",
+  "version": "1.0.0",
+  "description": "web api",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "yt-b-4",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4",
+    "mysql": "^2.14.1"
+  }
+}
