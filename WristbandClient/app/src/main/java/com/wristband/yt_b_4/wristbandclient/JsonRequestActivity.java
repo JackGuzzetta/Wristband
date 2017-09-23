@@ -9,7 +9,12 @@ import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +25,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
-public class JsonRequestActivity extends Activity implements OnClickListener {
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class JsonRequestActivity extends AppCompatActivity implements OnClickListener {
     private String TAG = JsonRequestActivity.class.getSimpleName();
     private Button btnJsonArray;
     private TextView msgResponse;
@@ -36,7 +44,27 @@ public class JsonRequestActivity extends Activity implements OnClickListener {
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         btnJsonArray.setOnClickListener(this);
+
+
     }
+
+
+    //Used to get hash key for facebook API
+    private void PrintFBHashKey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.wristband.yt_b_4.wristbandclient", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                msgResponse.setText("KeyHash:" + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
