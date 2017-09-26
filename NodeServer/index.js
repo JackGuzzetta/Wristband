@@ -26,7 +26,7 @@ con.connect(function(err) {
 app.get('/get_all_users', function(req, res) {
     //get data from mysql database
     console.log(req.params.uid);
-    con.query('SELECT * FROM wristband', req.params.uid, function(err, result) {
+    con.query('SELECT * FROM users', req.params.uid, function(err, result) {
         if (err) {
             res.json({
                 err
@@ -42,7 +42,39 @@ app.get('/get_all_users', function(req, res) {
 app.get('/get_user/:uid', function(req, res) {
     //get data from mysql database
     console.log(req.params.uid);
-    con.query('SELECT * FROM wristband WHERE fb_id=?', req.params.uid, function(err, result) {
+    con.query('SELECT * FROM users WHERE id=?', req.params.uid, function(err, result) {
+        if (err) {
+            res.json({
+                err
+            })
+            console.log("error: ", err);
+        } else {
+            res.json({user: result})
+            console.log(result);
+        }
+    });
+});
+
+app.get('/get_all_parties', function(req, res) {
+    //get data from mysql database
+    console.log(req.params.uid);
+    con.query('SELECT * FROM parties', req.params.uid, function(err, result) {
+        if (err) {
+            res.json({
+                err
+            })
+            console.log("error: ", err);
+        } else {
+            res.json({all: result})
+            console.log(result);
+        }
+    });
+});
+
+app.get('/get_party/:uid', function(req, res) {
+    //get data from mysql database
+    console.log(req.params.uid);
+    con.query('SELECT * FROM parties WHERE id=?', req.params.uid, function(err, result) {
         if (err) {
             res.json({
                 err

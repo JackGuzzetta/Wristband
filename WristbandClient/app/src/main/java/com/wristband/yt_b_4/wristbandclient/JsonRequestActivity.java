@@ -7,6 +7,8 @@ package com.wristband.yt_b_4.wristbandclient;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
+import org.json.JSONException;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +40,6 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
         btnJsonArray.setOnClickListener(this);
     }
 
-
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
@@ -54,7 +55,14 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG, response.toString());
-                        msgResponse.setText(response.toString());
+
+                        try {
+                            msgResponse.setText(response.getJSONObject(0).toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //msgResponse.setText(response.toString());
+
                         hideProgressDialog();
                     }
                 }, new Response.ErrorListener() {
