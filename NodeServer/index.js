@@ -1,22 +1,18 @@
 var express = require('express')
 var mysql = require('mysql');
-
+var jwt = require('jsonwebtoken');
+var config = require('./config');
 var app = express()
 
 
 //connect to database
-var con = mysql.createConnection({
-    host: 'mysql.cs.iastate.edu',
-    user: 'dbu309ytb4',
-    password: 'z3ASzDvf',
-    database: 'db309ytb4'
-});
+var con = mysql.createConnection(config.mysql);
 
 con.connect(function(err) {
     if (err) {
         console.log("error: ", err);
     } else {
-        console.log("Connected!");
+        console.log("Connected to MySQL database: " + config.mysql.host);
 
     }
 });
@@ -58,7 +54,7 @@ app.get('/get_user/:uid', function(req, res) {
 app.get('/get_all_parties', function(req, res) {
     //get data from mysql database
     console.log(req.params.uid);
-    con.query('SELECT * FROM parties', req.params.uid, function(err, result) {
+    con.query('SELECT * FROM party', req.params.uid, function(err, result) {
         if (err) {
             res.json({
                 err
@@ -74,7 +70,7 @@ app.get('/get_all_parties', function(req, res) {
 app.get('/get_party/:uid', function(req, res) {
     //get data from mysql database
     console.log(req.params.uid);
-    con.query('SELECT * FROM parties WHERE id=?', req.params.uid, function(err, result) {
+    con.query('SELECT * FROM party WHERE id=?', req.params.uid, function(err, result) {
         if (err) {
             res.json({
                 err
@@ -89,5 +85,6 @@ app.get('/get_party/:uid', function(req, res) {
 //
 
 //port to listen on
-app.listen(3000)
+app.listen(config.port)
+console.log('Sever listening on port: ' + config.port);
 //
