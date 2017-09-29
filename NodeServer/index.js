@@ -25,19 +25,15 @@ con.connect(function(err) {
 
 //user auth
 //https://www.sitepoint.com/using-json-web-tokens-node-js/
-var fake_user = {};
 
-var res = {};
-fake_user.id = 12345;
+function createToken(user_id, expires) {
+	var token = jwt.encode({
+	    iss: user_id,
+	    exp: expires
+	}, app.get('jwtTokenSecret'));
+	return token;
+} 
 
-var expires = moment().add(7, 'days').valueOf();
-
-var token = jwt.encode({
-    iss: fake_user.id,
-    exp: expires
-}, app.get('jwtTokenSecret'));
-
-console.log(token);
 // res.json({
 //   token : token,
 //   expires: expires,
@@ -67,10 +63,14 @@ app.get('/login/:username/:password', function(req, res) {
                 if (result[0].username == req.params.username) {
                     console.log('Username exists');
                     if (result[0].password == req.params.password) {
+						var expires = moment().add(7, 'days').valueOf();
+                    	var token = createToken(result[0].id, expires);
                         res.json({
-                            login: 'true'
-                        })
-                        console.log('Login successful');
+                          token : token,
+                          expires: expires,
+                          user: result[0].username
+                        });
+                        console.log('Login successful for: ', result[0].id);
                     } else {
                         res.json({
                             login_password: 'false'
