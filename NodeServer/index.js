@@ -33,8 +33,8 @@ fake_user.id = 12345;
 var expires = moment().add(7, 'days').valueOf();
 
 var token = jwt.encode({
-  iss: fake_user.id,
-  exp: expires
+    iss: fake_user.id,
+    exp: expires
 }, app.get('jwtTokenSecret'));
 
 console.log(token);
@@ -58,27 +58,32 @@ app.get('/login/:username/:password', function(req, res) {
 
             console.log("error: ", err);
         } else {
-        	if (result.length == 0) {
-        		console.log('Username does not exist');
-            	res.json({login_username: 'false'})
-        	}
-        	else {
-        		if (result[0].username == req.params.username) {
-        			console.log('Username exists');
-        			if (result[0].password == req.params.password) {
-        				res.json({login: 'true'})
-        				console.log('Login successful');
-        			}
-        			else {
-        				res.json({login_password: 'false'})
-        				console.log('Invalid password');
-        			}
-        		}
-        		else {
-        			console.log('Username does not exist');
-        			res.json({login_username: 'false'})
-        		}
-        	}
+            if (result.length == 0) {
+                console.log('Username does not exist');
+                res.json({
+                    login_username: 'false'
+                })
+            } else {
+                if (result[0].username == req.params.username) {
+                    console.log('Username exists');
+                    if (result[0].password == req.params.password) {
+                        res.json({
+                            login: 'true'
+                        })
+                        console.log('Login successful');
+                    } else {
+                        res.json({
+                            login_password: 'false'
+                        })
+                        console.log('Invalid password');
+                    }
+                } else {
+                    console.log('Username does not exist');
+                    res.json({
+                        login_username: 'false'
+                    })
+                }
+            }
         }
     });
 
@@ -95,7 +100,9 @@ app.get('/get_all_users', function(req, res) {
             })
             console.log("error: ", err);
         } else {
-            res.json({all: result})
+            res.json({
+                all: result
+            })
             console.log(result);
         }
     });
@@ -111,7 +118,9 @@ app.get('/get_user/:uid', function(req, res) {
             })
             console.log("error: ", err);
         } else {
-            res.json({user: result})
+            res.json({
+                user: result
+            })
             console.log(result);
         }
     });
@@ -127,7 +136,9 @@ app.get('/get_all_parties', function(req, res) {
             })
             console.log("error: ", err);
         } else {
-            res.json({all: result})
+            res.json({
+                all: result
+            })
             console.log(result);
         }
     });
@@ -143,7 +154,9 @@ app.get('/get_party/:uid', function(req, res) {
             })
             console.log("error: ", err);
         } else {
-            res.json({user: result})
+            res.json({
+                user: result
+            })
             console.log(result);
         }
     });
