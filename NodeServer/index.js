@@ -1,3 +1,4 @@
+//http://bigspaceship.github.io/blog/2014/05/14/how-to-create-a-rest-api-with-node-dot-js/
 var express = require('express')
 var mysql = require('mysql');
 var jwt = require('jwt-simple');
@@ -29,7 +30,7 @@ var fake_user = {};
 var res = {};
 fake_user.id = 12345;
 
-var expires = moment().add('days', 7).valueOf();
+var expires = moment().add(7, 'days').valueOf();
 
 var token = jwt.encode({
   iss: fake_user.id,
@@ -43,22 +44,51 @@ console.log(token);
 //   user: fake_user
 // });
 
-
-
 //end user auth
 
+app.get('/login/:username/:password', function(req, res) {
+    //get data from mysql database
+    //{username, password}
+    console.log(req.params.username);
+    con.query('SELECT * FROM users WHERE username=?', req.params.username, function(err, result) {
+        if (err) {
+            res.json({
+                err
+            })
+
+            console.log("error: ", err);
+        } else {
+        	if (result.length == 0) {
+        		console.log('Username does not exist');
+            	res.json({login_username: 'false'})
+        	}
+        	else {
+        		if (result[0].username == req.params.username) {
+        			console.log('Username exists');
+        			if (result[0].password == req.params.password) {
+        				res.json({login: 'true'})
+        				console.log('Login successful');
+        			}
+        			else {
+        				res.json({login_password: 'false'})
+        				console.log('Invalid password');
+        			}
+        		}
+        		else {
+        			console.log('Username does not exist');
+        			res.json({login_username: 'false'})
+        		}
+        	}
+        }
+    });
 
 
-
-
-
-
+});
 
 //endpoints
 app.get('/get_all_users', function(req, res) {
     //get data from mysql database
-    console.log(req.params.uid);
-    con.query('SELECT * FROM users', req.params.uid, function(err, result) {
+    con.query('SELECT * FROM users', function(err, result) {
         if (err) {
             res.json({
                 err

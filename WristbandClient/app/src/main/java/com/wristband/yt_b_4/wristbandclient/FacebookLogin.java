@@ -10,6 +10,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -25,7 +27,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class FacebookLogin extends AppCompatActivity {
     TextView txtStatus;
-    LoginButton login_button;
+    LoginButton FacebookLoginButton;
+    Button LoginButton;
+    Button RegisterButton;
+
     CallbackManager callbackManager;
     Context context;
     @Override
@@ -41,7 +46,19 @@ public class FacebookLogin extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         txtStatus = (TextView) findViewById(R.id.txtstatus);
         txtStatus.setText("Please Log In");
-        login_button = (LoginButton) findViewById(R.id.login_button);
+        FacebookLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        LoginButton = (Button) findViewById(R.id.login_button);
+        RegisterButton = (Button) findViewById(R.id.register_button);
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+            }
+        });
+        RegisterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+            }
+        });
     }
 
     private void loginWithFB() {
