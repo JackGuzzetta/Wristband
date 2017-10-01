@@ -1,5 +1,5 @@
 var mysqlModel = require('mysql-model');
-var MyAppModel = require('./AppModel');
+var MyAppModel = require('./appModel');
 
 var Party = MyAppModel.extend({
     tableName: "parties",

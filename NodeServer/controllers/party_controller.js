@@ -88,7 +88,7 @@ module.exports.deleteParty = function(id, res) {
 		else {
 			console.log('Deleted party: ', id);
 			res.json({
-			    users: "Deleted party: ", party_name
+			    users: "Deleted party: ", id
 			})
 		}
 	});
