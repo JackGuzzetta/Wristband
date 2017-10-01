@@ -16,7 +16,6 @@ module.exports = function(app){
     app.put('/users/:id', function(req, res) {
         User.updateUser(req.params.id, req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
     });
-
     app.delete('/users/:id', function(req, res) {
         User.deleteUser(req.params.id, res);
     });
@@ -25,22 +24,20 @@ module.exports = function(app){
 
 
     //----------PARTY-------------
-    app.get('/party', function(req, res) {
-    	Party.findAllParties(res);
+    app.get('/parties', function(req, res) {
+        Party.findAllParties(res);
     });
-    app.get('/party/:id', function(req, res) {
-    	Party.findPartyByID(req.params.id, res);
+    app.get('/parties/:id', function(req, res) {
+        Party.findPartyByID(req.params.id, res);
     });
-
-    //TODO
-    //app.post('/party', add);
-    //app.put('/party/:id', update);
-    //app.delete('/party/:id', delete);
-
-
+    app.post('/parties', function(req, res) {
+        Party.createParty(req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, res)
+    });
+    app.put('/parties/:id', function(req, res) {
+        Party.updateParty(req.params.id, req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, res)
+    });
+    app.delete('/parties/:id', function(req, res) {
+        Party.deleteParty(req.params.id, res);
+    });
 	//----------------------------
-    
-
-
-    
 }

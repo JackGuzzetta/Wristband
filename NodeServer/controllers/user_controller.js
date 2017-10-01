@@ -28,6 +28,9 @@ module.exports.findAllUsers = function(res) {
 	user.find('all', function(err, rows, fields) {
 		if (err) {
 			console.log("error");
+			res.json({
+			    users: "Error"
+			})
 		}
 		else {
 			if (rows.length == 0) {
@@ -50,6 +53,9 @@ module.exports.findUserByID = function(id, res) {
 	user.find('all', {where: 'id=' + id}, function(err, rows, fields) {
 		if (err) {
 			console.log("error");
+			res.json({
+			    users: "Error"
+			})
 		}
 		else {
 			if (rows.length == 0) {
