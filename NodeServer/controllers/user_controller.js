@@ -1,6 +1,6 @@
 User = require('../models/users');
 
-module.exports.createUser = function(f_name, l_name, username, password, email) {
+module.exports.createUser = function(f_name, l_name, username, password, email, res) {
 	user = new User({
 	    f_name: f_name,
 	    l_name: l_name,
@@ -11,9 +11,15 @@ module.exports.createUser = function(f_name, l_name, username, password, email) 
 	user.save(function(err) {
 		if (err) {
 			console.log("Unable to create user");
+			res.json({
+			    users: "Error"
+			})
 		}
 		else {
-			console.log("Created new user");
+			console.log("Created new user: ", username);
+			res.json({
+			    users: "Created new user: ", username
+			})
 		}
 	});
 }
@@ -26,6 +32,9 @@ module.exports.findAllUsers = function(res) {
 		else {
 			if (rows.length == 0) {
 				console.log("Users not found.");
+				res.json({
+				    users: "Error"
+				})
 			}
 			else {
 				console.log(rows);
@@ -45,6 +54,9 @@ module.exports.findUserByID = function(id, res) {
 		else {
 			if (rows.length == 0) {
 				console.log("User not found.");
+				res.json({
+				    users: "Error"
+				})
 			}
 			else {
 				res.json({
@@ -54,19 +66,25 @@ module.exports.findUserByID = function(id, res) {
 		}
 	});
 }
-module.exports.deleteUser = function(id) {
+module.exports.deleteUser = function(id, res) {
 	user = new User();
 	user.set('id', id);
 	user.remove(function(err) {
 		if (err) {
 			console.log("Tried to delete a null user: ", id);
+			res.json({
+			    users: "Error"
+			})
 		}
 		else {
 			console.log('Deleted user: ', id);
+			res.json({
+			    users: "Deleted user: ", id
+			})
 		}
 	});
 }
-module.exports.updateUser = function(id, f_name, l_name, username, password, email) {
+module.exports.updateUser = function(id, f_name, l_name, username, password, email, res) {
 	user = new User({
 		id: id,
 	    f_name: f_name,
@@ -78,6 +96,14 @@ module.exports.updateUser = function(id, f_name, l_name, username, password, ema
 	user.save(function(err) {
 		if (err) {
 			console.log("Unable to update user");
+			res.json({
+			    users: "Error"
+			})
+		}
+		else {
+			res.json({
+			    users: "Updated user: ", id
+			})
 		}
 	});
 }

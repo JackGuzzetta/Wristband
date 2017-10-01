@@ -10,12 +10,16 @@ module.exports = function(app){
     app.get('/users/:id', function(req, res) {
     	User.findUserByID(req.params.id, res);
     });
+    app.post('/users', function(req, res) {
+        User.createUser(req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
+    });
+    app.put('/users/:id', function(req, res) {
+        User.updateUser(req.params.id, req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
+    });
 
-    //TODO
-    //app.post('/users', add);
-    // app.put('/users/:id', update);
-    // app.delete('/users/:id', delete);
-
+    app.delete('/users/:id', function(req, res) {
+        User.deleteUser(req.params.id, res);
+    });
 	//----------------------------
 
 
