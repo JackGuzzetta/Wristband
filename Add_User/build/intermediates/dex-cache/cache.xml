@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8b276096c96dfab196a2ad47603549697c8fdcd9">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_28f1bd54133af865e5dfedce94148a08ca1e6ffe\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\576247554b3a2eaa871806c1a83a28ee8ca1ded0\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="952944218ecedea1554a513dec0c14d570642843">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_eb1a5b5e98135d206f153dc7d85999b1b0b83787\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\7c2ec011733665421f75b690c118d9954b7e40f6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="fcd01fd11233459f546c437ec927e9b61bf7caf1">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_add87426f5e2f0b85c263363d8f2e7cce3f0345c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\26.0.0-alpha1\support-annotations-26.0.0-alpha1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="023ee503b631f69511e335a061ea008f8da60f40">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-26.0.0-alpha1_3ae0c377523e84d0153d733a8b8b384945686984\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_1fe4dbde563cd9774a861d3b6ff58ac0e41c5020\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\16eb6a0d57ef579d2c0f2fc020d13459c50be6bd\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8df0e365e40beb151bc42dee20817721a6cab7b0">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3b8b4c20cab2c59a80db42a98ba7ca08f6ae1f82\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\f43765fb76b93cff62b12e00dc4939f13299a8eb\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2e92aa0163544a804a0b34f169ca61801770839a">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_26364643ec5317a090844ca1a0596c778895168a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\78ec4c9e164d6b413143e05373f1c79f0a7d28b7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="47471eb19df288158b00b8d9cfa41bce7373f5cc">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_bd8a908b70e5d7e34664acb05c66d2c40de42a34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\b610c76e770002adf939779fe3c59eb52f84a717\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="88246166d5afb106f532f6e6deae683c66b42c89">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_712c6aad2230791810b1b53a6d13118c5c3fecf7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\86e04f92ae80897906a28b0938e843752f677576\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e5940de627c13253959388aac9354d59b6ef6387\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\1824052f051cab5ad0c4b4628fcf34bfe1e5b31a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="18d31838aa4fcc768a8a0516e22cc13b94655d89">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0d193e23329af83a146d85f43b7f11e41b4de23c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Kevson97\.android\build-cache\b07ec856480a5b3cf111e862d177b36d9c2efd97\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9935891f23923f39d002087085d9696568a9f657">
+        <dex dex="C:\Users\Kevson97\AndroidStudioProjects\Add_User\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_11434c467caef9c1b07cb1242cf21b84df2c5482\classes.dex" />
+    </item>
+
+</items>
