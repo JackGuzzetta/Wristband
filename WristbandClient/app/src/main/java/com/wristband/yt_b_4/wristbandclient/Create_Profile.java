@@ -2,12 +2,22 @@ package com.wristband.yt_b_4.wristbandclient;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Create_Profile extends AppCompatActivity {
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+public class Create_Profile extends AppCompatActivity {
+    private String TAG = JsonRequestActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +57,7 @@ public class Create_Profile extends AppCompatActivity {
             fail.show();
         }
         else{
+
             Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
             pass.show();
         }

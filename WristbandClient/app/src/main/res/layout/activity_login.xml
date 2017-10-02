@@ -22,19 +22,21 @@
         android:id="@+id/register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:text="Create profile"
+        android:layout_below="@+id/fb_login_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="120dp"
-        android:text="Register" />
+        android:layout_marginTop="165dp" />
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/register_button"
-        android:layout_alignStart="@+id/register_button"
+        android:layout_marginTop="77dp"
+        android:text="Login"
         android:layout_alignTop="@+id/register_button"
-        android:layout_marginTop="45dp"
-        android:text="Login" />
+        android:layout_alignRight="@+id/register_button"
+        android:layout_alignEnd="@+id/register_button"
+        android:layout_alignLeft="@+id/register_button"
+        android:layout_alignStart="@+id/register_button" />
 
 </RelativeLayout>

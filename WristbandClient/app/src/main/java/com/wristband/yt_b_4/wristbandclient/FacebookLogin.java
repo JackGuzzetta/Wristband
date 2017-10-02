@@ -41,6 +41,7 @@ public class FacebookLogin extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         initializeControls();
         loginWithFB();
+
     }
     private void initializeControls() {
         callbackManager = CallbackManager.Factory.create();
@@ -57,6 +58,7 @@ public class FacebookLogin extends AppCompatActivity {
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
+                createProfile();
             }
         });
     }
@@ -79,6 +81,12 @@ public class FacebookLogin extends AppCompatActivity {
                 txtStatus.setText("Error: " + error.getMessage());
             }
         });
+    }
+
+    private void createProfile() {
+        Intent intent = new Intent (FacebookLogin.this, Create_Profile.class);
+        startActivity(intent);
+
     }
 
     @Override
