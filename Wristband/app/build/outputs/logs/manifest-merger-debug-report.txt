@@ -1,0 +1,95 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:2:1-23:12
+	package
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:3:5-45
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+application
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:5:5-21:19
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/0a23dec7ed3743ab6c762806ca922f534a496685/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/be3a2108828fea8db5ff6ad78920d9cbf8313919/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/3b4907e7a521309770fa7eebb937a4d57cecdcd7/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/aa30b9058e696dac578a681105886ed724ef861c/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/38a225640921910a7c293ad5f5837d1b014a66f3/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/f4cd923d00fcc58ecbe6d42c09c69b23f5050533/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/7ab11a916584a45ba85c284d30c23c259eabc26f/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/aebad7cb7e7c67ac1afb86a7d549665404af2490/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/AustinKonsor/.android/build-cache/59bb841fb596b55a7b78fc0c6dc75de9384dc55e/output/AndroidManifest.xml:9:5-20
+	android:label
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:8:9-41
+	android:supportsRtl
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:10:9-35
+	android:roundIcon
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:9:9-54
+	android:allowBackup
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:6:9-35
+	android:icon
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:7:9-43
+	android:theme
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:11:9-40
+activity#com.wristband.yt_b_4.wristband.MainActivity
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:12:9-18:20
+	android:name
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:12:19-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:16:17-77
+	android:name
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:16:27-74
+activity#com.wristband.yt_b_4.wristband.CreateEvent
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:19:9-58
+	android:name
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:19:19-46
+activity#com.wristband.yt_b_4.wristband.MyEvents
+ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:20:9-55
+	android:name
+		ADDED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml:20:19-43
+uses-sdk
+INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/0a23dec7ed3743ab6c762806ca922f534a496685/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/be3a2108828fea8db5ff6ad78920d9cbf8313919/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/3b4907e7a521309770fa7eebb937a4d57cecdcd7/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/aa30b9058e696dac578a681105886ed724ef861c/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/38a225640921910a7c293ad5f5837d1b014a66f3/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/f4cd923d00fcc58ecbe6d42c09c69b23f5050533/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/7ab11a916584a45ba85c284d30c23c259eabc26f/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/aebad7cb7e7c67ac1afb86a7d549665404af2490/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/AustinKonsor/.android/build-cache/59bb841fb596b55a7b78fc0c6dc75de9384dc55e/output/AndroidManifest.xml:5:5-7:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/0a23dec7ed3743ab6c762806ca922f534a496685/output/AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/be3a2108828fea8db5ff6ad78920d9cbf8313919/output/AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/3b4907e7a521309770fa7eebb937a4d57cecdcd7/output/AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/aa30b9058e696dac578a681105886ed724ef861c/output/AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/38a225640921910a7c293ad5f5837d1b014a66f3/output/AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/f4cd923d00fcc58ecbe6d42c09c69b23f5050533/output/AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/7ab11a916584a45ba85c284d30c23c259eabc26f/output/AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/aebad7cb7e7c67ac1afb86a7d549665404af2490/output/AndroidManifest.xml:25:5-27:41
+	android:value
+		ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/AndroidManifest.xml:27:9-38
+	android:name
+		ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] /Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/AndroidManifest.xml:26:9-47

@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/layout-v21/notification_action.xml"
+    }
+]

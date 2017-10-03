@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher.png",
+        "source": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher_round.png",
+        "source": "/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    }
+]

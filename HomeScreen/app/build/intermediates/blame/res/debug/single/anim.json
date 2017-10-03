@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_fade_in.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_popup_enter.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_popup_exit.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_slide_in_top.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_fade_out.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/res/merged/debug/anim/abc_slide_out_top.xml",
+        "source": "/Users/AustinKonsor/.android/build-cache/60befe2cd672bf94f8e69b211471c4a6f44357ff/output/res/anim/abc_slide_out_top.xml"
+    }
+]
