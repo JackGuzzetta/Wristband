@@ -42,7 +42,7 @@ module.exports.findAllUsers = function(res) {
 			else {
 				console.log(rows);
 				res.json({
-				    rows
+				    users: rows
 				})
 			}
 		}
