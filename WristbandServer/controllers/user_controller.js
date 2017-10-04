@@ -18,7 +18,7 @@ module.exports.createUser = function(f_name, l_name, username, password, email, 
 		else {
 			console.log("Created new user: ", username);
 			res.json({
-			    users: "Created new user: ", username
+			    users: username
 			})
 		}
 	});
@@ -42,7 +42,7 @@ module.exports.findAllUsers = function(res) {
 			else {
 				console.log(rows);
 				res.json({
-				    users: rows
+				    rows
 				})
 			}
 		}
