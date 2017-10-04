@@ -1,7 +1,0 @@
-#Tue Oct 03 01:48:09 CDT 2017
-base.0=/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_2a6447112a405e4d84e84b48dcc397317a446692
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_a43c83ceb44c53c6adaf510d24b21d19c91e4297/classes.dex
-base.1=/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_a43c83ceb44c53c6adaf510d24b21d19c91e4297
-file.0=/Users/AustinKonsor/YT_B_4_ProjectName/HomeScreen/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_2a6447112a405e4d84e84b48dcc397317a446692/classes.dex

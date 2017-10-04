@@ -1,7 +1,0 @@
-#Thu Sep 21 15:31:43 CDT 2017
-base.0=/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_5588dedd2c0c7c0e2c9db23c1635d6996f57a194
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8be53eec54db10287c75ce620e9dd82ac94e35cb/classes.dex
-base.1=/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8be53eec54db10287c75ce620e9dd82ac94e35cb
-file.0=/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_5588dedd2c0c7c0e2c9db23c1635d6996f57a194/classes.dex

@@ -1,4 +1,0 @@
-#Thu Sep 21 15:31:43 CDT 2017
-base.0=/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2
-renamed.0=classes.dex
-file.0=/Users/AustinKonsor/YT_B_4_ProjectName/Wristband/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex
