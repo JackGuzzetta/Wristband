@@ -41,9 +41,8 @@ module.exports.findAllUsers = function(res) {
 			}
 			else {
 				console.log(rows);
-				res.json({
-				    users: rows
-				})
+				res.contentType('application/json');
+				res.send(JSON.stringify(rows));
 			}
 		}
 	});

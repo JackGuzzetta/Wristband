@@ -8,6 +8,7 @@ import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -54,9 +55,8 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-
                         try {
+
                             msgResponse.setText(response.getJSONObject(0).toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
