@@ -55,12 +55,7 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-//                        try {
-//
-//                            msgResponse.setText(response.getJSONObject(0).toString());
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+
                         msgResponse.setText(response.toString());
 
                         hideProgressDialog();
