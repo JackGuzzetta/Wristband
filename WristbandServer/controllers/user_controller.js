@@ -17,9 +17,8 @@ module.exports.createUser = function(f_name, l_name, username, password, email, 
 		}
 		else {
 			console.log("Created new user: ", username);
-			res.json({
-			    users: username
-			})
+			res.contentType('application/json');
+				res.send(JSON.stringify(username));
 		}
 	});
 }
@@ -64,9 +63,8 @@ module.exports.findUserByID = function(id, res) {
 				})
 			}
 			else {
-				res.json({
-				    user: rows
-				})
+				res.contentType('application/json');
+				res.send(JSON.stringify(rows));
 			}
 		}
 	});
@@ -83,9 +81,8 @@ module.exports.deleteUser = function(id, res) {
 		}
 		else {
 			console.log('Deleted user: ', id);
-			res.json({
-			    users: "Deleted user: ", id
-			})
+			res.contentType('application/json');
+			res.send(JSON.stringify(id));
 		}
 	});
 }
@@ -106,9 +103,8 @@ module.exports.updateUser = function(id, f_name, l_name, username, password, ema
 			})
 		}
 		else {
-			res.json({
-			    users: "Updated user: ", id
-			})
+			res.contentType('application/json');
+			res.send(JSON.stringify(id));
 		}
 	});
 }
