@@ -3,7 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 9/23/2017.
  */
-
+import com.wristband.yt_b_4.wristbandclient.models.User;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -35,6 +35,7 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
     private TextView msgResponse;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,7 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
     }
 
     private void sendDataToServer() {
+        user = new User("Michael", "test", "tester", "123", "as@as.com");
         showProgressDialog();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_USERS, null,
@@ -81,11 +83,11 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("f_name", "tester");
-                headers.put("l_name", "tester");
-                headers.put("username", "asasdasdasdd");
-                headers.put("password", "ads");
-                headers.put("email", "asd@adasd.com");
+                headers.put("f_name", user.getFirstName());
+                headers.put("l_name", user.getLastName());
+                headers.put("username", user.getUsername());
+                headers.put("password", user.getPassword());
+                headers.put("email", user.getEmail());
                 return headers;
             }
         };
