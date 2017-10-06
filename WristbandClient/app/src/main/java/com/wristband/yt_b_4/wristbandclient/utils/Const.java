@@ -5,8 +5,6 @@ package com.wristband.yt_b_4.wristbandclient.utils;
  */
 
 public class Const {
-    public static final String URL_JSON_ARRAY =
+    public static final String URL_USERS =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/users";
-    public static final String  ADD_USER =
-            "http://proj-309-yt-b-4.cs.iastate.edu:3000/create_users";
 }

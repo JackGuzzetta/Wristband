@@ -4,6 +4,9 @@ package com.wristband.yt_b_4.wristbandclient;
  * Created by Mike on 9/23/2017.
  */
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
@@ -23,12 +26,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class JsonRequestActivity extends AppCompatActivity implements OnClickListener {
     private String TAG = JsonRequestActivity.class.getSimpleName();
     private Button btnJsonArray;
     private TextView msgResponse;
     private ProgressDialog pDialog;
-    private String tag_json_arry = "jarray_req";
+    private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +55,49 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
         if (pDialog.isShowing())
             pDialog.hide();
     }
-    private void makeJsonArryReq() {
+
+    private void sendDataToServer() {
         showProgressDialog();
-        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JSON_ARRAY,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Const.URL_USERS, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString());
+                        msgResponse.setText(response.toString());
+                        hideProgressDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                hideProgressDialog();
+            }
+        }) {
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("f_name", "tester");
+                headers.put("l_name", "tester");
+                headers.put("username", "asasdasdasdd");
+                headers.put("password", "ads");
+                headers.put("email", "asd@adasd.com");
+                return headers;
+            }
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq,
+                tag_json_obj);
+        // Cancelling request
+        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+    }
+    private void getDataFromServer() {
+        showProgressDialog();
+        JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -94,7 +140,7 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnJsonArray:
-                makeJsonArryReq();
+                sendDataToServer();
                 break;
         }
     }
