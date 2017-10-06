@@ -7,6 +7,6 @@ package com.wristband.yt_b_4.wristbandclient.utils;
 public class Const {
     public static final String URL_JSON_ARRAY =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/users";
-    public static final String  ADD_USER =
-            "http://proj-309-yt-b-4.cs.iastate.edu:3000/create_users";
+    public static final String  URL_PARTY =
+            "http://proj-309-yt-b-4.cs.iastate.edu:3000/parties";
 }
