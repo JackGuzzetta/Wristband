@@ -19,9 +19,8 @@ module.exports.createParty = function(party_name, date, time, privacy, max_peopl
 		}
 		else {
 			console.log("Created new party: ", party_name);
-			res.json({
-			    users: "Created new party: ", party_name
-			})
+			res.contentType('application/json');
+			res.send(JSON.stringify(party_name));
 		}
 	});
 }
@@ -43,9 +42,8 @@ module.exports.findAllParties = function(res) {
 			}
 			else {
 				console.log(rows);
-				res.json({
-				    parties: rows
-				})
+				res.contentType('application/json');
+				res.send(JSON.stringify(rows));
 			}
 		}
 	});
@@ -67,9 +65,8 @@ module.exports.findPartyByID = function(id, res) {
 				})
 			}
 			else {
-				res.json({
-				    party: rows
-				})
+				res.contentType('application/json');
+				res.send(JSON.stringify(rows));
 				console.log(party);
 			}
 		}
@@ -87,9 +84,8 @@ module.exports.deleteParty = function(id, res) {
 		}
 		else {
 			console.log('Deleted party: ', id);
-			res.json({
-			    users: "Deleted party: ", id
-			})
+			res.contentType('application/json');
+			res.send(JSON.stringify(id));
 		}
 	});
 }
@@ -112,9 +108,8 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, alert
 		}
 		else {
 			console.log('Updated party: ', id);
-			res.json({
-			    users: "Updated party: ", id
-			})
+			res.contentType('application/json');
+			res.send(JSON.stringify(id));
 		}
 	});
 }
