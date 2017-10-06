@@ -3,6 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 9/23/2017.
  */
+import com.wristband.yt_b_4.wristbandclient.JsonRequestActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;

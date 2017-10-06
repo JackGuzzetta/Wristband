@@ -56,9 +56,25 @@ public class JsonRequestActivity extends AppCompatActivity implements OnClickLis
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        msgResponse.setText(response.toString());
+                        try {
+                            String newString = "User extracted from Json\n";
+                            newString += response.getJSONObject(0).getString("id");
+                            newString += "\n";
+                            newString += response.getJSONObject(0).getString("f_name");
+                            newString += "\n";
+                            newString += response.getJSONObject(0).getString("l_name");
+                            newString += "\n";
+                            newString += response.getJSONObject(0).getString("username");
+                            newString += "\n";
+                            newString += response.getJSONObject(0).getString("password");
+                            newString += "\n";
+                            newString += response.getJSONObject(0).getString("email");
+                            msgResponse.setText(newString);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                        hideProgressDialog();
+                         hideProgressDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override
