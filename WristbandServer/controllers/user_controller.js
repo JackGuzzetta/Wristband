@@ -17,8 +17,9 @@ module.exports.createUser = function(f_name, l_name, username, password, email, 
 		}
 		else {
 			console.log("Created new user: ", username);
-			res.contentType('application/json');
-				res.send(JSON.stringify(username));
+			res.json({
+				    users: "Success"
+			})
 		}
 	});
 }
