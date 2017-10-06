@@ -19,8 +19,9 @@ module.exports.createParty = function(party_name, date, time, privacy, max_peopl
 		}
 		else {
 			console.log("Created new party: ", party_name);
-			res.contentType('application/json');
-			res.send(JSON.stringify(party_name));
+			res.json({
+				    users: "Success"
+			})
 		}
 	});
 }
@@ -84,8 +85,9 @@ module.exports.deleteParty = function(id, res) {
 		}
 		else {
 			console.log('Deleted party: ', id);
-			res.contentType('application/json');
-			res.send(JSON.stringify(id));
+			res.json({
+				    users: "Success"
+			})
 		}
 	});
 }
@@ -108,8 +110,9 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, alert
 		}
 		else {
 			console.log('Updated party: ', id);
-			res.contentType('application/json');
-			res.send(JSON.stringify(id));
+			res.json({
+				    users: "Success"
+			})
 		}
 	});
 }

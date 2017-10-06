@@ -94,7 +94,7 @@ public class exampleActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        msgStatus.setText("Account successfully created!");
+                        msgStatus.setText("Account successfully created! " + response);
                         hideProgressDialog();
                     }
                 }, new Response.ErrorListener() {

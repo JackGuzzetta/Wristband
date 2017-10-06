@@ -18,7 +18,7 @@ module.exports.createUser = function(f_name, l_name, username, password, email, 
 		else {
 			console.log("Created new user: ", username);
 			res.json({
-				    users: "Success"
+				    users: username
 			})
 		}
 	});
@@ -82,8 +82,9 @@ module.exports.deleteUser = function(id, res) {
 		}
 		else {
 			console.log('Deleted user: ', id);
-			res.contentType('application/json');
-			res.send(JSON.stringify(id));
+			res.json({
+				    users: "Success"
+			})
 		}
 	});
 }
@@ -104,8 +105,9 @@ module.exports.updateUser = function(id, f_name, l_name, username, password, ema
 			})
 		}
 		else {
-			res.contentType('application/json');
-			res.send(JSON.stringify(id));
+			res.json({
+				    users: "Success"
+			})
 		}
 	});
 }
