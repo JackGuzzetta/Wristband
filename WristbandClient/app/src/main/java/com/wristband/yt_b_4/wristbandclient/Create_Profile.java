@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,14 +18,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class Create_Profile extends AppCompatActivity {
-    private String TAG = JsonRequestActivity.class.getSimpleName();
+    private String TAG = Create_Profile.class.getSimpleName();
+    private Button btnCreate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create__profile);
+        btnCreate = (Button) findViewById(R.id.btnCreate);
+
     }
 
-    public void createProfile(View view){
+    private void createProfile(){
         //Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText first_name = (EditText) findViewById(R.id.fname);
         EditText last_name = (EditText) findViewById(R.id.lname);
@@ -62,5 +66,13 @@ public class Create_Profile extends AppCompatActivity {
             pass.show();
         }
 
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnCreate:
+                createProfile();
+                break;
+        }
     }
 }
