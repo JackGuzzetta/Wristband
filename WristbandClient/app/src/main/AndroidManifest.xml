@@ -16,18 +16,18 @@
         <activity android:name=".examples.exampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FacebookLogin" />
+
+        <activity android:name=".Create_Party" />
+        <activity android:name=".Add_User" />
+        <activity android:name=".Create_Profile"></activity>
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
-        <activity android:name=".Add_User" />
-        <activity android:name=".Create_Profile"></activity>
     </application>
 
 </manifest>

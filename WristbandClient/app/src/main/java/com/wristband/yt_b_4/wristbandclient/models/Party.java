@@ -39,4 +39,14 @@ public class Party {
     public String getHost() {
         return this.host;
     }
+    public int makePartyPublic(){
+        this.privacy = 1;
+        return this.privacy;
+    }
+    public int MakePartyPrivate(){
+        this.privacy = 0;
+        return this.privacy;
+    }
+
+
 }
