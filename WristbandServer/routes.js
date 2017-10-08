@@ -50,7 +50,7 @@ module.exports = function(app){
     //     User.findUserByID(req.params.id, res);
     // });
     app.post('/relation', function(req, res) {
-        Relation.createRelation(req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
+        Relation.createRelation(req.headers.user_id, req.headers.party_id, res)
     });
     // app.put('/users/:id', function(req, res) {
     //     User.updateUser(req.params.id, req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)

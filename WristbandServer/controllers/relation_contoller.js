@@ -15,7 +15,7 @@ module.exports.createRelation = function(user_id, party_id, res) {
 		else {
 			console.log("Created new relation: ", user_id);
 			res.json({
-				    relations: user_id
+				    relations: user_id, party_id
 			})
 		}
 	});
