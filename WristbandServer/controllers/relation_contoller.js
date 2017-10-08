@@ -1,42 +1,39 @@
-User = require('../models/users');
+Relation = require('../models/relations');
 
-module.exports.createUser = function(f_name, l_name, username, password, email, res) {
-	user = new User({
-	    f_name: f_name,
-	    l_name: l_name,
-	    username: username,
-	    password: password,
-	    email: email,
+module.exports.createRelation = function(user_id, party_id, res) {
+	var relation = new Relation({
+	    user_id: user_id,
+	    party_id: party_id,
 	});
-	user.save(function(err) {
+	relation.save(function(err) {
 		if (err) {
-			console.log("Unable to create user");
+			console.log("Unable to create relation");
 			res.json({
-			    users: "Error"
+			    relations: "Error"
 			})
 		}
 		else {
-			console.log("Created new user: ", username);
+			console.log("Created new relation: ", user_id);
 			res.json({
-				    users: username
+				    relations: user_id
 			})
 		}
 	});
 }
-module.exports.findAllUsers = function(res) {
-	var user = new User();
-	user.find('all', function(err, rows, fields) {
+module.exports.findAllRelations = function(res) {
+	var relation = new Relation();
+	relation.find('all', function(err, rows, fields) {
 		if (err) {
 			console.log("error");
 			res.json({
-			    users: "Error"
+			    relations: "Error"
 			})
 		}
 		else {
 			if (rows.length == 0) {
-				console.log("Users not found.");
+				console.log("Relations not found.");
 				res.json({
-				    users: "Error"
+				    relations: "Error"
 				})
 			}
 			else {
@@ -47,67 +44,68 @@ module.exports.findAllUsers = function(res) {
 		}
 	});
 }
-module.exports.findUserByID = function(id, res) {
-	var user = new User();
-	user.find('all', {where: 'id=' + id}, function(err, rows, fields) {
-		if (err) {
-			console.log("error");
-			res.json({
-			    users: "Error"
-			})
-		}
-		else {
-			if (rows.length == 0) {
-				console.log("User not found.");
-				res.json({
-				    users: "Error"
-				})
-			}
-			else {
-				res.contentType('application/json');
-				res.send(JSON.stringify(rows));
-			}
-		}
-	});
-}
-module.exports.deleteUser = function(id, res) {
-	user = new User();
-	user.set('id', id);
-	user.remove(function(err) {
-		if (err) {
-			console.log("Tried to delete a null user: ", id);
-			res.json({
-			    users: "Error"
-			})
-		}
-		else {
-			console.log('Deleted user: ', id);
-			res.json({
-				    users: "Success"
-			})
-		}
-	});
-}
-module.exports.updateUser = function(id, f_name, l_name, username, password, email, res) {
-	user = new User({
-		id: id,
-	    f_name: f_name,
-	    l_name: l_name,
-	    username: username,
-	    password: password,
-	    email: email,
-	});
-	user.save(function(err) {
-		if (err) {
-			console.log("Unable to update user");
-			res.json({
-			    users: "Error"
-			})
-		}
-		else {
-			res.json({
-				    users: "Success"
-			})
-		}
-	});
-}
+//TODO
+// module.exports.findRelationByID = function(id, res) {
+// 	var relation = new Relation();
+// 	relation.find('all', {where: 'id=' + id}, function(err, rows, fields) {
+// 		if (err) {
+// 			console.log("error");
+// 			res.json({
+// 			    relations: "Error"
+// 			})
+// 		}
+// 		else {
+// 			if (rows.length == 0) {
+// 				console.log("Relation not found.");
+// 				res.json({
+// 				    relations: "Error"
+// 				})
+// 			}
+// 			else {
+// 				res.contentType('application/json');
+// 				res.send(JSON.stringify(rows));
+// 			}
+// 		}
+// 	});
+// }
+// module.exports.deleteRelation = function(id, res) {
+// 	relation = new Relation();
+// 	relation.set('id', id);
+// 	relation.remove(function(err) {
+// 		if (err) {
+// 			console.log("Tried to delete a null relation: ", id);
+// 			res.json({
+// 			    relations: "Error"
+// 			})
+// 		}
+// 		else {
+// 			console.log('Deleted relation: ', id);
+// 			res.json({
+// 				    relations: "Success"
+// 			})
+// 		}
+// 	});
+// }
+// module.exports.updateRelation = function(id, f_name, l_name, username, password, email, res) {
+// 	relation = new Relation({
+// 		id: id,
+// 	    f_name: f_name,
+// 	    l_name: l_name,
+// 	    username: username,
+// 	    password: password,
+// 	    email: email,
+// 	});
+// 	relation.save(function(err) {
+// 		if (err) {
+// 			console.log("Unable to update relation");
+// 			res.json({
+// 			    relations: "Error"
+// 			})
+// 		}
+// 		else {
+// 			res.json({
+// 				    relations: "Success"
+// 			})
+// 		}
+// 	});
+// }
