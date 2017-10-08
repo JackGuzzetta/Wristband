@@ -1,17 +1,20 @@
 package com.wristband.yt_b_4.wristbandclient;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class Add_User extends AppCompatActivity {
-
+    private Button next;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__user);
+        next = (Button) findViewById(R.id.next);
     }
 
     public void buttonClickParty(View view) {
@@ -83,5 +86,10 @@ public class Add_User extends AppCompatActivity {
             Toast blank = Toast.makeText(getApplicationContext(), "Enter the name or user number of person to blacklist", Toast.LENGTH_LONG);
             blank.show();
         }
+    }
+
+    private void back_Homescreen(){
+        //Intent intent = new Intent (Add_User.this, Homescreen.class);
+        //startActivity(intent);
     }
 }

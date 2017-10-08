@@ -27,10 +27,12 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity  {
     int max;
+    private Button next;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
+        next = (Button) findViewById(R.id.next);
     }
     public void buttonClickParty(View view) {
         EditText person_name = (EditText) findViewById(R.id.username);
@@ -63,6 +65,11 @@ public class CoHost extends AppCompatActivity  {
             Toast blank = Toast.makeText(getApplicationContext(), "Enter the username or number of person to add", Toast.LENGTH_LONG);
             blank.show();
         }
+    }
+
+    private void Add_Users(){
+        Intent intent = new Intent (CoHost.this, Add_User.class);
+        startActivity(intent);
     }
 
 }

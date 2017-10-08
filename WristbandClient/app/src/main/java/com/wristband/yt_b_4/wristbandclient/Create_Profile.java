@@ -1,6 +1,7 @@
 package com.wristband.yt_b_4.wristbandclient;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,8 +101,8 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
         }
         else{
             sendDataToServer(user);
-
-
+            //Intent intent = new Intent (Create_Profile.this, Homescreen.class);
+            //startActivity(intent);
             Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
             pass.show();
         }
