@@ -61,6 +61,7 @@ public class Login extends AppCompatActivity {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
+                loginProfile();
             }
         });
         RegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +100,11 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent (Login.this, Create_Profile.class);
         startActivity(intent);
 
+    }
+
+    private void loginProfile() {
+        Intent intent = new Intent (Login.this, LoginProfile.class);
+        startActivity(intent);
     }
 
     @Override

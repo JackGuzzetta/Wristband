@@ -7,31 +7,46 @@
     <application
         android:name=".app.AppController"
         android:allowBackup="true"
+        android:banner="@color/cardview_dark_background"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:banner="@color/cardview_dark_background"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login" android:noHistory="true">
+        <activity
+            android:name=".Login"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Add_User" android:noHistory="true"/>
-        <activity android:name=".CoHost" android:noHistory="true"/>
-        <activity android:name=".Create_Party" android:noHistory="true"/>
-        <activity android:name=".Create_Profile" android:noHistory="true"></activity>
+        <activity
+            android:name=".Add_User"
+            android:noHistory="true" />
+        <activity
+            android:name=".CoHost"
+            android:noHistory="true" />
+        <activity
+            android:name=".Create_Party"
+            android:noHistory="true" />
+        <activity
+            android:name=".Create_Profile"
+            android:noHistory="true" />
         <activity android:name=".examples.exampleActivity" />
-        <activity android:name=".HomeScreen" android:noHistory="true"/>
-        <activity android:name=".GuestScreen" android:noHistory="true"/>
-
+        <activity
+            android:name=".HomeScreen"
+            android:noHistory="true" />
+        <activity
+            android:name=".GuestScreen"
+            android:noHistory="true" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <activity android:name=".LoginProfile"></activity>
     </application>
 
 </manifest>

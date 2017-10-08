@@ -24,7 +24,7 @@ import android.widget.CompoundButton;
  */
 
 public class Create_Party extends AppCompatActivity {
-    Button create, next;
+    Button create, next, btnBack;
     ImageButton pic;
     String name;
     String location;
@@ -43,12 +43,21 @@ public class Create_Party extends AppCompatActivity {
         this.pic = (ImageButton) findViewById(R.id.pict);
         this.create = (Button) findViewById(R.id.create);
         this.next = (Button) findViewById(R.id.next);
+        btnBack = (Button) findViewById(R.id.btnBack);
         next.setVisibility(View.INVISIBLE);
         swit = (Switch) findViewById(R.id.swittch);
         swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 s = isChecked;
             }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goBack(view);
+            }
+
         });
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +181,11 @@ public class Create_Party extends AppCompatActivity {
 
     }
 
+
+    private void goBack(View view){
+        Intent intent = new Intent (Create_Party.this, HomeScreen.class);
+        startActivity(intent);
+    }
 
 }
 

@@ -34,7 +34,7 @@ public class Create_Profile extends AppCompatActivity{
     private String TAG = Create_Profile.class.getSimpleName();
     private User user;
     private EditText first_name, last_name, user_name, user_password, user_email, user_reenter;
-    private Button btnCreate;
+    private Button btnCreate, btnBack;
     private TextView msgStatus;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -53,6 +53,7 @@ public class Create_Profile extends AppCompatActivity{
         user_password = (EditText) findViewById(R.id.password);
         user_reenter = (EditText) findViewById(R.id.reenter);
         btnCreate = (Button) findViewById(R.id.btnCreate);
+        btnBack = (Button) findViewById(R.id.btnBack);
         msgStatus = (TextView) findViewById(R.id.msgResponse);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -64,6 +65,14 @@ public class Create_Profile extends AppCompatActivity{
                 createProfile(view);
             }
         });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goBack(view);
+            }
+
+        });
     }
 
     private void showProgressDialog() {
@@ -73,6 +82,11 @@ public class Create_Profile extends AppCompatActivity{
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();
+    }
+
+    private void goBack(View view){
+        Intent intent = new Intent (Create_Profile.this, Login.class);
+        startActivity(intent);
     }
 
     private void createProfile(View view){
