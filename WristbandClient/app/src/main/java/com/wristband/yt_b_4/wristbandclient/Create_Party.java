@@ -47,11 +47,7 @@ public class Create_Party extends AppCompatActivity {
         swit = (Switch) findViewById(R.id.swittch);
         swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    s=true;
-                } else {
-                    s=false;
-                }
+                s = isChecked;
             }
         });
         create.setOnClickListener(new View.OnClickListener() {

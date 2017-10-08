@@ -3,7 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 9/23/2017.
  */
-import com.wristband.yt_b_4.wristbandclient.JsonRequestActivity;
+import com.wristband.yt_b_4.wristbandclient.examples.exampleActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -26,7 +28,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class FacebookLogin extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     TextView txtStatus;
     LoginButton FacebookLoginButton;
     Button LoginButton;
@@ -37,10 +39,16 @@ public class FacebookLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         context = this;
         FacebookSdk.sdkInitialize(getApplicationContext());
         initializeControls();
+        if (isLoggedIn()) {
+            txtStatus.setText("Logged in");
+            Intent intent = new Intent(Login.this, exampleActivity.class);
+            startActivity(intent);
+        }
         loginWithFB();
 
     }
@@ -68,7 +76,7 @@ public class FacebookLogin extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback < LoginResult > () {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(FacebookLogin.this, JsonRequestActivity.class);
+                Intent intent = new Intent(Login.this, exampleActivity.class);
                 startActivity(intent);
             }
 
@@ -83,9 +91,13 @@ public class FacebookLogin extends AppCompatActivity {
             }
         });
     }
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
+    }
 
     private void createProfile() {
-        Intent intent = new Intent (FacebookLogin.this, Create_Profile.class);
+        Intent intent = new Intent (Login.this, Create_Profile.class);
         startActivity(intent);
 
     }

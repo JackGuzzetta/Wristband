@@ -13,16 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".examples.exampleActivity">
+        <activity android:name=".Login" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Create_Party" />
-        <activity android:name=".Add_User" />
-        <activity android:name=".Create_Profile"></activity>
+        <activity android:name=".Add_User" android:noHistory="true"/>
+        <activity android:name=".CoHost" android:noHistory="true"/>
+        <activity android:name=".Create_Party" android:noHistory="true"/>
+        <activity android:name=".Create_Profile" android:noHistory="true"></activity>
+        <activity android:name=".examples.exampleActivity" />
 
 
         <meta-data

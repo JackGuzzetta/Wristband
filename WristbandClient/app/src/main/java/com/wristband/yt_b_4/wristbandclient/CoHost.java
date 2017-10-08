@@ -1,4 +1,4 @@
-package com.wristband.yt_b_4.wristbandclient.models;
+package com.wristband.yt_b_4.wristbandclient;
 
 /**
  * Created by Mike on 10/7/2017.
