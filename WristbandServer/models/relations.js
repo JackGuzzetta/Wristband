@@ -1,7 +1,7 @@
 var mysqlModel = require('mysql-model');
 var MyAppModel = require('./appModel');
 
-var User = MyAppModel.extend({
+var Relation = MyAppModel.extend({
     tableName: "party_relation",
 });
 
