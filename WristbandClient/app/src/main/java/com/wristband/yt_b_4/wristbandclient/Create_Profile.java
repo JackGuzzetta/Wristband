@@ -15,9 +15,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.wristband.yt_b_4.wristbandclient.R;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
+import com.wristband.yt_b_4.wristbandclient.models.User;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
@@ -29,20 +31,32 @@ import java.util.Map;
 
 public class Create_Profile extends AppCompatActivity implements View.OnClickListener {
     private String TAG = Create_Profile.class.getSimpleName();
+    private User user;
+    private EditText first_name, last_name, user_name, user_password, user_email, user_reenter;
     private Button btnCreate;
-    private TextView msgResponse;
+    private TextView msgStatus;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create__profile);
+        initializeControls();
+    }
+
+    private void initializeControls(){
+        first_name = (EditText) findViewById(R.id.fname);
+        last_name = (EditText) findViewById(R.id.lname);
+        user_email = (EditText) findViewById(R.id.email);
+        user_name = (EditText) findViewById(R.id.username);
+        user_password = (EditText) findViewById(R.id.password);
+        user_reenter = (EditText) findViewById(R.id.reenter);
         btnCreate = (Button) findViewById(R.id.btnCreate);
-        msgResponse = (TextView) findViewById(R.id.msgResponse);
+        msgStatus = (TextView) findViewById(R.id.msgResponse);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
-        btnCreate.setOnClickListener(this);
+
     }
 
     private void showProgressDialog() {
@@ -55,13 +69,6 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
     }
 
     private void createProfile(){
-        //Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText first_name = (EditText) findViewById(R.id.fname);
-        EditText last_name = (EditText) findViewById(R.id.lname);
-        EditText user_email = (EditText) findViewById(R.id.email);
-        EditText user_name = (EditText) findViewById(R.id.username);
-        EditText user_password = (EditText) findViewById(R.id.password);
-        EditText user_reenter = (EditText) findViewById(R.id.reenter);
 
         //text in first name box
         String f_name = first_name.getText().toString();
@@ -75,6 +82,7 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
         String password = user_password.getText().toString();
         //text in reenter box
         String reenter = user_reenter.getText().toString();
+        user = new User (first_name.getText().toString(), last_name.getText().toString(), user_name.getText().toString(), user_password.getText().toString(), user_email.getText().toString(), user_reenter.getText().toString());
 
         /*check to see that the user has entered text in all boxes,
         give toast error message if text is missing
@@ -86,50 +94,61 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
             Toast fail = Toast.makeText(getApplicationContext(), "Required information missing", Toast.LENGTH_LONG);
             fail.show();
         }
+        else if(password.equals(reenter) == false){
+            Toast fail = Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG);
+            fail.show();
+        }
         else{
+            sendDataToServer(user);
 
-            showProgressDialog();
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                    Const.URL_USERS, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d(TAG, response.toString());
-                            msgResponse.setText(response.toString());
-                            hideProgressDialog();
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    hideProgressDialog();
-                }
-            }) {
-                /**
-                 * Passing some request headers
-                 * */
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    headers.put("f_name", "f_name");
-                    headers.put("l_name", "tester");
-                    headers.put("username", "asasdasdasdd");
-                    headers.put("password", "ads");
-                    headers.put("email", "asd@adasd.com");
-                    return headers;
-                }
-            };
-            // Adding request to request queue
-            AppController.getInstance().addToRequestQueue(jsonObjReq,
-                    tag_json_obj);
-            // Cancelling request
-            // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
 
             Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
             pass.show();
         }
 
+    }
+
+    private void sendDataToServer(final User user) {
+        showProgressDialog();
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Const.URL_USERS, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            msgStatus.setText("Account : " + response.getString("users") + " created.");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        hideProgressDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                msgStatus.setText("Error creating account: " + error);
+                hideProgressDialog();
+            }
+        }) {
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("f_name", user.getFirstName());
+                headers.put("l_name", user.getLastName());
+                headers.put("username", user.getUsername());
+                headers.put("password", user.getPassword());
+                headers.put("email", user.getEmail());
+                return headers;
+            }
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq,
+                tag_json_obj);
+        // Cancelling request
+        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
     }
 
     public void onClick(View v) {
