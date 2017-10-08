@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Create_Profile extends AppCompatActivity implements View.OnClickListener {
+public class Create_Profile extends AppCompatActivity{
     private String TAG = Create_Profile.class.getSimpleName();
     private User user;
     private EditText first_name, last_name, user_name, user_password, user_email, user_reenter;
@@ -57,7 +57,13 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
-
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                createProfile(view);
+            }
+        });
     }
 
     private void showProgressDialog() {
@@ -69,7 +75,7 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
             pDialog.hide();
     }
 
-    private void createProfile(){
+    private void createProfile(View view){
 
         //text in first name box
         String f_name = first_name.getText().toString();
@@ -101,8 +107,8 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
         }
         else{
             sendDataToServer(user);
-            //Intent intent = new Intent (Create_Profile.this, Homescreen.class);
-            //startActivity(intent);
+            Intent intent = new Intent (Create_Profile.this, HomeScreen.class);
+            startActivity(intent);
             Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
             pass.show();
         }
@@ -152,11 +158,11 @@ public class Create_Profile extends AppCompatActivity implements View.OnClickLis
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
     }
 
-    public void onClick(View v) {
+    /*public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnCreate:
                 createProfile();
                 break;
         }
-    }
+    }*/
 }

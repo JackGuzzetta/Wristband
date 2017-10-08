@@ -25,6 +25,8 @@
         <activity android:name=".Create_Party" android:noHistory="true"/>
         <activity android:name=".Create_Profile" android:noHistory="true"></activity>
         <activity android:name=".examples.exampleActivity" />
+        <activity android:name=".HomeScreen" android:noHistory="true"/>
+        <activity android:name=".GuestScreen" android:noHistory="true"/>
 
 
         <meta-data

@@ -89,7 +89,7 @@ public class Add_User extends AppCompatActivity {
     }
 
     private void back_Homescreen(){
-        //Intent intent = new Intent (Add_User.this, Homescreen.class);
-        //startActivity(intent);
+        Intent intent = new Intent (Add_User.this, HomeScreen.class);
+        startActivity(intent);
     }
 }
