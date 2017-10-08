@@ -69,7 +69,7 @@ public class Create_Party extends AppCompatActivity {
 
                 } else {
                     //Party p = new Party(name, date, time, location);
-                    Party p = new Party(name, date, time, 0, 200, 0, "mvanbosc");
+                    Party p = new Party(name, date, time, 0, 200, 0, "mvanbosc", location);
                     if (s) {
                         p.makePartyPublic();
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);

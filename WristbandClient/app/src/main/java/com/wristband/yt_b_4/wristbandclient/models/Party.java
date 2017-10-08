@@ -6,10 +6,10 @@ package com.wristband.yt_b_4.wristbandclient.models;
 
 public class Party {
 
-    private String party_name, date, time, host;
+    private String party_name, date, time, host, location;
     private int privacy, max_people, alerts;
 
-    public Party(String party_name, String date, String time, int privacy, int max_people, int alerts, String host) {
+    public Party(String party_name, String date, String time, int privacy, int max_people, int alerts, String host, String location) {
         this.party_name = party_name;
         this.date = date;
         this.time = time;
@@ -17,6 +17,7 @@ public class Party {
         this.max_people = max_people;
         this.alerts = alerts;
         this.host = host;
+        this.location = location;
     }
     public String getPartyName() {
         return this.party_name;
@@ -36,9 +37,8 @@ public class Party {
     public int getAlerts() {
         return this.alerts;
     }
-    public String getHost() {
-        return this.host;
-    }
+    public String getHost() { return this.host; }
+    public String getLocation() {return this.location; }
     public int makePartyPublic(){
         this.privacy = 1;
         return this.privacy;
@@ -47,6 +47,7 @@ public class Party {
         this.privacy = 0;
         return this.privacy;
     }
-
-
+    public void setLocation(String location){
+        this.location = location;
+    }
 }

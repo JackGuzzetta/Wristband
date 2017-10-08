@@ -44,13 +44,12 @@ public class Login extends AppCompatActivity {
         context = this;
         FacebookSdk.sdkInitialize(getApplicationContext());
         initializeControls();
+
         if (isLoggedIn()) {
-            txtStatus.setText("Logged in");
             Intent intent = new Intent(Login.this, exampleActivity.class);
             startActivity(intent);
         }
         loginWithFB();
-
     }
     private void initializeControls() {
         callbackManager = CallbackManager.Factory.create();

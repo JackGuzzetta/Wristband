@@ -1,6 +1,6 @@
 Party = require('../models/parties');
 
-module.exports.createParty = function(party_name, date, time, privacy, max_people, alerts, host, res) {
+module.exports.createParty = function(party_name, date, time, privacy, max_people, alerts, host, location, res) {
 	party = new Party({
 	    party_name: party_name,
 	    date: date,
@@ -8,7 +8,8 @@ module.exports.createParty = function(party_name, date, time, privacy, max_peopl
 	    privacy: privacy,
 	    max_people: max_people,
 	    alerts: alerts,
-	    host: host
+	    host: host,
+	    location: location
 	});
 	party.save(function(err) {
 		if (err) {
@@ -91,7 +92,7 @@ module.exports.deleteParty = function(id, res) {
 		}
 	});
 }
-module.exports.updateParty = function(id, party_name, date, time, privacy, alerts, host, res) {
+module.exports.updateParty = function(id, party_name, date, time, privacy, alerts, host, location, res) {
 	party = new Party({
 		id: id,
 	    party_name: party_name,
@@ -99,7 +100,8 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, alert
 	    time: time,
 	    privacy: privacy,
 	    alerts: alerts,
-	    host: host
+	    host: host,
+	    location: location
 	});
 	party.save(function(err) {
 		if (err) {

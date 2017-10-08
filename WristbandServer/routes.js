@@ -31,10 +31,10 @@ module.exports = function(app){
         Party.findPartyByID(req.params.id, res);
     });
     app.post('/parties', function(req, res) {
-        Party.createParty(req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, res)
+        Party.createParty(req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, req.headers.location, res)
     });
     app.put('/parties/:id', function(req, res) {
-        Party.updateParty(req.params.id, req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, res)
+        Party.updateParty(req.params.id, req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, req.headers.location, res)
     });
     app.delete('/parties/:id', function(req, res) {
         Party.deleteParty(req.params.id, res);
