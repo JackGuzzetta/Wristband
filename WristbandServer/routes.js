@@ -2,7 +2,7 @@ module.exports = function(app){
    
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
-    var Relation = require('./controllers/relation_controller');
+    var Relation = require('./controllers/relation_contoller');
 
 	//----------User-------------
     app.get('/users', function(req, res) {
