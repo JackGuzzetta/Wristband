@@ -16,12 +16,14 @@ public class HomeScreen extends AppCompatActivity {
 
     Button GuestButton;
     Button NewPartyButton;
+    Button btnlogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen2);
         GuestButton = (Button) findViewById(R.id.button2);
         NewPartyButton = (Button) findViewById(R.id.button3);
+        btnlogout = (Button) findViewById(R.id.logout);
         initializeControls();
     }
 
@@ -60,7 +62,14 @@ public class HomeScreen extends AppCompatActivity {
                 newParty();
             }
         });
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //back to login screen
+                logout(view);
+            }
 
+        });
 
     }
     public void guestScreen(){
@@ -70,6 +79,11 @@ public class HomeScreen extends AppCompatActivity {
 
     public void newParty(){
         Intent intent = new Intent(this, Create_Party.class);
+        startActivity(intent);
+    }
+
+    public void logout(View view){
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
 
