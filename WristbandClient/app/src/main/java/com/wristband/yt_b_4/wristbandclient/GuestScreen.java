@@ -1,14 +1,19 @@
 package com.wristband.yt_b_4.wristbandclient;
 
+import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,7 +54,25 @@ public class GuestScreen extends AppCompatActivity {
             }
         });
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                //startActivity(new Intent(this, About.class));
+                return true;
+            case R.id.logout:
+                LoginManager.getInstance().logOut();
+                startActivity(new Intent(this, Login.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();

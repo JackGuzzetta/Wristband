@@ -3,12 +3,16 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 10/7/2017.
  */
+import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -186,6 +190,24 @@ public class Create_Party extends AppCompatActivity {
         Intent intent = new Intent (Create_Party.this, HomeScreen.class);
         startActivity(intent);
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                //startActivity(new Intent(this, About.class));
+                return true;
+            case R.id.logout:
+                LoginManager.getInstance().logOut();
+                startActivity(new Intent(this, Login.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
 

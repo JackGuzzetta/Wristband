@@ -11,6 +11,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -46,10 +49,25 @@ public class Login extends AppCompatActivity {
         initializeControls();
 
         if (isLoggedIn()) {
-            //Intent intent = new Intent(Login.this, HomeScreen.class);
-            //startActivity(intent);
+            Intent intent = new Intent(Login.this, HomeScreen.class);
+            startActivity(intent);
         }
         loginWithFB();
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.loginmenu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                //startActivity(new Intent(this, About.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     private void initializeControls() {
         callbackManager = CallbackManager.Factory.create();
@@ -76,7 +94,7 @@ public class Login extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback < LoginResult > () {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(Login.this, exampleActivity.class);
+                Intent intent = new Intent(Login.this, HomeScreen.class);
                 startActivity(intent);
             }
 
