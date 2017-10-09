@@ -46,8 +46,8 @@ public class Login extends AppCompatActivity {
         initializeControls();
 
         if (isLoggedIn()) {
-            //Intent intent = new Intent(Login.this, HomeScreen.class);
-            //startActivity(intent);
+            Intent intent = new Intent(Login.this, HomeScreen.class);
+            startActivity(intent);
         }
         loginWithFB();
     }
