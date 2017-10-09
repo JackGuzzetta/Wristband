@@ -1,4 +1,4 @@
-module.exports = function(app){
+module.exports = function(app) {
    
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
@@ -59,4 +59,8 @@ module.exports = function(app){
     //     User.deleteUser(req.params.id, res);
     // });
     //----------------------------
+
+    app.post('/users/login', function(req, res) {
+        User.login(req.headers.username, req.headers.password, res);
+    }); 
 }

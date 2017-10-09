@@ -3,12 +3,12 @@ var express = require('express');
 var mysqlModel = require('mysql-model');
 var app = express();
 var config = require('./config');
-var User = require('./controllers/user_controller');
+var jwt = require('jwt-simple');
+var moment = require('moment');
+var User = require('./controllers/user_controller')(app);
 var Party = require('./controllers/party_controller');
-
-
 require('./routes')(app);
-
+app.set('jwtTokenSecret', config.crypt);
 
 
 //EXAMPLE CRUD (CREATE/READ/UPDATE/DELETE) Operations
