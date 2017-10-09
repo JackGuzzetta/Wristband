@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,7 +20,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 public class GuestScreen extends AppCompatActivity {
-    private Button getPartyBtn;
+    private Button getPartyBtn, btnBack;
     private TextView dateText, partyText, responseTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -28,13 +29,21 @@ public class GuestScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_screen2);
         getPartyBtn = (Button) findViewById(R.id.btnJsonArray);
+        btnBack = (Button) findViewById(R.id.btnBack);
         partyText = (TextView) findViewById(R.id.partyTxt);
         responseTxt = (TextView) findViewById(R.id.msgResponse);
         dateText = (TextView) findViewById(R.id.dateTxt);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goBack(view);
+            }
 
+        });
         getPartyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +98,11 @@ public class GuestScreen extends AppCompatActivity {
                 tag_json_arry);
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
+    }
+
+    private void goBack(View view){
+        Intent intent = new Intent (GuestScreen.this, HomeScreen.class);
+        startActivity(intent);
     }
 
 }
