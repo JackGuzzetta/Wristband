@@ -9,7 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import com.facebook.login.LoginManager;
+
 
 
 public class HomeScreen extends AppCompatActivity {
@@ -69,6 +82,14 @@ public class HomeScreen extends AppCompatActivity {
 
     public void newParty(){
         Intent intent = new Intent(this, Create_Party.class);
+        startActivity(intent);
+    }
+
+    public void logout(View view){
+       // if(isLoggedIn() == true){
+
+        //}
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
 }
