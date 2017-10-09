@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-<<<<<<< HEAD
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,10 +20,10 @@ import com.facebook.login.widget.LoginButton;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-=======
+
 import com.facebook.login.LoginManager;
 
->>>>>>> b4b27dea3ecbdb4f444b6230016ec5a1b89e3ff7
+
 
 public class HomeScreen extends AppCompatActivity {
 
