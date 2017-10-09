@@ -1,7 +1,9 @@
 package com.wristband.yt_b_4.wristbandclient;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,11 +44,15 @@ public class LoginProfile extends AppCompatActivity {
     private TextView msgStatus;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_profile);
         initializeControls();
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -108,18 +114,68 @@ public class LoginProfile extends AppCompatActivity {
     }
 
     private void createLogin(View view){
+        Toast fail;
         //text in username box
         String username = user_name.getText().toString();
         //text in password box
         String password = user_password.getText().toString();
 
         if(username.isEmpty() || password.isEmpty()){
-            Toast fail = Toast.makeText(getApplicationContext(), "Required information missing", Toast.LENGTH_LONG);
+            fail = Toast.makeText(getApplicationContext(), "Required information missing", Toast.LENGTH_LONG);
             fail.show();
         }
         else{
-
+            sendDataToServer(username, password);
         }
 
+    }
+    private void sendDataToServer(final String username, final String password) {
+        showProgressDialog();
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Const.URL_USERS + "/login", null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast toast;
+                        try {
+                            String responseToken = response.getString("token");
+                            String username = response.getString("username");
+                            toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
+                            toast.show();
+                            editor.putString("token", responseToken);
+                            editor.commit();
+                            Intent intent = new Intent (LoginProfile.this, HomeScreen.class);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                        hideProgressDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
+                toast.show();
+                hideProgressDialog();
+            }
+        }) {
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("username", username);
+                headers.put("password", password);
+                return headers;
+            }
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq,
+                tag_json_obj);
+        // Cancelling request
+        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
     }
 }
