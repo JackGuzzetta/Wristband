@@ -4,6 +4,8 @@ package com.wristband.yt_b_4.wristbandclient.examples;
  * Created by Mike on 10/6/2017.
  */
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,11 +39,20 @@ public class exampleActivity extends AppCompatActivity {
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ProgressDialog pDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example);
         initializeControls();
+    //write login key
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("key", "123");
+        editor.commit();
+    //read login key
+        String  highScore = sharedPref.getString("key", "default");
+        msgStatus.setText(highScore);
     }
     private void initializeControls() {
         //initialize variables

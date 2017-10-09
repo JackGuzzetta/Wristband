@@ -3,10 +3,15 @@ package com.wristband.yt_b_4.wristbandclient;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.facebook.login.LoginManager;
 
 public class Add_User extends AppCompatActivity {
     private Button next;
@@ -15,6 +20,25 @@ public class Add_User extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__user);
         next = (Button) findViewById(R.id.next);
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                //startActivity(new Intent(this, About.class));
+                return true;
+            case R.id.logout:
+                LoginManager.getInstance().logOut();
+                startActivity(new Intent(this, Login.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void buttonClickParty(View view) {
