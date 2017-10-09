@@ -62,7 +62,7 @@ module.exports = function(app) {
                                 token = createToken(username, expires);
                                 console.log(token);
                                 res.json({
-                                    token: token
+                                    token: token,
                                     username: username
                                 })
                             }
