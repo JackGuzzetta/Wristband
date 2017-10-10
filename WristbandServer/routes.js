@@ -31,6 +31,9 @@ module.exports = function(app) {
     app.get('/parties/:id', function(req, res) {
         Party.findPartyByID(req.params.id, res);
     });
+    app.get('/party_name/:name', function(req, res) {
+        Party.findPartyByName(req.params.name, res);
+    });
     app.post('/parties', function(req, res) {
         Party.createParty(req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, req.headers.location, res)
     });

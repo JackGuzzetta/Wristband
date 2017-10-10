@@ -32,6 +32,7 @@ public class GuestScreen extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
+    private String party_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,8 @@ public class GuestScreen extends AppCompatActivity {
                 //partyText.setText("party: " + party.getPartyName() );
             }
         });
+        party_name = getIntent().getStringExtra("party_name");
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

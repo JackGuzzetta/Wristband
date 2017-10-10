@@ -74,6 +74,30 @@ module.exports.findPartyByID = function(id, res) {
 		}
 	});
 }
+module.exports.findPartyByName = function(name, res) {
+	var party = new Party();
+	party.find('all', {where: 'party_name=' + '\'' + name+ '\''}, function(err, rows, fields) {
+		if (err) {
+			console.log("error");
+			res.json({
+			    party: "Error"
+			})
+		}
+		else {
+			if (rows.length == 0) {
+				console.log("Party not found.");
+				res.json({
+				    party: "Error"
+				})
+			}
+			else {
+				res.contentType('application/json');
+				res.send(JSON.stringify(rows));
+				console.log(party);
+			}
+		}
+	});
+}
 module.exports.deleteParty = function(id, res) {
 	party = new Party();
 	party.set('id', id);

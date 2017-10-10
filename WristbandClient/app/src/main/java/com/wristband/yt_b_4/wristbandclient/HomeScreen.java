@@ -10,9 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -77,12 +80,21 @@ public class HomeScreen extends AppCompatActivity {
         String myString = settings.getString("username", "default");
         adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected item text from ListView
+                String party_name = (String) parent.getItemAtPosition(position);
+                guestScreen(party_name);
+                // Display the selected item text on TextView
+
+            }
+        });
 
         GuestButton = (Button) findViewById(R.id.button2);
         GuestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                guestScreen();
+                //guestScreen();
             }
         });
         NewPartyButton = (Button) findViewById(R.id.button3);
@@ -94,8 +106,9 @@ public class HomeScreen extends AppCompatActivity {
 
         getDataFromServer();
     }
-    public void guestScreen(){
+    public void guestScreen(String party_name){
         Intent intent = new Intent(this, GuestScreen.class);
+        intent.putExtra("party_name", party_name);
         startActivity(intent);
     }
 
@@ -120,6 +133,9 @@ public class HomeScreen extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.hide();
     }
+
+
+
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
