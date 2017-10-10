@@ -3,9 +3,18 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 10/7/2017.
  */
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
+import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
+import com.wristband.yt_b_4.wristbandclient.models.User;
+import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +35,12 @@ import android.provider.MediaStore;
 import android.widget.Switch;
 import android.widget.CompoundButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Jackguzzetta on 9/26/17.
  */
@@ -40,6 +55,9 @@ public class Create_Party extends AppCompatActivity {
     Switch swit;
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
+    private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private ProgressDialog pDialog;
+
 
 
     @Override
@@ -52,7 +70,16 @@ public class Create_Party extends AppCompatActivity {
         this.next = (Button) findViewById(R.id.next);
         btnBack = (Button) findViewById(R.id.btnBack);
         next.setVisibility(View.INVISIBLE);
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
+
+
+
         swit = (Switch) findViewById(R.id.swittch);
+
+
+
         swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 s = isChecked;
@@ -84,16 +111,19 @@ public class Create_Party extends AppCompatActivity {
                     blank.show();
 
                 } else {
-                    //Party p = new Party(name, date, time, location);
-                    Party p = new Party(name, date, time, 0, 200, 0, "mvanbosc", location);
+                    SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                    String host = settings.getString("username", "default");
+                    Party p = new Party(name, date, time, 0, 200, 0, host, location);
                     if (s) {
                         p.makePartyPublic();
+                        sendDataToServer(p);
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.INVISIBLE);
                         next.setVisibility(View.VISIBLE);
                     } else {
                         p.MakePartyPrivate();
+                        sendDataToServer(p);
                         Toast blank = Toast.makeText(getApplicationContext(), "Private Party Created", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.INVISIBLE);
@@ -217,5 +247,56 @@ public class Create_Party extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void showProgressDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (pDialog.isShowing())
+            pDialog.hide();
+    }
+    private void sendDataToServer(final Party party) {
+        showProgressDialog();
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Const.URL_PARTY, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            response.getString("users");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        hideProgressDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressDialog();
+            }
+        }) {
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("party_name", party.getPartyName());
+                headers.put("date", party.getDate());
+                headers.put("time", party.getTime());
+                headers.put("privacy", Integer.toString(party.getPrivacy()));
+                headers.put("max_people", Integer.toString(party.getMaxPeople()));
+                headers.put("alerts", Integer.toString(party.getAlerts()));
+                headers.put("host", party.getHost());
+                headers.put("location", party.getLocation());
+
+                return headers;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(jsonObjReq,
+                tag_json_obj);
     }
 }
