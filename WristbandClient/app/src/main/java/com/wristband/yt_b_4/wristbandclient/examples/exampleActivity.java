@@ -11,7 +11,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import android.os.Bundle;
@@ -50,6 +49,9 @@ public class exampleActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("key", "123");
         editor.commit();
+
+//        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+//        String myString = settings.getString("username", "default");
     //read login key
         String  highScore = sharedPref.getString("key", "default");
         msgStatus.setText(highScore);

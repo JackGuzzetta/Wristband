@@ -142,8 +142,17 @@ public class LoginProfile extends AppCompatActivity {
                             String username = response.getString("username");
                             toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
                             toast.show();
+                            //stores user and token into encrypted storage accessible across activities
+                            SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = settings.edit();
                             editor.putString("token", responseToken);
+                            editor.putString("username", username);
                             editor.commit();
+
+                            //to get the stored token and username
+                            //SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                            //String myString = settings.getString("username", "default");
+
                             Intent intent = new Intent (LoginProfile.this, HomeScreen.class);
                             startActivity(intent);
                         } catch (JSONException e) {
