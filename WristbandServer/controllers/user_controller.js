@@ -63,7 +63,7 @@ module.exports = function(app) {
                                 console.log(token);
                                 res.json({
                                     token: token,
-                                    username: username
+                                    user: username
                                 })
                             }
                         }
