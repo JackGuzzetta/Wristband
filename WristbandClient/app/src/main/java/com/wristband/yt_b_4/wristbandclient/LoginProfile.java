@@ -142,7 +142,7 @@ public class LoginProfile extends AppCompatActivity {
                         Toast toast;
                         try {
                             String responseToken = response.getString("token");
-                            String username = response.getString("username");
+                            String username = response.getString("user");
                             toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
                             toast.show();
                             //stores user and token into encrypted storage accessible across activities
@@ -159,7 +159,7 @@ public class LoginProfile extends AppCompatActivity {
                             Intent intent = new Intent(LoginProfile.this, HomeScreen.class);
                             startActivity(intent);
                         } catch (JSONException e) {
-                            toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
+                            toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials" + e, Toast.LENGTH_LONG);
                             toast.show();
                         }
                         hideProgressDialog();
