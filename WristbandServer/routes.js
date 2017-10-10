@@ -11,6 +11,9 @@ module.exports = function(app) {
     app.get('/users/:id', function(req, res) {
     	User.findUserByID(req.params.id, res);
     });
+    app.get('/user_name/:username', function(req, res) {
+        User.findUserByUsername(req.params.username, res);
+    });
     app.post('/users', function(req, res) {
         User.createUser(req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
     });
@@ -49,9 +52,9 @@ module.exports = function(app) {
     app.get('/relation', function(req, res) {
         Relation.findAllRelations(res);
     });
-    // app.get('/users/:id', function(req, res) {
-    //     User.findUserByID(req.params.id, res);
-    // });
+    app.get('/relation/:id', function(req, res) {
+        Relation.findRelationByID(req.params.id, res);
+    });
     app.post('/relation', function(req, res) {
         Relation.createRelation(req.headers.user_id, req.headers.party_id, res)
     });

@@ -143,6 +143,7 @@ public class LoginProfile extends AppCompatActivity {
                         try {
                             String responseToken = response.getString("token");
                             String username = response.getString("user");
+                            String id = response.getString("id");
                             toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
                             toast.show();
                             //stores user and token into encrypted storage accessible across activities
@@ -150,6 +151,7 @@ public class LoginProfile extends AppCompatActivity {
                             SharedPreferences.Editor editor = settings.edit();
                             editor.putString("token", responseToken);
                             editor.putString("username", username);
+                            editor.putString("id", id);
                             editor.commit();
 
                             //to get the stored token and username

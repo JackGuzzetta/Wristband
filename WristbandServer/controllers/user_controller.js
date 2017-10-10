@@ -31,6 +31,7 @@ module.exports = function(app) {
         var expires = moment().add(7, 'days').valueOf();
         var token;
         var user = new User();
+        var id;
         user.find('all', {
             where: 'username=' + '\'' + username + '\''
         }, function(err, rows, fields) {
@@ -45,6 +46,7 @@ module.exports = function(app) {
                         error: "username"
                     })
                 } else {
+                    id = rows[0].id;
                     user.find('all', {
                         where: 'password=' + '\'' + password + '\''
                     }, function(err, rows, fields) {
@@ -63,6 +65,7 @@ module.exports = function(app) {
                                 console.log(token);
                                 res.json({
                                     token: token,
+                                    id: id,
                                     user: username
                                 })
                             }
@@ -122,6 +125,29 @@ module.exports = function(app) {
         var user = new User();
         user.find('all', {
             where: 'id=' + id
+        }, function(err, rows, fields) {
+            if (err) {
+                console.log("error");
+                res.json({
+                    users: "Error"
+                })
+            } else {
+                if (rows.length == 0) {
+                    console.log("User not found.");
+                    res.json({
+                        users: "Error"
+                    })
+                } else {
+                    res.contentType('application/json');
+                    res.send(JSON.stringify(rows));
+                }
+            }
+        });
+    }
+        module.exports.findUserByUsername = function(username, res) {
+        var user = new User();
+        user.find('all', {
+            where: 'username=' + '\'' + username + '\''
         }, function(err, rows, fields) {
             if (err) {
                 console.log("error");
