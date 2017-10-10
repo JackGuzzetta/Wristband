@@ -5,7 +5,10 @@ package com.wristband.yt_b_4.wristbandclient;
  */
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -203,6 +206,10 @@ public class Create_Party extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
+                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.clear();
+                editor.commit();
                 startActivity(new Intent(this, Login.class));
                 return true;
             default:

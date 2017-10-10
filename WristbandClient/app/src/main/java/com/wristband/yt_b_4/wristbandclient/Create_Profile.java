@@ -1,7 +1,9 @@
 package com.wristband.yt_b_4.wristbandclient;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,7 +55,6 @@ public class Create_Profile extends AppCompatActivity{
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
@@ -61,6 +62,10 @@ public class Create_Profile extends AppCompatActivity{
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
+                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.clear();
+                editor.commit();
                 startActivity(new Intent(this, Login.class));
                 return true;
             default:

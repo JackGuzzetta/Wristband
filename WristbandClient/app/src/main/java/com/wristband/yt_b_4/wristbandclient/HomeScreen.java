@@ -60,6 +60,10 @@ public class HomeScreen extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
+                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.clear();
+                editor.commit();
                 startActivity(new Intent(this, Login.class));
                 return true;
             default:

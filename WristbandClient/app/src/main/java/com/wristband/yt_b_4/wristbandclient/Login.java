@@ -6,6 +6,7 @@ package com.wristband.yt_b_4.wristbandclient;
 import com.wristband.yt_b_4.wristbandclient.examples.exampleActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -110,8 +111,10 @@ public class Login extends AppCompatActivity {
         });
     }
     public boolean isLoggedIn() {
+        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+        String username = settings.getString("username", null);
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        return accessToken != null;
+        return ((accessToken != null) || (username != null));
     }
 
     private void createProfile() {
