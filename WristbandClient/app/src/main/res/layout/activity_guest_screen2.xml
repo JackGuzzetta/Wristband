@@ -42,10 +42,10 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/partyTxt"
         android:layout_marginTop="69dp"
-        android:text="Date" />
+        android:text="idk" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -55,12 +55,12 @@
         android:text="Location" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="73dp"
         android:text="Friends Invited"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/location"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -68,9 +68,9 @@
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView4"
+        android:layout_alignEnd="@+id/friends"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView4"
+        android:layout_alignRight="@+id/friends"
         android:text="Photos" />
 
     <Button
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/location"
         android:text="View Location" />
 
     <TextView
@@ -99,7 +99,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="21dp"
-        android:text="TextView" />
+        android:text="Date" />
 
     <Button
         android:id="@+id/btnBack"

@@ -26,7 +26,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 public class GuestScreen extends AppCompatActivity {
     private Button getPartyBtn, btnBack;
-    private TextView dateText, partyText, responseTxt;
+    private TextView dateText, partyText, responseTxt, locationTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
@@ -38,6 +38,7 @@ public class GuestScreen extends AppCompatActivity {
         btnBack = (Button) findViewById(R.id.btnBack);
         partyText = (TextView) findViewById(R.id.partyTxt);
         responseTxt = (TextView) findViewById(R.id.msgResponse);
+        locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -54,8 +55,8 @@ public class GuestScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                Party part = getDataFromServer(1);
-                dateText.setText(part.getDate());
+                getDataFromServer(1);
+                //partyText.setText("party: " + party.getPartyName() );
             }
         });
     }
@@ -94,14 +95,13 @@ public class GuestScreen extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
                             String name = response.getJSONObject(0).getString("party_name");
-                            String date = response.getJSONObject(0).getString("party_name");
-                            String time = response.getJSONObject(0).getString("party_name");
-                            String privacyString = response.getJSONObject(0).getString("party_name");
-                            String max_peopleString = response.getJSONObject(0).getString("party_name");
-                            String alertsString = response.getJSONObject(0).getString("party_name");
-                            String host = response.getJSONObject(0).getString("party_name");
-                            String location = response.getJSONObject(0).getString("party_name");
-
+                            String date = response.getJSONObject(0).getString("date");
+                            String time = response.getJSONObject(0).getString("time");
+                            String privacyString = response.getJSONObject(0).getString("privacy");
+                            String max_peopleString = response.getJSONObject(0).getString("max_people");
+                            String alertsString = response.getJSONObject(0).getString("alerts");
+                            String host = response.getJSONObject(0).getString("host");
+                            String location = response.getJSONObject(0).getString("location");
                             int privacy, max_people, alerts;
                             try {
                                 privacy = Integer.parseInt(privacyString);
@@ -112,7 +112,12 @@ public class GuestScreen extends AppCompatActivity {
                                 max_people = -1;
                                 alerts = -1;
                             }
-                            party = new Party(name, date, time, privacy, max_people, alerts, host, location);
+                            partyText.setText("party: " + name);
+                            dateText.setText("date: " + date);
+                            locationTxt.setText("location: " + location);
+
+
+                            // party = new Party(name, date, time, 0, 0, 0, host, location);
                             //responseTxt.setText(newString);
                         } catch (JSONException e) {
                             responseTxt.setText("Error: " + e);
