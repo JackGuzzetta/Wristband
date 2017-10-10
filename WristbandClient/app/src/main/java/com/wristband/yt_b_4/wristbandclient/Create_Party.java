@@ -110,13 +110,13 @@ public class Create_Party extends AppCompatActivity {
             }
         });
 
-//        pic.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//    }
+        //        pic.setOnClickListener(new OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //
+        //            }
+        //        });
+        //    }
 
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,44 +124,44 @@ public class Create_Party extends AppCompatActivity {
                 Intent GaleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(GaleryIntent, RESULT_LOAD_IMAGE);
-//                Intent i = new Intent(Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//                final int ACTIVITY_SELECT_IMAGE = 1234;
-//                startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
+                //                Intent i = new Intent(Intent.ACTION_PICK,
+                //                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                //                final int ACTIVITY_SELECT_IMAGE = 1234;
+                //                startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
 
 
             }
 
 
         });
-//
-//
-//    }
-//
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        switch(requestCode) {
-//            case 1:
-//                if(resultCode == RESULT_OK){
-//                    Uri selectedImage = data.getData();
-//                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//
-//                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String filePath = cursor.getString(columnIndex);
-//                    cursor.close();
-//
-//
-//                    Bitmap photo = BitmapFactory.decodeFile(filePath);
-//                    BitmapDrawable d = new BitmapDrawable(getResources(), photo);
-//                    pic.setImageBitmap(photo);
-//                }
-//        }
+        //
+        //
+        //    }
+        //
+        //    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+        //    {
+        //        super.onActivityResult(requestCode, resultCode, data);
+        //
+        //        switch(requestCode) {
+        //            case 1:
+        //                if(resultCode == RESULT_OK){
+        //                    Uri selectedImage = data.getData();
+        //                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        //
+        //
+        //                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        //                    cursor.moveToFirst();
+        //
+        //                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        //                    String filePath = cursor.getString(columnIndex);
+        //                    cursor.close();
+        //
+        //
+        //                    Bitmap photo = BitmapFactory.decodeFile(filePath);
+        //                    BitmapDrawable d = new BitmapDrawable(getResources(), photo);
+        //                    pic.setImageBitmap(photo);
+        //                }
+        //        }
 
     }
 
@@ -171,7 +171,9 @@ public class Create_Party extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri SelectedImage = data.getData();
-            String[] FilePathColumn = {MediaStore.Images.Media.DATA};
+            String[] FilePathColumn = {
+                    MediaStore.Images.Media.DATA
+            };
 
             Cursor SelectedCursor = getContentResolver().query(SelectedImage, FilePathColumn, null, null, null);
             SelectedCursor.moveToFirst();
@@ -189,8 +191,8 @@ public class Create_Party extends AppCompatActivity {
     }
 
 
-    private void goBack(View view){
-        Intent intent = new Intent (Create_Party.this, HomeScreen.class);
+    private void goBack(View view) {
+        Intent intent = new Intent(Create_Party.this, HomeScreen.class);
         startActivity(intent);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -217,4 +219,3 @@ public class Create_Party extends AppCompatActivity {
         }
     }
 }
-

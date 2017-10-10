@@ -31,7 +31,7 @@ import com.wristband.yt_b_4.wristbandclient.R;
  * Created by paulaguzzetta on 10/3/17.
  */
 
-public class CoHost extends AppCompatActivity  {
+public class CoHost extends AppCompatActivity {
     int max;
     private Button next;
     @Override
@@ -75,7 +75,7 @@ public class CoHost extends AppCompatActivity  {
 
 
         //search by number
-        if(name.isEmpty() && !number.isEmpty()){
+        if (name.isEmpty() && !number.isEmpty()) {
             //find user from users table and add that user to the party_list table
             //if no user is found from number, search by name
             //check name to see if it is on blacklist, if it is, show toast that person is blacklisted
@@ -86,19 +86,17 @@ public class CoHost extends AppCompatActivity  {
             //Toast fail = Toast.makeText(getApplicationContext(), "Failed to find person with that user number", Toast.LENGTH_LONG);
             //fail.show();
 
-        }
-        else if(!name.isEmpty()){
-            Toast pass = Toast.makeText(getApplicationContext(), "Added " + name , Toast.LENGTH_LONG);
+        } else if (!name.isEmpty()) {
+            Toast pass = Toast.makeText(getApplicationContext(), "Added " + name, Toast.LENGTH_LONG);
             pass.show();
-        }
-        else{
+        } else {
             Toast blank = Toast.makeText(getApplicationContext(), "Enter the username or number of person to add", Toast.LENGTH_LONG);
             blank.show();
         }
     }
 
-    private void Add_Users(){
-        Intent intent = new Intent (CoHost.this, Add_User.class);
+    private void Add_Users() {
+        Intent intent = new Intent(CoHost.this, Add_User.class);
         startActivity(intent);
     }
 

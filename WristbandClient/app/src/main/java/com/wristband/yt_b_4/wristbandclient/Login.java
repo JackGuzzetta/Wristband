@@ -118,13 +118,13 @@ public class Login extends AppCompatActivity {
     }
 
     private void createProfile() {
-        Intent intent = new Intent (Login.this, Create_Profile.class);
+        Intent intent = new Intent(Login.this, Create_Profile.class);
         startActivity(intent);
 
     }
 
     private void loginProfile() {
-        Intent intent = new Intent (Login.this, LoginProfile.class);
+        Intent intent = new Intent(Login.this, LoginProfile.class);
         startActivity(intent);
     }
 
@@ -138,7 +138,7 @@ public class Login extends AppCompatActivity {
     private void PrintFBHashKey() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.wristband.yt_b_4.wristbandclient", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
+            for (Signature signature: info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
                 //msgResponse.setText("KeyHash:" + Base64.encodeToString(md.digest(), Base64.DEFAULT));

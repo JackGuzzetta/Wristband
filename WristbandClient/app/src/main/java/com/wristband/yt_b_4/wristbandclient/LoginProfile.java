@@ -77,7 +77,7 @@ public class LoginProfile extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void initializeControls(){
+    private void initializeControls() {
         user_name = (EditText) findViewById(R.id.username);
         user_password = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -112,23 +112,22 @@ public class LoginProfile extends AppCompatActivity {
             pDialog.hide();
     }
 
-    private void goBack(View view){
-        Intent intent = new Intent (LoginProfile.this, Login.class);
+    private void goBack(View view) {
+        Intent intent = new Intent(LoginProfile.this, Login.class);
         startActivity(intent);
     }
 
-    private void createLogin(View view){
+    private void createLogin(View view) {
         Toast fail;
         //text in username box
         String username = user_name.getText().toString();
         //text in password box
         String password = user_password.getText().toString();
 
-        if(username.isEmpty() || password.isEmpty()){
+        if (username.isEmpty() || password.isEmpty()) {
             fail = Toast.makeText(getApplicationContext(), "Required information missing", Toast.LENGTH_LONG);
             fail.show();
-        }
-        else{
+        } else {
             sendDataToServer(username, password);
         }
 
@@ -137,7 +136,7 @@ public class LoginProfile extends AppCompatActivity {
         showProgressDialog();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_USERS + "/login", null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener < JSONObject > () {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast toast;
@@ -157,7 +156,7 @@ public class LoginProfile extends AppCompatActivity {
                             //SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
                             //String myString = settings.getString("username", "default");
 
-                            Intent intent = new Intent (LoginProfile.this, HomeScreen.class);
+                            Intent intent = new Intent(LoginProfile.this, HomeScreen.class);
                             startActivity(intent);
                         } catch (JSONException e) {
                             toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
@@ -177,8 +176,8 @@ public class LoginProfile extends AppCompatActivity {
              * Passing some request headers
              * */
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+            public Map < String, String > getHeaders() throws AuthFailureError {
+                HashMap < String, String > headers = new HashMap < String, String > ();
                 headers.put("Content-Type", "application/json");
                 headers.put("username", username);
                 headers.put("password", password);

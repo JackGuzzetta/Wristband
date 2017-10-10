@@ -63,7 +63,7 @@ public class Add_User extends AppCompatActivity {
         //make sure party is not at capacity by checking max people value from party table
 
         //search by number
-        if(name.isEmpty() && !number.isEmpty()){
+        if (name.isEmpty() && !number.isEmpty()) {
             //find user from users table and add that user to the party_list table
             //if no user is found from number, search by name
             //check name to see if it is on blacklist, if it is, show toast that person is blacklisted
@@ -74,13 +74,11 @@ public class Add_User extends AppCompatActivity {
             //Toast fail = Toast.makeText(getApplicationContext(), "Failed to find person with that user number", Toast.LENGTH_LONG);
             //fail.show();
 
-        }
-        else if(!name.isEmpty()){
+        } else if (!name.isEmpty()) {
             //search for person by name, if not found, add person to both users and party_list tables
             Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to party", Toast.LENGTH_LONG);
             pass.show();
-        }
-        else{
+        } else {
             Toast blank = Toast.makeText(getApplicationContext(), "Enter the name or user number of person to add", Toast.LENGTH_LONG);
             blank.show();
         }
@@ -98,28 +96,27 @@ public class Add_User extends AppCompatActivity {
         the person to the table.  Need checking for multiple entries.
          */
         //search by number
-        if(!number.isEmpty()){
+        if (!number.isEmpty()) {
             //find user from users table and add that user to the blacklist table
             Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to blacklist", Toast.LENGTH_LONG);
             pass.show();
             //if no user is found from number, give a toast that user number is not found
             //Toast fail = Toast.makeText(getApplicationContext(), "Failed to find person with that user number", Toast.LENGTH_LONG);
             //fail.show();
-        }
-        else if(!name.isEmpty()){
+        } else if (!name.isEmpty()) {
             //search for person by name, if not found, add person to both users and blacklist tables
             Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to blacklist", Toast.LENGTH_LONG);
             pass.show();
         }
         //both name and number are empty, send toast to enter a name or number
-        else{
+        else {
             Toast blank = Toast.makeText(getApplicationContext(), "Enter the name or user number of person to blacklist", Toast.LENGTH_LONG);
             blank.show();
         }
     }
 
-    private void back_Homescreen(){
-        Intent intent = new Intent (Add_User.this, HomeScreen.class);
+    private void back_Homescreen() {
+        Intent intent = new Intent(Add_User.this, HomeScreen.class);
         startActivity(intent);
     }
 }

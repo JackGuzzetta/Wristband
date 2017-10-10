@@ -36,7 +36,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Create_Profile extends AppCompatActivity{
+public class Create_Profile extends AppCompatActivity {
     private String TAG = Create_Profile.class.getSimpleName();
     private User user;
     private EditText first_name, last_name, user_name, user_password, user_email, user_reenter;
@@ -72,7 +72,7 @@ public class Create_Profile extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void initializeControls(){
+    private void initializeControls() {
         first_name = (EditText) findViewById(R.id.fname);
         last_name = (EditText) findViewById(R.id.lname);
         user_email = (EditText) findViewById(R.id.email);
@@ -111,12 +111,12 @@ public class Create_Profile extends AppCompatActivity{
             pDialog.hide();
     }
 
-    private void goBack(View view){
-        Intent intent = new Intent (Create_Profile.this, Login.class);
+    private void goBack(View view) {
+        Intent intent = new Intent(Create_Profile.this, Login.class);
         startActivity(intent);
     }
 
-    private void createProfile(View view){
+    private void createProfile(View view) {
 
         //text in first name box
         String f_name = first_name.getText().toString();
@@ -130,7 +130,7 @@ public class Create_Profile extends AppCompatActivity{
         String password = user_password.getText().toString();
         //text in reenter box
         String reenter = user_reenter.getText().toString();
-        user = new User (first_name.getText().toString(), last_name.getText().toString(), user_name.getText().toString(), user_password.getText().toString(), user_email.getText().toString(), user_reenter.getText().toString());
+        user = new User(first_name.getText().toString(), last_name.getText().toString(), user_name.getText().toString(), user_password.getText().toString(), user_email.getText().toString(), user_reenter.getText().toString());
 
         /*check to see that the user has entered text in all boxes,
         give toast error message if text is missing
@@ -138,17 +138,15 @@ public class Create_Profile extends AppCompatActivity{
         the home screen (perhaps add toast "profile created" on home screen
          */
         //check for missing answers
-        if(f_name.isEmpty() || l_name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || reenter.isEmpty()){
+        if (f_name.isEmpty() || l_name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || reenter.isEmpty()) {
             Toast fail = Toast.makeText(getApplicationContext(), "Required information missing", Toast.LENGTH_LONG);
             fail.show();
-        }
-        else if(password.equals(reenter) == false){
+        } else if (password.equals(reenter) == false) {
             Toast fail = Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG);
             fail.show();
-        }
-        else{
+        } else {
             sendDataToServer(user);
-            Intent intent = new Intent (Create_Profile.this, HomeScreen.class);
+            Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
             startActivity(intent);
             Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
             pass.show();
@@ -160,7 +158,7 @@ public class Create_Profile extends AppCompatActivity{
         showProgressDialog();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_USERS, null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener < JSONObject > () {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -181,8 +179,8 @@ public class Create_Profile extends AppCompatActivity{
              * Passing some request headers
              * */
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+            public Map < String, String > getHeaders() throws AuthFailureError {
+                HashMap < String, String > headers = new HashMap < String, String > ();
                 headers.put("Content-Type", "application/json");
                 headers.put("f_name", user.getFirstName());
                 headers.put("l_name", user.getLastName());

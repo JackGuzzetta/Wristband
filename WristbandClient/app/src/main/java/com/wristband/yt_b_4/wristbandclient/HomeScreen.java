@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,7 +22,6 @@ import com.facebook.login.LoginManager;
 import java.util.ArrayList;
 import java.util.List;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
-import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +72,7 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    private void initializeControls()  {
+    private void initializeControls() {
         listView = (ListView) findViewById(R.id.list_view);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         String myString = settings.getString("username", "default");
@@ -106,18 +104,18 @@ public class HomeScreen extends AppCompatActivity {
 
         getDataFromServer();
     }
-    public void guestScreen(String party_name){
+    public void guestScreen(String party_name) {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
         startActivity(intent);
     }
 
-    public void newParty(){
+    public void newParty() {
         Intent intent = new Intent(this, Create_Party.class);
         startActivity(intent);
     }
 
-    public void logout(View view){
+    public void logout(View view) {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
@@ -134,36 +132,28 @@ public class HomeScreen extends AppCompatActivity {
             pDialog.hide();
     }
 
-
-
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY,
-                        new Response.Listener<JSONArray>() {
+                        new Response.Listener < JSONArray > () {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    for (int i=0; i < response.length(); i++) {
+                                    for (int i = 0; i < response.length(); i++) {
                                         String name = response.getJSONObject(i).getString("party_name");
                                         list.add(name);
                                         adapter.notifyDataSetChanged();
                                     }
-                                } catch (JSONException e) {
-                                }
+                                } catch (JSONException e) {}
                             }
                         }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
+                    public void onErrorResponse(VolleyError error) {}
                 });
-                // Adding request to request queue
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);
-                // Cancelling request
-                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
-
             }
         }).start();
     }
