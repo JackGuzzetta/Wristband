@@ -2,6 +2,7 @@ package com.wristband.yt_b_4.wristbandclient;
 
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
+import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +29,7 @@ public class GuestScreen extends AppCompatActivity {
     private TextView dateText, partyText, responseTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private Party party;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +54,8 @@ public class GuestScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                int id;
-                try {
-                    id = 1;
-                    getDataFromServer(id);
-                } catch (NumberFormatException e) {
-                    responseTxt.setText("Invalid ID, not a string");
-                }
+                Party part = getDataFromServer(1);
+                dateText.setText(part.getDate());
             }
         });
     }
@@ -89,19 +86,34 @@ public class GuestScreen extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.hide();
     }
-    private void getDataFromServer(final int id) {
+    private Party getDataFromServer(final int id) {
         showProgressDialog();
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + "/" + id,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            String newString = "Party extracted from Json\n";
-                            newString += response.getJSONObject(0).getString("party_name");
-                            newString += "\n";
-                            newString += response.getJSONObject(0).getString("date");
+                            String name = response.getJSONObject(0).getString("party_name");
+                            String date = response.getJSONObject(0).getString("party_name");
+                            String time = response.getJSONObject(0).getString("party_name");
+                            String privacyString = response.getJSONObject(0).getString("party_name");
+                            String max_peopleString = response.getJSONObject(0).getString("party_name");
+                            String alertsString = response.getJSONObject(0).getString("party_name");
+                            String host = response.getJSONObject(0).getString("party_name");
+                            String location = response.getJSONObject(0).getString("party_name");
 
-                            responseTxt.setText(newString);
+                            int privacy, max_people, alerts;
+                            try {
+                                privacy = Integer.parseInt(privacyString);
+                                max_people = Integer.parseInt(max_peopleString);
+                                alerts = Integer.parseInt(alertsString);
+                            } catch (NumberFormatException e) {
+                                privacy = -1;
+                                max_people = -1;
+                                alerts = -1;
+                            }
+                            party = new Party(name, date, time, privacy, max_people, alerts, host, location);
+                            //responseTxt.setText(newString);
                         } catch (JSONException e) {
                             responseTxt.setText("Error: " + e);
                         }
@@ -120,6 +132,7 @@ public class GuestScreen extends AppCompatActivity {
                 tag_json_arry);
         // Cancelling request
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
+        return party;
     }
 
     private void goBack(View view){
