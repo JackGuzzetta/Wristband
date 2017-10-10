@@ -29,7 +29,6 @@ import org.json.JSONException;
 
 public class HomeScreen extends AppCompatActivity {
 
-    Button GuestButton;
     Button NewPartyButton;
     ListView listView;
     List list = new ArrayList();
@@ -40,7 +39,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen2);
-        GuestButton = (Button) findViewById(R.id.button2);
         NewPartyButton = (Button) findViewById(R.id.button3);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -89,12 +87,6 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-        GuestButton = (Button) findViewById(R.id.button2);
-        GuestButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //guestScreen();
-            }
-        });
         NewPartyButton = (Button) findViewById(R.id.button3);
         NewPartyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
