@@ -272,7 +272,7 @@ public class Create_Party extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(500L); //wait for party to be created first
+                    Thread.sleep(1000L); //wait for party to be created first
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
