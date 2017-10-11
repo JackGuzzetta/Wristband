@@ -33,14 +33,23 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity {
     int max;
-    private Button next, save;
+    private Button next, save,btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
         next = (Button) findViewById(R.id.next);
         save = (Button) findViewById(R.id.save);
+        btnBack = (Button) findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack(view);
+            }
+
+        });
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -98,6 +107,12 @@ public class CoHost extends AppCompatActivity {
 
     private void Add_Users() {
         Intent intent = new Intent(CoHost.this, Add_User.class);
+        startActivity(intent);
+    }
+
+    private void goBack(View view) {
+        Intent intent = new Intent(CoHost.this, Create_Party.class);
+        finish();
         startActivity(intent);
     }
 

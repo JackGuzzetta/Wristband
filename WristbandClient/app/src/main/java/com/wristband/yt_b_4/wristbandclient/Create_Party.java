@@ -94,7 +94,6 @@ public class Create_Party extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //create a new user with values from the EditTexts
                 goBack(view);
             }
 

@@ -24,7 +24,7 @@ tools:context="com.wristband.yt_b_4.wristbandclient.CoHost"
     app:layout_constraintLeft_toLeftOf="parent"
     android:src="@android:drawable/ic_menu_search"
     android:layout_marginBottom="360dp"
-    android:layout_marginStart="109dp"
+    android:layout_marginStart="100dp"
     app:layout_constraintVertical_bias="0.183" />
 <View
     android:layout_width="368dp"
@@ -153,6 +153,19 @@ tools:context="com.wristband.yt_b_4.wristbandclient.CoHost"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="109dp"
         android:onClick="Add_Users"
+        />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="258dp"
+        android:text="Back"
+        android:clickable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="460dp"
+        android:layout_marginStart="260dp"
         />
 
 
