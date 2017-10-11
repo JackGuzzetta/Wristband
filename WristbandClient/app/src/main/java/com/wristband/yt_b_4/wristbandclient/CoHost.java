@@ -33,11 +33,14 @@ import com.wristband.yt_b_4.wristbandclient.R;
 public class CoHost extends AppCompatActivity {
     int max;
     private Button done, save,btnBack;
+    String name, date, time, loc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
         done = (Button) findViewById(R.id.done);
+        save = (Button) findViewById(R.id.save);
+        btnBack = (Button) findViewById(R.id.btnBack);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,8 +49,6 @@ public class CoHost extends AppCompatActivity {
 
             }
         });
-        save = (Button) findViewById(R.id.save);
-        btnBack = (Button) findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +56,11 @@ public class CoHost extends AppCompatActivity {
             }
 
         });
+        Intent intent = getIntent();
+        name = intent.getStringExtra("eventname");
+        date = intent.getStringExtra("Date");
+        time = intent.getStringExtra("Time");
+        loc = intent.getStringExtra("loc");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,7 +125,10 @@ public class CoHost extends AppCompatActivity {
 
     private void goBack(View view) {
         Intent intent = new Intent(CoHost.this, Create_Party.class);
-        finish();
+        intent.putExtra("eventname",name);
+        intent.putExtra("Date",date);
+        intent.putExtra("Time",time);
+        intent.putExtra("loc",loc);
         startActivity(intent);
     }
 
