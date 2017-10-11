@@ -112,7 +112,6 @@ public class CoHost extends AppCompatActivity {
 
     private void goBack(View view) {
         Intent intent = new Intent(CoHost.this, Create_Party.class);
-        finish();
         startActivity(intent);
     }
 
