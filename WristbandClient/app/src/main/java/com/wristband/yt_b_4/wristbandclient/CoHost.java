@@ -33,12 +33,19 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity {
     int max;
-    private Button next, save,btnBack;
+    private Button done, save,btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
-        next = (Button) findViewById(R.id.next);
+        done = (Button) findViewById(R.id.done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CoHost.this, HomeScreen.class);
+                startActivity(intent);
+            }
+        });
         save = (Button) findViewById(R.id.save);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {

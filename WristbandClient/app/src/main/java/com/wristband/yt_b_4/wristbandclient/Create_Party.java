@@ -143,7 +143,8 @@ public class Create_Party extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_add_cohost);
+                Intent intent = new Intent(Create_Party.this, CoHost.class);
+                startActivity(intent);
             }
         });
 
