@@ -101,16 +101,19 @@ public class HomeScreen extends AppCompatActivity {
     public void guestScreen(String party_name) {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
+        finish();
         startActivity(intent);
     }
 
     public void newParty() {
         Intent intent = new Intent(this, Create_Party.class);
+        finish();
         startActivity(intent);
     }
 
     public void logout(View view) {
         Intent intent = new Intent(this, Login.class);
+        finish();
         startActivity(intent);
     }
     @Override

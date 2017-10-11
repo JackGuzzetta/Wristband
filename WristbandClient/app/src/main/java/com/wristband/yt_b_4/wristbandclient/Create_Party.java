@@ -231,6 +231,7 @@ public class Create_Party extends AppCompatActivity {
 
     private void goBack(View view) {
         Intent intent = new Intent(Create_Party.this, HomeScreen.class);
+        finish();
         startActivity(intent);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -282,8 +283,6 @@ public class Create_Party extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 try {
                                     party_id = response.getJSONObject(0).getString("id");
-                                    Toast blank = Toast.makeText(getApplicationContext(), "party id: " + party_id, Toast.LENGTH_LONG);
-                                    blank.show();
                                 } catch (JSONException e) {}
                             }
                         }, new Response.ErrorListener() {
