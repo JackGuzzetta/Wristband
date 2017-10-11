@@ -15,13 +15,13 @@ module.exports.createParty = function(party_name, date, time, privacy, max_peopl
 		if (err) {
 			console.log("Unable to create party");
 			res.json({
-			    users: "Error"
+			    parties: "Error"
 			})
 		}
 		else {
 			console.log("Created new party: ", party_name);
 			res.json({
-				    users: "Success"
+				party_name: party_name
 			})
 		}
 	});
@@ -32,14 +32,14 @@ module.exports.findAllParties = function(res) {
 		if (err) {
 			console.log("error");
 			res.json({
-			    users: "Error"
+			    parties: "Error"
 			})
 		}
 		else {
 			if (rows.length == 0) {
 				console.log("No parties not found.");
 				res.json({
-				    users: "Error"
+				    parties: "Error"
 				})
 			}
 			else {
@@ -56,14 +56,14 @@ module.exports.findPartyByID = function(id, res) {
 		if (err) {
 			console.log("error");
 			res.json({
-			    users: "Error"
+			    parties: "Error"
 			})
 		}
 		else {
 			if (rows.length == 0) {
 				console.log("Party not found.");
 				res.json({
-				    users: "Error"
+				    parties: "Error"
 				})
 			}
 			else {
@@ -80,14 +80,14 @@ module.exports.findPartyByName = function(name, res) {
 		if (err) {
 			console.log("error");
 			res.json({
-			    party: "Error"
+			    parties: "Error"
 			})
 		}
 		else {
 			if (rows.length == 0) {
 				console.log("Party not found.");
 				res.json({
-				    party: "Error"
+				    parties: "Error"
 				})
 			}
 			else {
@@ -105,13 +105,13 @@ module.exports.deleteParty = function(id, res) {
 		if (err) {
 			console.log("Tried to delete a null party: ", id);
 			res.json({
-			    users: "Error"
+			    parties: "Error"
 			})
 		}
 		else {
 			console.log('Deleted party: ', id);
 			res.json({
-				    users: "Success"
+				    parties: "Success"
 			})
 		}
 	});
@@ -131,13 +131,13 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, alert
 		if (err) {
 			console.log("Unable to update party");
 			res.json({
-			    users: "Error"
+			    parties: "Error"
 			})
 		}
 		else {
 			console.log('Updated party: ', id);
 			res.json({
-				    users: "Success"
+				    parties: "Success"
 			})
 		}
 	});
