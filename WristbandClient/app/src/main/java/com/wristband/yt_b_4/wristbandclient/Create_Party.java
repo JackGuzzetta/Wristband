@@ -7,6 +7,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
@@ -35,6 +36,7 @@ import android.provider.MediaStore;
 import android.widget.Switch;
 import android.widget.CompoundButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +55,8 @@ public class Create_Party extends AppCompatActivity {
     String date;
     String time;
     Switch swit;
+    String user_id;
+    String party_id;
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -75,6 +79,8 @@ public class Create_Party extends AppCompatActivity {
         pDialog.setCancelable(false);
 
 
+        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+        user_id = settings.getString("id", "default");
 
         swit = (Switch) findViewById(R.id.swittch);
 
@@ -117,6 +123,7 @@ public class Create_Party extends AppCompatActivity {
                     if (s) {
                         p.makePartyPublic();
                         sendDataToServer(p);
+                        getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.INVISIBLE);
@@ -124,6 +131,7 @@ public class Create_Party extends AppCompatActivity {
                     } else {
                         p.MakePartyPrivate();
                         sendDataToServer(p);
+                        getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Private Party Created", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.INVISIBLE);
@@ -257,46 +265,122 @@ public class Create_Party extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.hide();
     }
-    private void sendDataToServer(final Party party) {
-        showProgressDialog();
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Const.URL_PARTY, null,
-                new Response.Listener<JSONObject>() {
+    //We need to get the party id from party name
+    //we need the user id
+    private void getDataFromServer(final String party_name) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(500L); //wait for party to be created first
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //showProgressDialog();
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + party_name,
+                        new Response.Listener <JSONArray> () {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    party_id = response.getJSONObject(0).getString("id");
+                                    Toast blank = Toast.makeText(getApplicationContext(), "party id: " + party_id, Toast.LENGTH_LONG);
+                                    blank.show();
+                                } catch (JSONException e) {}
+                            }
+                        }, new Response.ErrorListener() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            response.getString("users");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        hideProgressDialog();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideProgressDialog();
+                    public void onErrorResponse(VolleyError error) {}
+                });
+                AppController.getInstance().addToRequestQueue(req,
+                        tag_json_arry);
             }
-        }) {
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                headers.put("party_name", party.getPartyName());
-                headers.put("date", party.getDate());
-                headers.put("time", party.getTime());
-                headers.put("privacy", Integer.toString(party.getPrivacy()));
-                headers.put("max_people", Integer.toString(party.getMaxPeople()));
-                headers.put("alerts", Integer.toString(party.getAlerts()));
-                headers.put("host", party.getHost());
-                headers.put("location", party.getLocation());
+        }).start();
+    }
 
-                return headers;
+    private void sendDataToServer(final Party party) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_PARTY, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    response.getString("users");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("party_name", party.getPartyName());
+                        headers.put("date", party.getDate());
+                        headers.put("time", party.getTime());
+                        headers.put("privacy", Integer.toString(party.getPrivacy()));
+                        headers.put("max_people", Integer.toString(party.getMaxPeople()));
+                        headers.put("alerts", Integer.toString(party.getAlerts()));
+                        headers.put("host", party.getHost());
+                        headers.put("location", party.getLocation());
+                        return headers;
+                    }
+                };
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                //showProgressDialog();
+                try {
+                    Thread.sleep(3000L); //wait for party to be created first
+                    sendRelationToServer(user_id, party_id);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        };
-        AppController.getInstance().addToRequestQueue(jsonObjReq,
-                tag_json_obj);
+        }).start();
+    }
+    private void sendRelationToServer(final String user, final String party) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_RELATION_BY_ID, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    response.getString("users");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("user_id", user);
+                        headers.put("party_id", party);
+                        return headers;
+                    }
+                };
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                //showProgressDialog();
+            }
+
+        }).start();
     }
 }

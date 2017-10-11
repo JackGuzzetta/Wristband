@@ -197,13 +197,7 @@ public class Create_Profile extends AppCompatActivity {
         // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
     }
 
-    /*public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnCreate:
-                createProfile();
-                break;
-        }
-    }*/
+
     @Override
     public void onBackPressed() {
         // Do Here what ever you want do on back press;
