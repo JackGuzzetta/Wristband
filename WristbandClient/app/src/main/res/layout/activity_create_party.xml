@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintVertical_bias="0.016"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="120dp"
         android:layout_marginTop="140dp" />
 
     <TextView
@@ -49,8 +49,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintVertical_bias="0.016"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="190dp" />
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="175dp" />
 
     <EditText
         android:layout_width="188dp"
@@ -58,7 +58,7 @@
         android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="185dp"
+        android:layout_marginTop="170dp"
         android:id="@+id/eventName"
         />
 
@@ -74,16 +74,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintVertical_bias="0.197"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="180dp" />
 
     <EditText
         android:layout_width="188dp"
-        android:layout_height="37dp"
+        android:layout_height="43dp"
         android:layout_marginRight="28dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="239dp"
+        android:layout_marginTop="230dp"
         android:id="@+id/day" />
     <TextView
         android:layout_width="wrap_content"
@@ -97,16 +97,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintVertical_bias="0.197"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="240dp" />
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="245dp" />
 
     <EditText
         android:layout_width="188dp"
-        android:layout_height="37dp"
+        android:layout_height="43dp"
         android:layout_marginRight="28dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="289dp"
+        android:layout_marginTop="285dp"
         android:id="@+id/tyme"
 
         />
@@ -122,12 +122,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintVertical_bias="0.2"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="300dp" />
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="310dp" />
 
     <EditText
         android:layout_width="188dp"
-        android:layout_height="37dp"
+        android:layout_height="43dp"
         android:layout_marginRight="28dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -148,7 +148,7 @@
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintVertical_bias="0.034"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="375dp" />
+        android:layout_marginTop="385dp" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -177,13 +177,13 @@
         android:id="@+id/next"
         android:layout_width="167dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="201dp"
+        android:layout_marginLeft="190dp"
         android:text="Next"
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="5dp"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="190dp"
         />
 
     <Button
@@ -195,8 +195,8 @@
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="445dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginBottom="460dp"
+        android:layout_marginStart="270dp"
         />
 
 </android.support.constraint.ConstraintLayout>

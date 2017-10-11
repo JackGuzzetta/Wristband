@@ -33,12 +33,13 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity {
     int max;
-    private Button next;
+    private Button next, save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
         next = (Button) findViewById(R.id.next);
+        save = (Button) findViewById(R.id.save);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
