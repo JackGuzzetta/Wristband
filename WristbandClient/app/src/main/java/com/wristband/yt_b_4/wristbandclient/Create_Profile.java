@@ -166,12 +166,16 @@ public class Create_Profile extends AppCompatActivity {
                                         Toast fail = Toast.makeText(getApplicationContext(), "Username already exists", Toast.LENGTH_LONG);
                                         fail.show();
                                     }
+                                    else {
+                                    }
                                 } catch (JSONException e) {
                                 }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        sendDataToServer(user);
+
                     }
                 });
                 AppController.getInstance().addToRequestQueue(req,
@@ -183,28 +187,20 @@ public class Create_Profile extends AppCompatActivity {
     private void sendDataToServer(final User user) {
         new Thread(new Runnable() {
             public void run() {
-                showProgressDialog();
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_USERS, null,
                         new Response.Listener < JSONObject > () {
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    msgStatus.setText("Account : " + response.getString("users") + " created.");
-                                    //Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
-                                    //startActivity(intent);
-                                    //Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
-                                    //pass.show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                hideProgressDialog();
+                                Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getUsername(), Toast.LENGTH_LONG);
+                                pass.show();
+                                Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
+                                startActivity(intent);
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         msgStatus.setText("Error creating account: " + error);
-                        hideProgressDialog();
                     }
                 }) {
                     /**
