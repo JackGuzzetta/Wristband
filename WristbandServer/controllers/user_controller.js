@@ -47,30 +47,20 @@ module.exports = function(app) {
                     })
                 } else {
                     id = rows[0].id;
-                    user.find('all', {
-                        where: 'password=' + '\'' + password + '\''
-                    }, function(err, rows, fields) {
-                        if (err) {
-                            console.log("error", err);
-                            res.json({
-                                error: "db"
-                            })
-                        } else {
-                            if (rows.length == 0) {
-                                res.json({
-                                    error: "password"
-                                })
-                            } else {
-                                token = createToken(username, expires);
-                                console.log(token);
-                                res.json({
-                                    token: token,
-                                    id: id,
-                                    user: username
-                                })
-                            }
-                        }
-                    });
+                    if (rows[0].password == password) {
+                        token = createToken(username, expires);
+                        console.log(token);
+                        res.json({
+                            token: token,
+                            id: id,
+                            user: username
+                        })
+                    }
+                    else {
+                        res.json({
+                            error: "password"
+                        })
+                    }
                 }
             }
         });
