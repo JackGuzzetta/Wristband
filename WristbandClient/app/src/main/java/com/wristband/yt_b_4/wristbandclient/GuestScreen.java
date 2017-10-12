@@ -29,7 +29,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 public class GuestScreen extends AppCompatActivity {
-    private Button btnCohost, btnBack, btnGuest;
+    private Button btnCohost, btnBack, btnGuest, btnBlacklist;
     private TextView dateText, partyText, responseTxt, locationTxt, timeTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -42,6 +42,7 @@ public class GuestScreen extends AppCompatActivity {
         btnCohost = (Button) findViewById(R.id.btnCohost);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnGuest = (Button) findViewById(R.id.btnGuest);
+        btnBlacklist = (Button) findViewById(R.id.btnBlacklist);
         partyText = (TextView) findViewById(R.id.partyTxt);
         responseTxt = (TextView) findViewById(R.id.msgResponse);
         timeTxt = (TextView) findViewById(R.id.time);
