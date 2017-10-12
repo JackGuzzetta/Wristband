@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -30,6 +31,7 @@ import com.facebook.login.widget.LoginButton;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import android.graphics.Color;
 
 
 public class Login extends AppCompatActivity {
@@ -37,6 +39,7 @@ public class Login extends AppCompatActivity {
     LoginButton FacebookLoginButton;
     Button LoginButton;
     Button RegisterButton;
+
 
     CallbackManager callbackManager;
     Context context;
@@ -48,6 +51,7 @@ public class Login extends AppCompatActivity {
         context = this;
         FacebookSdk.sdkInitialize(getApplicationContext());
         initializeControls();
+        findViewById(R.id.screen).setBackgroundColor(Color.rgb(0, 0, 100));
 
         if (isLoggedIn()) {
             Intent intent = new Intent(Login.this, HomeScreen.class);

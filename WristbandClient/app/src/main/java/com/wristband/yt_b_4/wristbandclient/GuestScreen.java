@@ -65,14 +65,12 @@ public class GuestScreen extends AppCompatActivity {
                 //create a new user with values from the EditTexts
             }
         });
-
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
@@ -117,26 +115,21 @@ public class GuestScreen extends AppCompatActivity {
                                     responseTxt.setText("Data retrieved from server");
                                     timeTxt.setText("Time: " + time);
                                 } catch (JSONException e) {
-                                    //responseTxt.setText("Error: " + e);
                                 }
 
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //responseTxt.setText("error: " + error.getMessage());
                     }
                 });
-                // Adding request to request queue
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);
-                // Cancelling request
                 // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
 
             }
         }).start();
     }
-
     private void goBack(View view) {
         Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
         startActivity(intent);

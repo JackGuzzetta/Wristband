@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,14 +32,23 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity {
     int max;
-    private Button next, save,btnBack;
+    private Button done, save,btnBack;
+    String name, date, time, loc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
-        next = (Button) findViewById(R.id.next);
+        done = (Button) findViewById(R.id.done);
         save = (Button) findViewById(R.id.save);
         btnBack = (Button) findViewById(R.id.btnBack);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CoHost.this, HomeScreen.class);
+                startActivity(intent);
+
+            }
+        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,6 +56,11 @@ public class CoHost extends AppCompatActivity {
             }
 
         });
+        Intent intent = getIntent();
+        name = intent.getStringExtra("eventname");
+        date = intent.getStringExtra("Date");
+        time = intent.getStringExtra("Time");
+        loc = intent.getStringExtra("loc");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,7 +125,10 @@ public class CoHost extends AppCompatActivity {
 
     private void goBack(View view) {
         Intent intent = new Intent(CoHost.this, Create_Party.class);
+        intent.putExtra("eventname",name);
+        intent.putExtra("Date",date);
+        intent.putExtra("Time",time);
+        intent.putExtra("loc",loc);
         startActivity(intent);
     }
-
 }

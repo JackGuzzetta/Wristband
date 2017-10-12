@@ -54,6 +54,7 @@ public class Create_Party extends AppCompatActivity {
     String location;
     String date;
     String time;
+    String locate;
     Switch swit;
     String user_id;
     String party_id;
@@ -73,6 +74,10 @@ public class Create_Party extends AppCompatActivity {
         this.create = (Button) findViewById(R.id.create);
         this.next = (Button) findViewById(R.id.next);
         btnBack = (Button) findViewById(R.id.btnBack);
+        EditText eventname = (EditText) findViewById(R.id.eventName);
+        EditText Date = (EditText) findViewById(R.id.day);
+        EditText Time = (EditText) findViewById(R.id.tyme);
+        EditText loc = (EditText) findViewById(R.id.locat);
         next.setVisibility(View.INVISIBLE);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -98,6 +103,16 @@ public class Create_Party extends AppCompatActivity {
             }
 
         });
+        Intent intent = getIntent();
+        name = intent.getStringExtra("eventname");
+        date = intent.getStringExtra("Date");
+        time = intent.getStringExtra("Time");
+        locate = intent.getStringExtra("loc");
+        eventname.setText(name);
+        Date.setText(date);
+        Time.setText(time);
+        loc.setText(locate);
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,17 +158,18 @@ public class Create_Party extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_add_cohost);
+                EditText eventname = (EditText) findViewById(R.id.eventName);
+                EditText Date = (EditText) findViewById(R.id.day);
+                EditText Time = (EditText) findViewById(R.id.tyme);
+                EditText loc = (EditText) findViewById(R.id.locat);
+                Intent intent = new Intent(Create_Party.this, CoHost.class);
+                intent.putExtra("eventname",eventname.getText().toString());
+                intent.putExtra("Date",Date.getText().toString());
+                intent.putExtra("Time",Time.getText().toString());
+                intent.putExtra("loc",loc.getText().toString());
+                startActivity(intent);
             }
         });
-
-        //        pic.setOnClickListener(new OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //
-        //            }
-        //        });
-        //    }
 
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,45 +177,10 @@ public class Create_Party extends AppCompatActivity {
                 Intent GaleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(GaleryIntent, RESULT_LOAD_IMAGE);
-                //                Intent i = new Intent(Intent.ACTION_PICK,
-                //                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                //                final int ACTIVITY_SELECT_IMAGE = 1234;
-                //                startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
-
-
             }
 
 
         });
-        //
-        //
-        //    }
-        //
-        //    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-        //    {
-        //        super.onActivityResult(requestCode, resultCode, data);
-        //
-        //        switch(requestCode) {
-        //            case 1:
-        //                if(resultCode == RESULT_OK){
-        //                    Uri selectedImage = data.getData();
-        //                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        //
-        //
-        //                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        //                    cursor.moveToFirst();
-        //
-        //                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        //                    String filePath = cursor.getString(columnIndex);
-        //                    cursor.close();
-        //
-        //
-        //                    Bitmap photo = BitmapFactory.decodeFile(filePath);
-        //                    BitmapDrawable d = new BitmapDrawable(getResources(), photo);
-        //                    pic.setImageBitmap(photo);
-        //                }
-        //        }
-
     }
 
     @Override
@@ -222,9 +203,7 @@ public class Create_Party extends AppCompatActivity {
 
             pic.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             Toast.makeText(getApplicationContext(), picturePath, Toast.LENGTH_LONG).show();
-
         }
-
     }
 
 
@@ -275,7 +254,6 @@ public class Create_Party extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //showProgressDialog();
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + party_name,
                         new Response.Listener <JSONArray> () {
                             @Override
