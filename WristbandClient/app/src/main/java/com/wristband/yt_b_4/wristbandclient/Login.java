@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
         context = this;
         FacebookSdk.sdkInitialize(getApplicationContext());
         initializeControls();
-        findViewById(R.id.screen).setBackgroundColor(Color.rgb(0, 0, 100));
+        findViewById(R.id.loginscreen).setBackgroundColor(Color.rgb(0, 0, 100));
 
         if (isLoggedIn()) {
             Intent intent = new Intent(Login.this, HomeScreen.class);
