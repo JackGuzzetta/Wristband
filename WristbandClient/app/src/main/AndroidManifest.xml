@@ -29,7 +29,6 @@
         <activity android:name=".examples.exampleActivity"/>
         <activity android:name=".HomeScreen"  android:noHistory="true"/>
         <activity android:name=".GuestScreen"/>
-        <activity android:name=".LoginProfile" android:noHistory="true"/>
 
 
         <meta-data

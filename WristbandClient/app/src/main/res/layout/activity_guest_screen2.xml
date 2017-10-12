@@ -3,13 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@color/cardview_shadow_start_color">
 
-    <Button
-        android:id="@+id/btnJsonArray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Refresh" />
 
     <TextView
         android:id="@+id/msgResponse"
@@ -73,21 +66,21 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/friends"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/friends"
-        android:text="Photos" />
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Photos"
+        android:layout_below="@+id/partyTxt"
+        android:layout_alignLeft="@+id/button6"
+        android:layout_alignStart="@+id/button6" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="Comment" />
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Comment"
+        android:layout_below="@+id/dateTxt"
+        android:layout_alignLeft="@+id/btnBack"
+        android:layout_alignStart="@+id/btnBack" />
 
     <Button
         android:id="@+id/button7"
@@ -121,4 +114,23 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="5dp"
         android:layout_marginEnd="5dp" />
+
+    <Button
+        android:id="@+id/btnCohost"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:text="Add Cohost"
+        android:clickable="true"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/btnGuest"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:text="Add Guest"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

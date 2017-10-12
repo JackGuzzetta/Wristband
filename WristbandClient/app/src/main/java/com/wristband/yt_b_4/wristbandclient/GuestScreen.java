@@ -29,7 +29,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 public class GuestScreen extends AppCompatActivity {
-    private Button getPartyBtn, btnBack;
+    private Button btnCohost, btnBack, btnGuest;
     private TextView dateText, partyText, responseTxt, locationTxt, timeTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -39,8 +39,9 @@ public class GuestScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_screen2);
-        getPartyBtn = (Button) findViewById(R.id.btnJsonArray);
+        btnCohost = (Button) findViewById(R.id.btnCohost);
         btnBack = (Button) findViewById(R.id.btnBack);
+        btnGuest = (Button) findViewById(R.id.btnGuest);
         partyText = (TextView) findViewById(R.id.partyTxt);
         responseTxt = (TextView) findViewById(R.id.msgResponse);
         timeTxt = (TextView) findViewById(R.id.time);
@@ -59,10 +60,18 @@ public class GuestScreen extends AppCompatActivity {
             }
 
         });
-        getPartyBtn.setOnClickListener(new View.OnClickListener() {
+        btnCohost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
+                goCohost(view);
+            }
+        });
+        btnGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goGuest(view);
             }
         });
     }
@@ -132,6 +141,16 @@ public class GuestScreen extends AppCompatActivity {
     }
     private void goBack(View view) {
         Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
+        startActivity(intent);
+    }
+
+    private void goCohost(View view) {
+        Intent intent = new Intent(GuestScreen.this, CoHost.class);
+        startActivity(intent);
+    }
+
+    private void goGuest(View view) {
+        Intent intent = new Intent(GuestScreen.this, Add_User.class);
         startActivity(intent);
     }
 
