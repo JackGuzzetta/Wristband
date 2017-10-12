@@ -43,7 +43,7 @@ module.exports = function(app) {
             } else {
                 if (rows.length == 0) {
                     res.json({
-                        error: "username"
+                        login: "username error"
                     })
                 } else {
                     id = rows[0].id;
@@ -58,14 +58,13 @@ module.exports = function(app) {
                     }
                     else {
                         res.json({
-                            error: "password"
+                            login: "password error"
                         })
                     }
                 }
             }
         });
     }
-
 
     module.exports.createUser = function(f_name, l_name, username, password, email, res) {
         user = new User({

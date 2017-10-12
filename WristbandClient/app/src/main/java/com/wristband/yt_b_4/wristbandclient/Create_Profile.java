@@ -145,56 +145,90 @@ public class Create_Profile extends AppCompatActivity {
             Toast fail = Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG);
             fail.show();
         } else {
-            sendDataToServer(user);
-            Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
-            startActivity(intent);
-            Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
-            pass.show();
+            //First check if user already exists in db or not
+            checkIfUserExists(user);
         }
 
     }
+    private void finishProfile(final User user) {
+
+    }
+    private void checkIfUserExists(final User user) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user.getUsername(),
+                        new Response.Listener < JSONArray > () {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    String db_username = response.getJSONObject(0).getString("username");
+                                    if (user.getUsername().equals(db_username)) {
+                                        Toast fail = Toast.makeText(getApplicationContext(), "Username already exists", Toast.LENGTH_LONG);
+                                        fail.show();
+                                    }
+                                } catch (JSONException e) {
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+                AppController.getInstance().addToRequestQueue(req,
+                        tag_json_arry);
+            }
+        }).start();
+    }
 
     private void sendDataToServer(final User user) {
-        showProgressDialog();
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Const.URL_USERS, null,
-                new Response.Listener < JSONObject > () {
+        new Thread(new Runnable() {
+            public void run() {
+                showProgressDialog();
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_USERS, null,
+                        new Response.Listener < JSONObject > () {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    msgStatus.setText("Account : " + response.getString("users") + " created.");
+                                    //Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
+                                    //startActivity(intent);
+                                    //Toast pass = Toast.makeText(getApplicationContext(), "Profile created", Toast.LENGTH_LONG);
+                                    //pass.show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                hideProgressDialog();
+                            }
+                        }, new Response.ErrorListener() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            msgStatus.setText("Account : " + response.getString("users") + " created.");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onErrorResponse(VolleyError error) {
+                        msgStatus.setText("Error creating account: " + error);
                         hideProgressDialog();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                msgStatus.setText("Error creating account: " + error);
-                hideProgressDialog();
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map < String, String > getHeaders() throws AuthFailureError {
+                        HashMap < String, String > headers = new HashMap < String, String > ();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("f_name", user.getFirstName());
+                        headers.put("l_name", user.getLastName());
+                        headers.put("username", user.getUsername());
+                        headers.put("password", user.getPassword());
+                        headers.put("email", user.getEmail());
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
-        }) {
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map < String, String > getHeaders() throws AuthFailureError {
-                HashMap < String, String > headers = new HashMap < String, String > ();
-                headers.put("Content-Type", "application/json");
-                headers.put("f_name", user.getFirstName());
-                headers.put("l_name", user.getLastName());
-                headers.put("username", user.getUsername());
-                headers.put("password", user.getPassword());
-                headers.put("email", user.getEmail());
-                return headers;
-            }
-        };
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq,
-                tag_json_obj);
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+        }).start();
     }
 
 

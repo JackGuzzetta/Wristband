@@ -161,7 +161,7 @@ public class LoginProfile extends AppCompatActivity {
                             Intent intent = new Intent(LoginProfile.this, HomeScreen.class);
                             startActivity(intent);
                         } catch (JSONException e) {
-                            toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials" + e, Toast.LENGTH_LONG);
+                            toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
                             toast.show();
                         }
                         hideProgressDialog();
