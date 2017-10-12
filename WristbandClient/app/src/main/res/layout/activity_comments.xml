@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wristband.yt_b_4.wristbandclient.Comments">
+
+    <Button
+        android:id="@+id/btnComments"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:text="Add Comment"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        tools:layout_editor_absoluteY="455dp"
+        tools:layout_editor_absoluteX="42dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="131dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Back"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp" />
+
+</android.support.constraint.ConstraintLayout>

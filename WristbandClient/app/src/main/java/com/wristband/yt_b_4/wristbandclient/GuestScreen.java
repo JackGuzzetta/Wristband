@@ -29,7 +29,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 public class GuestScreen extends AppCompatActivity {
-    private Button btnCohost, btnBack, btnGuest, btnBlacklist;
+    private Button btnCohost, btnBack, btnGuest, btnBlacklist, btnPhotos, btnComments;
     private TextView dateText, partyText, responseTxt, locationTxt, timeTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -43,6 +43,8 @@ public class GuestScreen extends AppCompatActivity {
         btnBack = (Button) findViewById(R.id.btnBack);
         btnGuest = (Button) findViewById(R.id.btnGuest);
         btnBlacklist = (Button) findViewById(R.id.btnBlacklist);
+        btnPhotos = (Button) findViewById(R.id.button5);
+        btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
         responseTxt = (TextView) findViewById(R.id.msgResponse);
         timeTxt = (TextView) findViewById(R.id.time);
@@ -73,6 +75,27 @@ public class GuestScreen extends AppCompatActivity {
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
                 goGuest(view);
+            }
+        });
+        btnBlacklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goBlacklist(view);
+            }
+        });
+        btnPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goPhotos(view);
+            }
+        });
+        btnComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goComments(view);
             }
         });
     }
@@ -154,5 +177,16 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Add_User.class);
         startActivity(intent);
     }
-
+    private void goBlacklist(View view) {
+        Intent intent = new Intent(GuestScreen.this, Blacklist.class);
+        startActivity(intent);
+    }
+    private void goPhotos(View view) {
+        Intent intent = new Intent(GuestScreen.this, Photos.class);
+        startActivity(intent);
+    }
+    private void goComments(View view) {
+        Intent intent = new Intent(GuestScreen.this, Comments.class);
+        startActivity(intent);
+    }
 }
