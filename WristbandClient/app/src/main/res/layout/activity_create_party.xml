@@ -11,14 +11,14 @@
         android:id="@+id/pict"
         android:layout_width="150dp"
         android:layout_height="149dp"
-        android:layout_marginLeft="117dp"
+        android:layout_marginLeft="109dp"
         android:text="Add Party Picture"
         android:clickable="true"
         android:onClick="buttonClickParty"
         app:layout_constraintLeft_toLeftOf="parent"
         android:src="@android:drawable/ic_menu_search"
-        android:layout_marginBottom="360dp"
-        android:layout_marginStart="109dp" />
+        android:layout_marginStart="109dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 
 
@@ -35,7 +35,8 @@
         app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintVertical_bias="0.016"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="140dp" />
+        android:layout_marginTop="140dp"
+        android:layout_marginStart="120dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +51,8 @@
         app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintVertical_bias="0.016"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="175dp" />
+        android:layout_marginTop="175dp"
+        android:layout_marginStart="2dp" />
 
     <EditText
         android:layout_width="188dp"
@@ -60,7 +62,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="170dp"
         android:id="@+id/eventName"
-        />
+        android:layout_marginEnd="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,7 +77,8 @@
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintVertical_bias="0.197"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="180dp" />
+        android:layout_marginTop="180dp"
+        android:layout_marginStart="4dp" />
 
     <EditText
         android:layout_width="188dp"
@@ -84,7 +87,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="230dp"
-        android:id="@+id/day" />
+        android:id="@+id/day"
+        android:layout_marginEnd="28dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +102,8 @@
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintVertical_bias="0.197"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="245dp" />
+        android:layout_marginTop="245dp"
+        android:layout_marginStart="4dp" />
 
     <EditText
         android:layout_width="188dp"
@@ -109,7 +114,7 @@
         android:layout_marginTop="285dp"
         android:id="@+id/tyme"
 
-        />
+        android:layout_marginEnd="28dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -123,7 +128,8 @@
         app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintVertical_bias="0.2"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="310dp" />
+        android:layout_marginTop="310dp"
+        android:layout_marginStart="4dp" />
 
     <EditText
         android:layout_width="188dp"
@@ -134,7 +140,7 @@
         android:layout_marginTop="340dp"
         android:id="@+id/locat"
 
-        />
+        android:layout_marginEnd="28dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,7 +154,8 @@
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintVertical_bias="0.034"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="385dp" />
+        android:layout_marginTop="385dp"
+        android:layout_marginStart="100dp" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -158,14 +165,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="420dp"
         android:id="@+id/swittch"
-        />
+        android:layout_marginEnd="180dp" />
 
 
     <Button
         android:id="@+id/create"
         android:layout_width="167dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="109dp"
+        android:layout_marginLeft="10dp"
         android:text="Create Party"
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -190,7 +197,7 @@
         android:id="@+id/btnBack"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="258dp"
+        android:layout_marginLeft="260dp"
         android:text="Back"
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -198,5 +205,6 @@
         android:layout_marginBottom="460dp"
         android:layout_marginStart="260dp"
         />
+
 
 </android.support.constraint.ConstraintLayout>

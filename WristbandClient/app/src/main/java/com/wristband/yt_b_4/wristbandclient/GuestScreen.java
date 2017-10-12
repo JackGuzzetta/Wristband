@@ -109,9 +109,9 @@ public class GuestScreen extends AppCompatActivity {
                                     String host = response.getJSONObject(0).getString("host");
                                     String time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
-                                    partyText.setText("party name: " + name);
-                                    dateText.setText("date: " + date);
-                                    locationTxt.setText("location: " + location);
+                                    partyText.setText("Party name: " + name);
+                                    dateText.setText("Date: " + date);
+                                    locationTxt.setText("Location: " + location);
                                     responseTxt.setText("Data retrieved from server");
                                     timeTxt.setText("Time: " + time);
                                 } catch (JSONException e) {
