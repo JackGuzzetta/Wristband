@@ -34,7 +34,7 @@ public class GuestScreen extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
-    private String party_name;
+    private String party_name, prev_class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +98,8 @@ public class GuestScreen extends AppCompatActivity {
                 goComments(view);
             }
         });
+        Intent intent = getIntent();
+        prev_class = intent.getStringExtra("prev");
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -170,6 +172,7 @@ public class GuestScreen extends AppCompatActivity {
 
     private void goCohost(View view) {
         Intent intent = new Intent(GuestScreen.this, CoHost.class);
+        intent.putExtra("prev", "guest");
         startActivity(intent);
     }
 

@@ -33,7 +33,7 @@ import com.wristband.yt_b_4.wristbandclient.R;
 public class CoHost extends AppCompatActivity {
     int max;
     private Button done, save,btnBack;
-    String name, date, time, loc;
+    String name, date, time, loc, prev_class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +61,7 @@ public class CoHost extends AppCompatActivity {
         date = intent.getStringExtra("Date");
         time = intent.getStringExtra("Time");
         loc = intent.getStringExtra("loc");
+        prev_class = intent.getStringExtra("prev");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,11 +125,18 @@ public class CoHost extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        Intent intent = new Intent(CoHost.this, Create_Party.class);
-        intent.putExtra("eventname",name);
-        intent.putExtra("Date",date);
-        intent.putExtra("Time",time);
-        intent.putExtra("loc",loc);
-        startActivity(intent);
+        if(prev_class.equals("party")) {
+            Intent intent = new Intent(CoHost.this, Create_Party.class);
+            intent.putExtra("eventname", name);
+            intent.putExtra("Date", date);
+            intent.putExtra("Time", time);
+            intent.putExtra("loc", loc);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(CoHost.this, GuestScreen.class);
+            intent.putExtra("prev", prev_class);
+            startActivity(intent);
+        }
     }
 }

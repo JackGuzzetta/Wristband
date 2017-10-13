@@ -55,6 +55,7 @@ public class Create_Party extends AppCompatActivity {
     String date;
     String time;
     String locate;
+    String prev_class;
     Switch swit;
     String user_id;
     String party_id;
@@ -82,7 +83,6 @@ public class Create_Party extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
-
 
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -167,6 +167,7 @@ public class Create_Party extends AppCompatActivity {
                 intent.putExtra("Date",Date.getText().toString());
                 intent.putExtra("Time",Time.getText().toString());
                 intent.putExtra("loc",loc.getText().toString());
+                intent.putExtra("prev","party");
                 startActivity(intent);
             }
         });
