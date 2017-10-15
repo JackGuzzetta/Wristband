@@ -158,6 +158,7 @@ module.exports = function(app) {
         });
     }
     module.exports.findUserByUsername = function(username, res) {
+        var expires = moment().add(7, 'days').valueOf();
         var user = new User();
         user.find('all', {
             where: 'username=' + '\'' + username + '\''
@@ -174,8 +175,13 @@ module.exports = function(app) {
                         users: "Error"
                     })
                 } else {
-                    res.contentType('application/json');
-                    res.send(JSON.stringify(rows));
+                    var id = rows[0].id;
+                    token = createToken(username, expires);
+                    res.json({
+                                token: token,
+                                id: id,
+                                username: username
+                            })
                 }
             }
         });

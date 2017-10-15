@@ -305,7 +305,13 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String db_username = response.getJSONObject(0).getString("username");
+                                    String responseToken = response.getJSONObject(0).getString("token");
+                                    String username = response.getJSONObject(0).getString("user");
+                                    String id = response.getJSONObject(0).getString("id");
+
+                                    editor.putString("token", responseToken);
+                                    editor.putString("username", username);
+                                    editor.putString("id", id);
                                     if (user.getUsername().equals(db_username)) {
                                         Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
                                         pass.show();
@@ -350,6 +356,7 @@ public class Login extends AppCompatActivity {
                                     editor.putString("token", responseToken);
                                     editor.putString("username", username);
                                     editor.putString("id", id);
+                                    editor.commit();
                                     pass = Toast.makeText(getApplicationContext(), "id: " + id, Toast.LENGTH_LONG);
                                     pass.show();
                                 } catch (JSONException e) {
