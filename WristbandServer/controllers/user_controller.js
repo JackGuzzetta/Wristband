@@ -55,8 +55,7 @@ module.exports = function(app) {
                             id: id,
                             user: username
                         })
-                    }
-                    else {
+                    } else {
                         res.json({
                             login: "password error"
                         })
@@ -67,6 +66,7 @@ module.exports = function(app) {
     }
 
     module.exports.createUser = function(f_name, l_name, username, password, email, res) {
+        var expires = moment().add(7, 'days').valueOf();
         user = new User({
             f_name: f_name,
             l_name: l_name,
@@ -82,9 +82,33 @@ module.exports = function(app) {
                 })
             } else {
                 console.log("Created new user: ", username);
-                res.json({
-                    users: username
-                })
+                var user = new User();
+                user.find('all', {
+                    where: 'username=' + '\'' + username + '\''
+                }, function(err, rows, fields) {
+                    if (err) {
+                        console.log("error");
+                        res.json({
+                            users: "Error"
+                        })
+                    } else {
+                        if (rows.length == 0) {
+                            console.log("User not found.");
+                            res.json({
+                                users: "Error"
+                            })
+                        } else {
+                            id = rows[0].id;
+                            token = createToken(username, expires);
+                            console.log(token);
+                            res.json({
+                                token: token,
+                                id: id,
+                                user: username
+                            })
+                        }
+                    }
+                });
             }
         });
     }
@@ -133,7 +157,7 @@ module.exports = function(app) {
             }
         });
     }
-        module.exports.findUserByUsername = function(username, res) {
+    module.exports.findUserByUsername = function(username, res) {
         var user = new User();
         user.find('all', {
             where: 'username=' + '\'' + username + '\''
