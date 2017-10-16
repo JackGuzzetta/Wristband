@@ -308,11 +308,10 @@ public class Login extends AppCompatActivity {
                                     String responseToken = response.getJSONObject(0).getString("token");
                                     String username = response.getJSONObject(0).getString("user");
                                     String id = response.getJSONObject(0).getString("id");
-
-                                    editor.putString("token", responseToken);
-                                    editor.putString("username", username);
-                                    editor.putString("id", id);
-                                    if (user.getUsername().equals(db_username)) {
+                                    if (user.getUsername().equals(username)) {
+                                        editor.putString("token", responseToken);
+                                        editor.putString("username", username);
+                                        editor.putString("id", id);
                                         Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
                                         pass.show();
                                         Intent intent = new Intent(Login.this, HomeScreen.class);

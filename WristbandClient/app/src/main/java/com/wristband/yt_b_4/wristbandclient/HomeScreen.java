@@ -136,25 +136,29 @@ public class HomeScreen extends AppCompatActivity {
     private void getAllPartiesByUserId() {
         new Thread(new Runnable() {
             public void run() {
-                //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION_BY_ID + user_id,
-                        new Response.Listener < JSONArray > () {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                try {
-                                    for (int i = 0; i < response.length(); i++) {
-                                        String id = response.getJSONObject(i).getString("party_id");
-                                        party_ids.add(id);
-                                        getDataFromServer(id);
-                                    }
-                                } catch (JSONException e) {}
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {}
-                });
-                AppController.getInstance().addToRequestQueue(req,
-                        tag_json_arry);
+                try {
+                    Thread.sleep(500L); //wait for party to be created first
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION_BY_ID + user_id,
+                            new Response.Listener < JSONArray > () {
+                                @Override
+                                public void onResponse(JSONArray response) {
+                                    try {
+                                        for (int i = 0; i < response.length(); i++) {
+                                            String id = response.getJSONObject(i).getString("party_id");
+                                            party_ids.add(id);
+                                            getDataFromServer(id);
+                                        }
+                                    } catch (JSONException e) {}
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {}
+                    });
+                    AppController.getInstance().addToRequestQueue(req,
+                            tag_json_arry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
