@@ -15,30 +15,50 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Login"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Add_User" />
-        <activity android:name=".CoHost" />
-        <activity android:name=".Create_Party" />
-        <activity android:name=".Create_Profile" />
+        <activity android:name=".Add_User"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CoHost"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Create_Party"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Create_Profile"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".examples.exampleActivity" />
         <activity
             android:name=".HomeScreen"
-            android:noHistory="true" />
-        <activity android:name=".GuestScreen" />
+            android:noHistory="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GuestScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".Photos" />
-        <activity android:name=".Comments" />
-        <activity android:name=".Blacklist"></activity>
+        <activity android:name=".Photos"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Comments"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Blacklist"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
