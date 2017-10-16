@@ -56,6 +56,12 @@ public class CoHost extends AppCompatActivity {
             }
 
         });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goNext(view);
+            }
+        });
         Intent intent = getIntent();
         name = intent.getStringExtra("eventname");
         date = intent.getStringExtra("Date");
@@ -138,5 +144,15 @@ public class CoHost extends AppCompatActivity {
             intent.putExtra("prev", prev_class);
             startActivity(intent);
         }
+    }
+
+    private void goNext(View view) {
+        Intent intent = new Intent(CoHost.this, Add_User.class);
+        intent.putExtra("prev", "party");
+        intent.putExtra("eventname", name);
+        intent.putExtra("Date", date);
+        intent.putExtra("Time", time);
+        intent.putExtra("loc", loc);
+        startActivity(intent);
     }
 }
