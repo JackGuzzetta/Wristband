@@ -178,6 +178,7 @@ public class GuestScreen extends AppCompatActivity {
 
     private void goGuest(View view) {
         Intent intent = new Intent(GuestScreen.this, Add_User.class);
+        intent.putExtra("prev", "guest");
         startActivity(intent);
     }
     private void goBlacklist(View view) {

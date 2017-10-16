@@ -16,12 +16,27 @@ import android.widget.Toast;
 import com.facebook.login.LoginManager;
 
 public class Add_User extends AppCompatActivity {
-    private Button next;
+    private Button btnBack;
+    String prev_class, name1, date1, time1, loc1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__user);
-        next = (Button) findViewById(R.id.next);
+        btnBack = (Button) findViewById(R.id.next);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack(view);
+            }
+
+        });
+
+        Intent intent = getIntent();
+        name1 = intent.getStringExtra("eventname");
+        date1 = intent.getStringExtra("Date");
+        time1 = intent.getStringExtra("Time");
+        loc1 = intent.getStringExtra("loc");
+        prev_class = intent.getStringExtra("prev");
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -83,40 +98,27 @@ public class Add_User extends AppCompatActivity {
             blank.show();
         }
     }
-    public void buttonClickBlacklist(View view) {
-        //Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText blacklist_name = (EditText) findViewById(R.id.invitee);
-        EditText blacklist_num = (EditText) findViewById(R.id.number);
-        //text in name box
-        String name = blacklist_name.getText().toString();
-        //text in number box
-        String number = blacklist_num.getText().toString();
-
-        /*This will check the blacklist, users, party, and party_list tables to verify and/or add
-        the person to the table.  Need checking for multiple entries.
-         */
-        //search by number
-        if (!number.isEmpty()) {
-            //find user from users table and add that user to the blacklist table
-            Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to blacklist", Toast.LENGTH_LONG);
-            pass.show();
-            //if no user is found from number, give a toast that user number is not found
-            //Toast fail = Toast.makeText(getApplicationContext(), "Failed to find person with that user number", Toast.LENGTH_LONG);
-            //fail.show();
-        } else if (!name.isEmpty()) {
-            //search for person by name, if not found, add person to both users and blacklist tables
-            Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to blacklist", Toast.LENGTH_LONG);
-            pass.show();
-        }
-        //both name and number are empty, send toast to enter a name or number
-        else {
-            Toast blank = Toast.makeText(getApplicationContext(), "Enter the name or user number of person to blacklist", Toast.LENGTH_LONG);
-            blank.show();
-        }
-    }
 
     private void back_Homescreen() {
         Intent intent = new Intent(Add_User.this, HomeScreen.class);
         startActivity(intent);
+    }
+
+    private void goBack(View view) {
+        if(prev_class.equals("party")) {
+            Intent intent = new Intent(Add_User.this, CoHost.class);
+            intent.putExtra("prev", "party");
+            intent.putExtra("eventname", name1);
+            intent.putExtra("Date", date1);
+            intent.putExtra("Time", time1);
+            intent.putExtra("loc", loc1);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(Add_User.this, GuestScreen.class);
+            prev_class="add_user";
+            intent.putExtra("prev", prev_class);
+            startActivity(intent);
+        }
     }
 }
