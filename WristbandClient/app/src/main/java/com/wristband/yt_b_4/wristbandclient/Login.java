@@ -356,8 +356,6 @@ public class Login extends AppCompatActivity {
                                     editor.putString("username", username);
                                     editor.putString("id", id);
                                     editor.commit();
-                                    pass = Toast.makeText(getApplicationContext(), "id: " + id, Toast.LENGTH_LONG);
-                                    pass.show();
                                 } catch (JSONException e) {
                                     pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);
                                     pass.show();
