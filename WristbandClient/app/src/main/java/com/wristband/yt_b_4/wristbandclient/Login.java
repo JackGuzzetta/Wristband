@@ -308,17 +308,19 @@ public class Login extends AppCompatActivity {
                                     String responseToken = response.getJSONObject(0).getString("token");
                                     String username = response.getJSONObject(0).getString("user");
                                     String id = response.getJSONObject(0).getString("id");
+                                    Toast pass = Toast.makeText(getApplicationContext(), "asd : " + user.getFirstName() + " "+ username, Toast.LENGTH_LONG);
+                                    pass.show();
                                     if (user.getUsername().equals(username)) {
                                         editor.putString("token", responseToken);
                                         editor.putString("username", username);
                                         editor.putString("id", id);
-                                        Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
+                                        pass = Toast.makeText(getApplicationContext(), "asd Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
                                         pass.show();
-                                        Intent intent = new Intent(Login.this, HomeScreen.class);
-                                        startActivity(intent);
+                                        //Intent intent = new Intent(Login.this, HomeScreen.class);
+                                        //startActivity(intent);
                                     }
                                     else {
-                                        makeProfile(user);
+                                        //makeProfile(user);
                                     }
                                 } catch (JSONException e) {
                                 }
@@ -326,7 +328,7 @@ public class Login extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        makeProfile(user);
+                        //makeProfile(user);
                     }
                 });
                 AppController.getInstance().addToRequestQueue(req,

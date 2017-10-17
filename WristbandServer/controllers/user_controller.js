@@ -172,7 +172,7 @@ module.exports = function(app) {
                 if (rows.length == 0) {
                     console.log("User not found.");
                     res.json({
-                        users: "Error"
+                        users: "Not found"
                     })
                 } else {
                     var id = rows[0].id;
