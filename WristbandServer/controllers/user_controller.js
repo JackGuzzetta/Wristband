@@ -173,10 +173,12 @@ module.exports = function(app) {
                     console.log("User not found.");
                     res.contentType('application/json');
                     res.json([{
-                        users: "Not found"
+                        users: "Not found",
+                        username: username
                     }])
                 } else {
                     var id = rows[0].id;
+                    console.log("found user: ", username);
                     token = createToken(username, expires);
                     res.contentType('application/json');
                     res.json([{
