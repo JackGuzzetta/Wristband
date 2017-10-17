@@ -7,7 +7,11 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.examples.exampleActivity;
 
@@ -48,6 +52,7 @@ import java.util.Map;
 import android.graphics.Color;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -138,8 +143,35 @@ public class Login extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback < LoginResult > () {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(Login.this, HomeScreen.class);
-                startActivity(intent);
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String f_name = object.getString("first_name");
+                                    String l_name = object.getString("last_name");
+                                    String fb_id = object.getString("id");
+                                    String email = null;
+                                    if (object.has("email"))
+                                        email = object.getString("email");
+                                    user = new User(f_name,l_name,fb_id,null,email);
+                                    checkIfUserExists(user);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast toast = Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, first_name, last_name, email");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+                //Intent intent = new Intent(Login.this, HomeScreen.class);
+                //startActivity(intent);
             }
 
             @Override
@@ -205,63 +237,164 @@ public class Login extends AppCompatActivity {
     }
 
     private void sendDataToServer(final String username, final String password) {
-        showProgressDialog();
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Const.URL_USERS + "/login", null,
-                new Response.Listener <JSONObject> () {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_USERS + "/login", null,
+                        new Response.Listener <JSONObject> () {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Toast toast;
+                                try {
+                                    String responseToken = response.getString("token");
+                                    String username = response.getString("user");
+                                    String id = response.getString("id");
+                                    toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
+                                    toast.show();
+                                    //stores user and token into encrypted storage accessible across activities
+                                    SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = settings.edit();
+                                    editor.putString("token", responseToken);
+                                    editor.putString("username", username);
+                                    editor.putString("id", id);
+                                    editor.commit();
+
+                                    //to get the stored token and username
+                                    //SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                                    //String myString = settings.getString("username", "default");
+
+                                    Intent intent = new Intent(Login.this, HomeScreen.class);
+                                    startActivity(intent);
+                                } catch (JSONException e) {
+                                    toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Toast toast;
-                        try {
-                            String responseToken = response.getString("token");
-                            String username = response.getString("user");
-                            String id = response.getString("id");
-                            toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
-                            toast.show();
-                            //stores user and token into encrypted storage accessible across activities
-                            SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putString("token", responseToken);
-                            editor.putString("username", username);
-                            editor.putString("id", id);
-                            editor.commit();
-
-                            //to get the stored token and username
-                            //SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-                            //String myString = settings.getString("username", "default");
-
-                            Intent intent = new Intent(Login.this, HomeScreen.class);
-                            startActivity(intent);
-                        } catch (JSONException e) {
-                            toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-                        hideProgressDialog();
+                    public void onErrorResponse(VolleyError error) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
+                        toast.show();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Invalid Login Credentials", Toast.LENGTH_LONG);
-                toast.show();
-                hideProgressDialog();
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map< String, String > getHeaders() throws AuthFailureError {
+                        HashMap< String, String > headers = new HashMap < String, String > ();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("username", username);
+                        headers.put("password", password);
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
-        }) {
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map< String, String > getHeaders() throws AuthFailureError {
-                HashMap< String, String > headers = new HashMap < String, String > ();
-                headers.put("Content-Type", "application/json");
-                headers.put("username", username);
-                headers.put("password", password);
-                return headers;
+        }).start();
+    }
+    private void checkIfUserExists(final User user) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user.getUsername(),
+                        new Response.Listener <JSONArray> () {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    String responseToken = response.getJSONObject(0).getString("token");
+                                    String username = response.getJSONObject(0).getString("user");
+                                    String id = response.getJSONObject(0).getString("id");
+                                    if (user.getUsername().equals(username)) {
+                                        editor.putString("token", responseToken);
+                                        editor.putString("username", username);
+                                        editor.putString("id", id);
+                                        Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
+                                        pass.show();
+                                        Intent intent = new Intent(Login.this, HomeScreen.class);
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        makeProfile(user);
+                                    }
+                                } catch (JSONException e) {
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        makeProfile(user);
+                    }
+                });
+                AppController.getInstance().addToRequestQueue(req,
+                        tag_json_arry);
             }
-        };
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq,
-                tag_json_obj);
-        // Cancelling request
-        // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+        }).start();
+    }
+    private void makeProfile(final User user) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_USERS, null,
+                        new Response.Listener < JSONObject > () {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
+                                //pass.show();
+
+                                String responseToken = null;
+                                try {
+                                    responseToken = response.getString("token");
+                                    String username = response.getString("user");
+                                    String id = response.getString("id");
+                                    SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = settings.edit();
+                                    editor.putString("token", responseToken);
+                                    editor.putString("username", username);
+                                    editor.putString("id", id);
+                                    editor.commit();
+                                    pass = Toast.makeText(getApplicationContext(), "id: " + id, Toast.LENGTH_LONG);
+                                    pass.show();
+                                } catch (JSONException e) {
+                                    pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);
+                                    pass.show();
+                                }
+                                //stores user and token into encrypted storage accessible across activities
+
+                                editor.commit();
+                                Intent intent = new Intent(Login.this, HomeScreen.class);
+                                startActivity(intent);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //msgStatus.setText("Error creating account: " + error);
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map < String, String > getHeaders() throws AuthFailureError {
+                        HashMap < String, String > headers = new HashMap < String, String > ();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("f_name", user.getFirstName());
+                        headers.put("l_name", user.getLastName());
+                        headers.put("username", user.getUsername());
+                        headers.put("password", user.getPassword());
+                        headers.put("email", user.getEmail());
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+            }
+        }).start();
     }
 }

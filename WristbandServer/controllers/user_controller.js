@@ -165,23 +165,28 @@ module.exports = function(app) {
         }, function(err, rows, fields) {
             if (err) {
                 console.log("error");
-                res.json({
+                res.json([{
                     users: "Error"
-                })
+                }])
             } else {
                 if (rows.length == 0) {
                     console.log("User not found.");
-                    res.json({
-                        users: "Error"
-                    })
+                    res.contentType('application/json');
+                    res.json([{
+                        users: "Not found",
+                        username: username
+                    }])
                 } else {
                     var id = rows[0].id;
+                    console.log("found user: ", username);
                     token = createToken(username, expires);
-                    res.json({
+                    res.contentType('application/json');
+                    res.json([{
+                                users: "exists",
                                 token: token,
                                 id: id,
                                 username: username
-                            })
+                            }])
                 }
             }
         });
