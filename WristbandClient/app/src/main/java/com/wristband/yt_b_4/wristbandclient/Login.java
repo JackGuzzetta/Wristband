@@ -305,11 +305,11 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String responseToken = response.getJSONObject(0).getString("token");
-                                    String username = response.getJSONObject(0).getString("username");
-                                    String id = response.getJSONObject(0).getString("id");
-                                    txtStatus.setText("P " + user.getUsername() + " " + username);
-                                    if (user.getUsername().equals(username)) {
+                                    String retVal = response.getJSONObject(0).getString("users");
+                                    if (!retVal.equals("Not found")) {
+                                        String username = response.getJSONObject(0).getString("username");
+                                        String id = response.getJSONObject(0).getString("id");
+                                        String responseToken = response.getJSONObject(0).getString("token");
                                         editor.putString("token", responseToken);
                                         editor.putString("username", username);
                                         editor.putString("id", id);
@@ -320,12 +320,13 @@ public class Login extends AppCompatActivity {
                                         makeProfile(user);
                                     }
                                 } catch (JSONException e) {
+                                    txtStatus.setText("Error "+ e);
                                 }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        txtStatus.setText("server error");
+                        txtStatus.setText("Error "+ error);
 
                     }
                 });

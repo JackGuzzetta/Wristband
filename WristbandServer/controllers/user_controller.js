@@ -182,6 +182,7 @@ module.exports = function(app) {
                     token = createToken(username, expires);
                     res.contentType('application/json');
                     res.json([{
+                                users: "exists",
                                 token: token,
                                 id: id,
                                 username: username
