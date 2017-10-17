@@ -317,7 +317,7 @@ public class Login extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                     else {
-                                        //makeProfile(user);
+                                        makeProfile(user);
                                     }
                                 } catch (JSONException e) {
                                 }
@@ -325,8 +325,7 @@ public class Login extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //makeProfile(user);
-                        txtStatus.setText("P " + error );
+                        txtStatus.setText("server error");
 
                     }
                 });
