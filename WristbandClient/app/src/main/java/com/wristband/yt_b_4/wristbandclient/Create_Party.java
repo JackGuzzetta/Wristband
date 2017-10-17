@@ -48,7 +48,7 @@ import java.util.Map;
  */
 
 public class Create_Party extends AppCompatActivity {
-    Button create, next, btnBack;
+    Button create, next, btnBack,dat;
     ImageButton pic;
     String name;
     String location;
@@ -71,6 +71,7 @@ public class Create_Party extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_party);
+        this.dat = (Button) findViewById(R.id.date);
         this.pic = (ImageButton) findViewById(R.id.pict);
         this.create = (Button) findViewById(R.id.create);
         this.next = (Button) findViewById(R.id.next);
@@ -155,6 +156,15 @@ public class Create_Party extends AppCompatActivity {
 
             }
         });
+        dat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Create_Party.this, datepicker.class);
+                startActivity(intent);
+
+            }
+        });
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
