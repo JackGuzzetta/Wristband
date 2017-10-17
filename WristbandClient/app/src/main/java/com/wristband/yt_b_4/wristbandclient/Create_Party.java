@@ -16,6 +16,7 @@ import com.wristband.yt_b_4.wristbandclient.models.User;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,7 +36,6 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 import android.widget.Switch;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,13 +44,27 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+
+import android.util.Log;
+import java.util.Calendar;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
 /**
  * Created by Jackguzzetta on 9/26/17.
  */
 
 public class Create_Party extends AppCompatActivity {
-    Button create, next, btnBack,dat,save;
-    int day,year,month;
+    private static final String TAG = "Date";
+    Button create, next, btnBack;
+    private TextView mDisplayDate;
+    private TextView mDisplayTime;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     ImageButton pic;
     String name;
     String location;
@@ -73,14 +87,11 @@ public class Create_Party extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_party);
-        this.dat = (Button) findViewById(R.id.date);
         this.pic = (ImageButton) findViewById(R.id.pict);
         this.create = (Button) findViewById(R.id.create);
         this.next = (Button) findViewById(R.id.next);
         btnBack = (Button) findViewById(R.id.btnBack);
         EditText eventname = (EditText) findViewById(R.id.eventName);
-        EditText Date = (EditText) findViewById(R.id.day);
-        EditText Time = (EditText) findViewById(R.id.tyme);
         EditText loc = (EditText) findViewById(R.id.locat);
         next.setVisibility(View.INVISIBLE);
         pDialog = new ProgressDialog(this);
@@ -112,16 +123,72 @@ public class Create_Party extends AppCompatActivity {
         time = intent.getStringExtra("Time");
         locate = intent.getStringExtra("loc");
         eventname.setText(name);
-        Date.setText(date);
-        Time.setText(time);
         loc.setText(locate);
+        mDisplayDate = (TextView) findViewById(R.id.date);
+        mDisplayTime = (TextView) findViewById(R.id.time);
+
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        Create_Party.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+
+                String date = year + "-" + month + "-" + day;
+                mDisplayDate.setText(date);
+            }
+        };
+
+        mDisplayTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int hour = cal.get(Calendar.HOUR);
+                int minute = cal.get(Calendar.MINUTE);
+
+                TimePickerDialog dialog = new TimePickerDialog(
+                        Create_Party.this,
+                        mTimeSetListener,
+                        hour,minute,true);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+
+                Log.d(TAG, "onDateSet: hh:mm: " + hour + ":" + minute);
+
+                String date = hour + ":" + minute + ":00";
+                mDisplayTime.setText(date);
+            }
+        };
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText eventname = (EditText) findViewById(R.id.eventName);
-                EditText Date = (EditText) findViewById(R.id.day);
-                EditText Time = (EditText) findViewById(R.id.tyme);
+                TextView Date = (TextView) findViewById(R.id.date);
+                TextView Time = (TextView) findViewById(R.id.time);
                 EditText loc = (EditText) findViewById(R.id.locat);
                 name = eventname.getText().toString();
                 date = Date.getText().toString();
@@ -158,26 +225,12 @@ public class Create_Party extends AppCompatActivity {
 
             }
         });
-        dat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Create_Party.this, Date_Picker.class);
-                startActivity(intent);
-//                Intent intent = new Intent(Create_Party.this, datepicker.class);
-//                startActivity(intent);
-
-
-            }
-        });
-
-
-
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText eventname = (EditText) findViewById(R.id.eventName);
-                EditText Date = (EditText) findViewById(R.id.day);
-                EditText Time = (EditText) findViewById(R.id.tyme);
+                TextView Date = (TextView) findViewById(R.id.date);
+                TextView Time = (TextView) findViewById(R.id.time);
                 EditText loc = (EditText) findViewById(R.id.locat);
                 Intent intent = new Intent(Create_Party.this, CoHost.class);
                 intent.putExtra("eventname",eventname.getText().toString());
