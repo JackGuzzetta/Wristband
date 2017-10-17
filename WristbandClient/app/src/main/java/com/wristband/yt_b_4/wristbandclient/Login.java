@@ -306,18 +306,15 @@ public class Login extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 try {
                                     String responseToken = response.getJSONObject(0).getString("token");
-                                    String username = response.getJSONObject(0).getString("user");
+                                    String username = response.getJSONObject(0).getString("username");
                                     String id = response.getJSONObject(0).getString("id");
-                                    Toast pass = Toast.makeText(getApplicationContext(), "asd : " + user.getFirstName() + " "+ username, Toast.LENGTH_LONG);
-                                    pass.show();
+                                    txtStatus.setText("P " + user.getUsername() + " " + username);
                                     if (user.getUsername().equals(username)) {
                                         editor.putString("token", responseToken);
                                         editor.putString("username", username);
                                         editor.putString("id", id);
-                                        pass = Toast.makeText(getApplicationContext(), "asd Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
-                                        pass.show();
-                                        //Intent intent = new Intent(Login.this, HomeScreen.class);
-                                        //startActivity(intent);
+                                        Intent intent = new Intent(Login.this, HomeScreen.class);
+                                        startActivity(intent);
                                     }
                                     else {
                                         //makeProfile(user);
@@ -329,6 +326,8 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //makeProfile(user);
+                        txtStatus.setText("P " + error );
+
                     }
                 });
                 AppController.getInstance().addToRequestQueue(req,

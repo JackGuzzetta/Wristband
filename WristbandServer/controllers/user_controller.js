@@ -177,11 +177,12 @@ module.exports = function(app) {
                 } else {
                     var id = rows[0].id;
                     token = createToken(username, expires);
-                    res.json({
-                                token: token,
-                                id: id,
-                                username: username
-                            })
+                    res.contentType('application/json');
+                    res.send(JSON.stringify({
+                        token: token,
+                        id: id,
+                        username: username
+                    }));
                 }
             }
         });
