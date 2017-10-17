@@ -310,9 +310,12 @@ public class Login extends AppCompatActivity {
                                         String username = response.getJSONObject(0).getString("username");
                                         String id = response.getJSONObject(0).getString("id");
                                         String responseToken = response.getJSONObject(0).getString("token");
+                                        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = settings.edit();
                                         editor.putString("token", responseToken);
                                         editor.putString("username", username);
                                         editor.putString("id", id);
+                                        editor.commit();
                                         Intent intent = new Intent(Login.this, HomeScreen.class);
                                         startActivity(intent);
                                     }
@@ -357,6 +360,8 @@ public class Login extends AppCompatActivity {
                                     editor.putString("username", username);
                                     editor.putString("id", id);
                                     editor.commit();
+                                    pass = Toast.makeText(getApplicationContext(), "id: " + id, Toast.LENGTH_LONG);
+                                    pass.show();
                                 } catch (JSONException e) {
                                     pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);
                                     pass.show();
