@@ -81,7 +81,7 @@ public class Login extends AppCompatActivity {
         initializeControls();
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-        findViewById(R.id.loginscreen).setBackgroundColor(Color.rgb(0, 50, 100));
+        //findViewById(R.id.loginscreen).setBackgroundColor(Color.rgb(0, 50, 100));
 
         if (isLoggedIn()) {
             Intent intent = new Intent(Login.this, HomeScreen.class);

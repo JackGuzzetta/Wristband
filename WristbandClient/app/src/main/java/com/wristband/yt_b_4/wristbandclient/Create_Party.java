@@ -35,6 +35,7 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 import android.widget.Switch;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +49,8 @@ import java.util.Map;
  */
 
 public class Create_Party extends AppCompatActivity {
-    Button create, next, btnBack,dat;
+    Button create, next, btnBack,dat,save;
+    int day,year,month;
     ImageButton pic;
     String name;
     String location;
@@ -159,11 +161,16 @@ public class Create_Party extends AppCompatActivity {
         dat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Create_Party.this, datepicker.class);
+                Intent intent = new Intent(Create_Party.this, Date_Picker.class);
                 startActivity(intent);
+//                Intent intent = new Intent(Create_Party.this, datepicker.class);
+//                startActivity(intent);
+
 
             }
         });
+
+
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
