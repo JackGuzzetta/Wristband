@@ -178,11 +178,11 @@ module.exports = function(app) {
                     var id = rows[0].id;
                     token = createToken(username, expires);
                     res.contentType('application/json');
-                    res.send(JSON.stringify({
-                        token: token,
-                        id: id,
-                        username: username
-                    }));
+                    res.json([{
+                                token: token,
+                                id: id,
+                                username: username
+                            }])
                 }
             }
         });
