@@ -60,7 +60,7 @@ import android.widget.TimePicker;
 
 public class Create_Party extends AppCompatActivity {
     private static final String TAG = "Date";
-    Button create, next, btnBack;
+    Button create, btnBack;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -89,11 +89,9 @@ public class Create_Party extends AppCompatActivity {
         setContentView(R.layout.activity_create_party);
         this.pic = (ImageButton) findViewById(R.id.pict);
         this.create = (Button) findViewById(R.id.create);
-        this.next = (Button) findViewById(R.id.next);
         btnBack = (Button) findViewById(R.id.btnBack);
         EditText eventname = (EditText) findViewById(R.id.eventName);
         EditText loc = (EditText) findViewById(R.id.locat);
-        next.setVisibility(View.INVISIBLE);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
@@ -204,41 +202,29 @@ public class Create_Party extends AppCompatActivity {
                     SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
                     String host = settings.getString("username", "default");
                     Party p = new Party(name, date, time, 0, 200, 0, host, location);
+                    Intent intent = new Intent(Create_Party.this, CoHost.class);
+                    intent.putExtra("eventname",eventname.getText().toString());
+                    intent.putExtra("Date",Date.getText().toString());
+                    intent.putExtra("Time",Time.getText().toString());
+                    intent.putExtra("loc",loc.getText().toString());
+                    intent.putExtra("prev","party");
                     if (s) {
                         p.makePartyPublic();
                         sendDataToServer(p);
                         getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);
                         blank.show();
-                        create.setVisibility(View.INVISIBLE);
-                        next.setVisibility(View.VISIBLE);
+                        startActivity(intent);
                     } else {
                         p.MakePartyPrivate();
                         sendDataToServer(p);
                         getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Private Party Created", Toast.LENGTH_LONG);
                         blank.show();
-                        create.setVisibility(View.INVISIBLE);
-                        next.setVisibility(View.VISIBLE);
+                        startActivity(intent);
                     }
                 }
 
-            }
-        });
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText eventname = (EditText) findViewById(R.id.eventName);
-                TextView Date = (TextView) findViewById(R.id.date);
-                TextView Time = (TextView) findViewById(R.id.time);
-                EditText loc = (EditText) findViewById(R.id.locat);
-                Intent intent = new Intent(Create_Party.this, CoHost.class);
-                intent.putExtra("eventname",eventname.getText().toString());
-                intent.putExtra("Date",Date.getText().toString());
-                intent.putExtra("Time",Time.getText().toString());
-                intent.putExtra("loc",loc.getText().toString());
-                intent.putExtra("prev","party");
-                startActivity(intent);
             }
         });
 
