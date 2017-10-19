@@ -31,8 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Add_User extends AppCompatActivity {
-    private Button btnBack;
-
+    private Button btnBack, btnDone;
     String prev_class, name1, date1, time1, loc1;
     AutoCompleteTextView autoView;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -50,6 +49,14 @@ public class Add_User extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 goBack(view);
+            }
+
+        });
+        btnDone = (Button) findViewById(R.id.btnDone);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back_Homescreen(view);
             }
 
         });
@@ -201,7 +208,7 @@ public class Add_User extends AppCompatActivity {
 //        }
     }
 
-    private void back_Homescreen() {
+    private void back_Homescreen(View view) {
         Intent intent = new Intent(Add_User.this, HomeScreen.class);
         startActivity(intent);
     }
