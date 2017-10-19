@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import org.json.JSONException;
 
 public class HomeScreen extends AppCompatActivity {
 
-    Button NewPartyButton;
+    Button NewPartyButton,publicparty;
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> party_ids = new ArrayList<String>();
@@ -43,8 +44,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen2);
-        findViewById(R.id.homescreen).setBackgroundColor(Color.rgb(0, 0, 100));
-        findViewById(R.id.list_view).setBackgroundColor(Color.rgb(255, 255, 255));
         NewPartyButton = (Button) findViewById(R.id.button3);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -92,13 +91,14 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         });
-
+        publicparty=(Button) findViewById(R.id.publicparties);
         NewPartyButton = (Button) findViewById(R.id.button3);
         NewPartyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 newParty();
             }
         });
+
         getAllPartiesByUserId();
     }
     public void guestScreen(String party_name) {

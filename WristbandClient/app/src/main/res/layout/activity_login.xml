@@ -23,13 +23,12 @@
         android:id="@+id/imageView5"
         android:layout_width="130dp"
         android:layout_height="100dp"
-        android:layout_alignLeft="@+id/username"
-        android:layout_alignStart="@+id/username"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_below="@+id/txtstatus"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="26dp"
         android:layout_weight="1"
-        app:srcCompat="@mipmap/wristband" />
+        app:srcCompat="@mipmap/wristband"
+        android:layout_below="@+id/txtstatus"
+        android:layout_centerHorizontal="true" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/fb_login_button"
