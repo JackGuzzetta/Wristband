@@ -44,14 +44,11 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen2);
-        findViewById(R.id.homescreen).setBackgroundColor(Color.rgb(0, 0, 100));
-        findViewById(R.id.list_view).setBackgroundColor(Color.rgb(255, 255, 255));
         NewPartyButton = (Button) findViewById(R.id.button3);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         initializeControls();
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

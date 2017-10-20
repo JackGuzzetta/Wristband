@@ -81,7 +81,6 @@ public class Login extends AppCompatActivity {
         initializeControls();
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-        //findViewById(R.id.loginscreen).setBackgroundColor(Color.rgb(0, 50, 100));
 
         if (isLoggedIn()) {
             Intent intent = new Intent(Login.this, HomeScreen.class);
@@ -305,15 +304,17 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String responseToken = response.getJSONObject(0).getString("token");
-                                    String username = response.getJSONObject(0).getString("user");
-                                    String id = response.getJSONObject(0).getString("id");
-                                    if (user.getUsername().equals(username)) {
+                                    String retVal = response.getJSONObject(0).getString("users");
+                                    if (!retVal.equals("Not found")) {
+                                        String username = response.getJSONObject(0).getString("username");
+                                        String id = response.getJSONObject(0).getString("id");
+                                        String responseToken = response.getJSONObject(0).getString("token");
+                                        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = settings.edit();
                                         editor.putString("token", responseToken);
                                         editor.putString("username", username);
                                         editor.putString("id", id);
-                                        Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
-                                        pass.show();
+                                        editor.commit();
                                         Intent intent = new Intent(Login.this, HomeScreen.class);
                                         startActivity(intent);
                                     }
@@ -321,12 +322,14 @@ public class Login extends AppCompatActivity {
                                         makeProfile(user);
                                     }
                                 } catch (JSONException e) {
+                                    txtStatus.setText("Error "+ e);
                                 }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        makeProfile(user);
+                        txtStatus.setText("Error "+ error);
+
                     }
                 });
                 AppController.getInstance().addToRequestQueue(req,
@@ -356,7 +359,7 @@ public class Login extends AppCompatActivity {
                                     editor.putString("username", username);
                                     editor.putString("id", id);
                                     editor.commit();
-                                    pass = Toast.makeText(getApplicationContext(), "id: " + id, Toast.LENGTH_LONG);
+                                    pass = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
                                     pass.show();
                                 } catch (JSONException e) {
                                     pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);

@@ -21,14 +21,12 @@
         android:textColor="@color/bright"
         android:textSize="45px" />
 
-    <EditText
-        android:layout_width="190dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="right"
-        android:id="@+id/invitee"
-        />
-</LinearLayout>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -44,12 +42,13 @@
         android:textColor="@color/bright"
         android:textSize="45px" />
 
-    <EditText
-        android:layout_width="170dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="right"
-        android:id="@+id/number" />
+        <EditText
+            android:id="@+id/id"
+            android:layout_width="170dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:editable="false"
+            android:layout_marginLeft="10dp" />
 </LinearLayout>
 
     <Button
@@ -76,5 +75,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="5dp"
         />
+
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="167dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="120dp"
+        android:text="Done"
+        android:clickable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="86dp"
+        android:layout_marginStart="109dp" />
 
 </android.support.constraint.ConstraintLayout>
