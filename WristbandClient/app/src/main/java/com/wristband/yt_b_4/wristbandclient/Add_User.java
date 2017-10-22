@@ -169,14 +169,21 @@ public class Add_User extends AppCompatActivity {
     }
 
     public void buttonClickParty(View view) {
+            String user_id;
             String text = textView.getText().toString();
-            String user_id = getUserID(text);
+        if(text.isEmpty() == false) {
+            user_id = getUserID(text);
             Intent intent = getIntent();
             String party_id = intent.getStringExtra("party_id");
             inviteUser(party_id, user_id);
-            Toast pass = Toast.makeText(getApplicationContext(), textView.getText().toString() + " added to party", Toast.LENGTH_LONG);
+            Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
             textView.setText("");
+        }
+        else{
+            Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
+            fail.show();
+        }
 //        //Intent intent = new Intent(this, DisplayMessageActivity.class);
 //        EditText person_name = (EditText) findViewById(R.id.invitee);
 //        EditText person_num = (EditText) findViewById(R.id.number);

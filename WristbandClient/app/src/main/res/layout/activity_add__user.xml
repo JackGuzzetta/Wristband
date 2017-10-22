@@ -36,7 +36,16 @@
         android:layout_marginLeft="5dp"
         android:id="@+id/userid"
         android:layout_above="@+id/last">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(Optional) User ID:"
+        android:textColor="@color/colorGray"
+        android:textSize="45px"/>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <Button
@@ -54,14 +63,14 @@
 
     <Button
         android:id="@+id/next"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
         android:text="Back"
         android:clickable="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="1dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="1dp"
         />
 
     <Button

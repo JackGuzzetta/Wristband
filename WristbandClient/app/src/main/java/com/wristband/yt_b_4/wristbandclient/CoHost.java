@@ -32,7 +32,7 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity {
     int max;
-    private Button done, save,btnBack;
+    private Button done, save,btnBack, enter;
     String name, date, time, loc, prev_class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class CoHost extends AppCompatActivity {
         done = (Button) findViewById(R.id.done);
         save = (Button) findViewById(R.id.save);
         btnBack = (Button) findViewById(R.id.btnBack);
+        enter = (Button) findViewById(R.id.enter);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
