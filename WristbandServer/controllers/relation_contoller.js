@@ -20,6 +20,26 @@ module.exports.createRelation = function(user_id, party_id, res) {
 		}
 	});
 }
+module.exports.createRelationInvite = function(user_id, party_id, res) {
+	var relation = new Relation({
+	    party_user_relation: user_id,
+	    party_id: party_id,
+	});
+	relation.save(function(err) {
+		if (err) {
+			console.log("Unable to create relation");
+			res.json({
+			    relations: "Error"
+			})
+		}
+		else {
+			console.log("Created new relation: ", user_id);
+			res.json({
+				    user_id: user_id, party_id: party_id
+			})
+		}
+	});
+}
 module.exports.findAllRelations = function(res) {
 	var relation = new Relation();
 	relation.find('all', function(err, rows, fields) {

@@ -34,6 +34,7 @@ public class GuestScreen extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
+    private String party_id;
     private String party_name, prev_class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +145,8 @@ public class GuestScreen extends AppCompatActivity {
                                     String host = response.getJSONObject(0).getString("host");
                                     String time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
+                                    party_id = response.getJSONObject(0).getString("id");
+
                                     partyText.setText("Party name: " + name);
                                     dateText.setText("Date: " + date);
                                     locationTxt.setText("Location: " + location);
@@ -179,6 +182,7 @@ public class GuestScreen extends AppCompatActivity {
     private void goGuest(View view) {
         Intent intent = new Intent(GuestScreen.this, Add_User.class);
         intent.putExtra("prev", "guest");
+        intent.putExtra("party_id", party_id);
         startActivity(intent);
     }
     private void goBlacklist(View view) {

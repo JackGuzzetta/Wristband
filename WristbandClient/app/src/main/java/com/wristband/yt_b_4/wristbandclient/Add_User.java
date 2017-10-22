@@ -17,11 +17,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
+import com.wristband.yt_b_4.wristbandclient.models.User;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
@@ -29,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Add_User extends AppCompatActivity {
     private Button btnBack, btnDone;
@@ -88,10 +94,8 @@ public class Add_User extends AppCompatActivity {
                     //username.setText(getUserID(text));
                     getUserID(text);
                 }
-
             }
         });
-
     }
 
     private String getUserID(String fullName) {
@@ -168,9 +172,13 @@ public class Add_User extends AppCompatActivity {
     }
 
     public void buttonClickParty(View view) {
-
             String text = textView.getText().toString();
-            getUserID(text);
+            String user_id = getUserID(text);
+            Intent intent = getIntent();
+            String party_id = intent.getStringExtra("party_id");
+            inviteUser(party_id, user_id);
+            Toast pass = Toast.makeText(getApplicationContext(), "Added blah", Toast.LENGTH_LONG);
+            pass.show();
 
 //        //Intent intent = new Intent(this, DisplayMessageActivity.class);
 //        EditText person_name = (EditText) findViewById(R.id.invitee);
@@ -230,4 +238,49 @@ public class Add_User extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    private void inviteUser(final String party_id, final String user_id) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_INVITE_RELATION, null,
+                        new Response.Listener < JSONObject > () {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Toast pass = Toast.makeText(getApplicationContext(), "Added user to party: ", Toast.LENGTH_LONG);
+                                pass.show();
+                                try {
+                                    String username = response.getString("user");
+                                } catch (JSONException e) {
+                                    pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);
+                                    pass.show();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //msgStatus.setText("Error creating account: " + error);
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map< String, String > getHeaders() throws AuthFailureError {
+                        HashMap< String, String > headers = new HashMap < String, String > ();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("party_id", party_id);
+                        headers.put("party_user_relation", user_id);
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+            }
+        }).start();
+    }
+
 }

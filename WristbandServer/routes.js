@@ -58,6 +58,9 @@ module.exports = function(app) {
     app.post('/relation', function(req, res) {
         Relation.createRelation(req.headers.user_id, req.headers.party_id, res)
     });
+    app.post('/relation_invite', function(req, res) {
+        Relation.createRelationInvite(req.headers.party_user_relation, req.headers.party_id, res)
+    });
     // app.put('/users/:id', function(req, res) {
     //     User.updateUser(req.params.id, req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
     // });
