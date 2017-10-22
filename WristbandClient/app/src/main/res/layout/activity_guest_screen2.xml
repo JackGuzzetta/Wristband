@@ -6,23 +6,11 @@
 
 
     <TextView
-        android:id="@+id/msgResponse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="@color/bright"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/btnBack"
-        android:layout_toStartOf="@+id/btnBack" />
-
-    <TextView
         android:id="@+id/partyTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:text="Party"
         android:layout_below="@+id/btnBack"
         android:layout_alignLeft="@+id/dateTxt"
@@ -34,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="39dp"
         android:textSize="20dp"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:text="Time"
         android:layout_below="@+id/dateTxt"
         android:layout_alignParentLeft="true"
@@ -45,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:text="Location"
         android:layout_marginTop="31dp"
         android:layout_below="@+id/time"
@@ -61,7 +49,7 @@
         android:layout_below="@+id/location"
         android:layout_alignParentLeft="true"
         android:textSize="20dp"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -96,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:layout_marginTop="55dp"
         android:text="Date"
         android:layout_below="@+id/partyTxt"

@@ -244,14 +244,6 @@ public class Add_User extends AppCompatActivity {
                         new Response.Listener < JSONObject > () {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Toast pass = Toast.makeText(getApplicationContext(), "Added user to party: ", Toast.LENGTH_LONG);
-                                pass.show();
-                                try {
-                                    String username = response.getString("user");
-                                } catch (JSONException e) {
-                                    pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);
-                                    pass.show();
-                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
