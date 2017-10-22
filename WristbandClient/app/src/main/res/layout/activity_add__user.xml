@@ -36,21 +36,8 @@
         android:layout_marginLeft="5dp"
         android:id="@+id/userid"
         android:layout_above="@+id/last">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="(Optional) User ID:"
-        android:textColor="@color/bright"
-        android:textSize="45px" />
 
-        <EditText
-            android:id="@+id/id"
-            android:layout_width="170dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:editable="false"
-            android:layout_marginLeft="10dp" />
-</LinearLayout>
+    </LinearLayout>
 
     <Button
         android:layout_width="167dp"

@@ -44,7 +44,6 @@ public class Add_User extends AppCompatActivity {
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> userIDs;
-    private EditText foundID;
     private AutoCompleteTextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,6 @@ public class Add_User extends AppCompatActivity {
         loc1 = intent.getStringExtra("loc");
         prev_class = intent.getStringExtra("prev");
         names = new ArrayList<>();
-        foundID = (EditText) findViewById(R.id.id);
 
         userIDs = new ArrayList<>();
         getDataFromServer();
@@ -106,7 +104,6 @@ public class Add_User extends AppCompatActivity {
 
             int idx = names.indexOf(fullName);
             ID = userIDs.get(idx);
-            foundID.setText(ID);
             return ID;
         }
         return null;
@@ -177,9 +174,9 @@ public class Add_User extends AppCompatActivity {
             Intent intent = getIntent();
             String party_id = intent.getStringExtra("party_id");
             inviteUser(party_id, user_id);
-            Toast pass = Toast.makeText(getApplicationContext(), "Added blah", Toast.LENGTH_LONG);
+            Toast pass = Toast.makeText(getApplicationContext(), textView.getText().toString() + " added to party", Toast.LENGTH_LONG);
             pass.show();
-
+            textView.setText("");
 //        //Intent intent = new Intent(this, DisplayMessageActivity.class);
 //        EditText person_name = (EditText) findViewById(R.id.invitee);
 //        EditText person_num = (EditText) findViewById(R.id.number);
