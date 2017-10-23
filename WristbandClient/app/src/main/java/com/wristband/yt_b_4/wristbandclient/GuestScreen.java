@@ -29,7 +29,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 public class GuestScreen extends AppCompatActivity {
-    private Button btnCohost, btnBack, btnGuest, btnBlacklist, btnPhotos, btnComments;
+    private Button btnCohost, btnBack, btnGuest, btnBlacklist, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -41,6 +41,7 @@ public class GuestScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_screen2);
         btnCohost = (Button) findViewById(R.id.btnCohost);
+        btnLocation = (Button) findViewById(R.id.button7);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnGuest = (Button) findViewById(R.id.btnGuest);
         btnBlacklist = (Button) findViewById(R.id.btnBlacklist);
@@ -55,11 +56,20 @@ public class GuestScreen extends AppCompatActivity {
         pDialog.setCancelable(false);
         party_name = getIntent().getStringExtra("party_name");
         getDataFromServer();
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
                 goBack(view);
+            }
+
+        });
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goLocation(view);
             }
 
         });
@@ -70,6 +80,7 @@ public class GuestScreen extends AppCompatActivity {
                 goCohost(view);
             }
         });
+
         btnGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +102,7 @@ public class GuestScreen extends AppCompatActivity {
                 goPhotos(view);
             }
         });
+
         btnComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,6 +185,11 @@ public class GuestScreen extends AppCompatActivity {
 
     private void goCohost(View view) {
         Intent intent = new Intent(GuestScreen.this, CoHost.class);
+        intent.putExtra("prev", "guest");
+        startActivity(intent);
+    }
+    private void goLocation(View view) {
+        Intent intent = new Intent(GuestScreen.this, MapsActivity.class);
         intent.putExtra("prev", "guest");
         startActivity(intent);
     }
