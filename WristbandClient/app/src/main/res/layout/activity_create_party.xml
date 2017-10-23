@@ -22,28 +22,14 @@
         android:layout_marginTop="5dp" />
 
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Party Picture"
-        android:textColor="@color/bright"
-        android:textSize="50px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.032"
-        app:layout_constraintVertical_bias="0.016"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginStart="120dp" />
-
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name your Event:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="50px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,16 +50,16 @@
         android:layout_marginTop="170dp"
         android:id="@+id/eventName"
         android:layout_marginEnd="16dp" />
-
+    </LinearLayout>
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="180dp"
         android:text="Click To Set Date"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="50px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.025"
@@ -86,11 +72,11 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="245dp"
         android:text="Click To Set Time"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="50px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.021"
@@ -98,38 +84,30 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.199" />
-
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/loca"
+    android:layout_above="@+id/time"
+    android:layout_marginTop="340dp"
+    android:layout_marginLeft="2dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set Location:"
-        android:textColor="@color/bright"
-        android:textSize="50px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintVertical_bias="0.2"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="310dp"
-        android:layout_marginStart="4dp" />
+        android:textColor="@color/colorGray"
+        android:textSize="50px" />
 
     <EditText
-        android:layout_width="188dp"
+        android:layout_width="235dp"
         android:layout_height="43dp"
-        android:layout_marginRight="28dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="340dp"
-        android:id="@+id/locat"
-
-        android:layout_marginEnd="28dp" />
+        android:id="@+id/locat" />
+</LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Make Party public"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="50px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -138,7 +116,7 @@
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintVertical_bias="0.034"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="385dp"
+        android:layout_marginTop="395dp"
         android:layout_marginStart="100dp" />
 
     <Switch
@@ -147,7 +125,7 @@
         android:layout_marginRight="180dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="430dp"
         android:id="@+id/swittch"
         android:layout_marginEnd="180dp" />
 
@@ -167,15 +145,15 @@
 
     <Button
         android:id="@+id/btnBack"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
         android:text="Back"
         android:clickable="true"
         android:layout_marginRight="5dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp" />
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"

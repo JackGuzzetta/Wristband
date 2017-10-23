@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/loginscreen">
     android:background="@drawable/bg"
+    android:textColor="@color/colorGray"
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"

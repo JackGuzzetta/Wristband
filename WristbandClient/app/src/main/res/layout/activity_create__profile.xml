@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="First Name:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="45px" />
 
     <EditText
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Last Name:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="45px"
          />
 
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="45px" />
 
     <EditText
@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="45px" />
 
     <EditText
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="45px" />
 
     <EditText
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm password:"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:textSize="45px" />
 
     <EditText
@@ -148,7 +148,7 @@
         android:layout_height="70dp"
         android:layout_marginLeft="131dp"
         android:text="Create Profile"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:clickable="true"
         android:onClick="createProfile"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -163,7 +163,7 @@
         android:layout_height="70dp"
         android:layout_marginLeft="131dp"
         android:text="Back"
-        android:textColor="@color/bright"
+        android:textColor="@color/colorGray"
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
