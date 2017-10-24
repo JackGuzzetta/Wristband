@@ -35,7 +35,8 @@ public class GuestScreen extends AppCompatActivity {
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
     private String party_id;
-    private String party_name, prev_class;
+    private String party_name, prev_class,loc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,7 @@ public class GuestScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                goLocation(view);
+                goLocation(loc);
             }
 
         });
@@ -157,7 +158,7 @@ public class GuestScreen extends AppCompatActivity {
                                     String time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
                                     party_id = response.getJSONObject(0).getString("id");
-
+                                    loc = location;
                                     partyText.setText("Party name: " + name);
                                     dateText.setText("Date: " + date);
                                     locationTxt.setText("Location: " + location);
@@ -178,6 +179,7 @@ public class GuestScreen extends AppCompatActivity {
             }
         }).start();
     }
+
     private void goBack(View view) {
         Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
         startActivity(intent);
@@ -188,9 +190,11 @@ public class GuestScreen extends AppCompatActivity {
         intent.putExtra("prev", "guest");
         startActivity(intent);
     }
-    private void goLocation(View view) {
+    private void goLocation(String party_name) {
         Intent intent = new Intent(GuestScreen.this, MapsActivity.class);
+        intent.putExtra("party_location", party_name);
         intent.putExtra("prev", "guest");
+        finish();
         startActivity(intent);
     }
 
