@@ -114,6 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, zoomLevel));
         }
         catch (Exception e){
+
             Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+address));
             startActivity(searchAddress);
 
