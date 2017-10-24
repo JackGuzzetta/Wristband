@@ -1,5 +1,8 @@
 package com.wristband.yt_b_4.wristbandclient;
 
+/**
+ * Created by Jackguzzetta on 10/23/17.
+ */
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,8 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 
-public class HomeScreen extends AppCompatActivity {
-
+public class PublicParties extends AppCompatActivity {
     Button NewPartyButton,publicparty;
     ListView listView;
     List list = new ArrayList();
@@ -43,8 +45,7 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen2);
-        publicparty = (Button) findViewById(R.id.publicparties);
+        setContentView(R.layout.activity_publicparty);
         NewPartyButton = (Button) findViewById(R.id.button3);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -80,7 +81,7 @@ public class HomeScreen extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
-        adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list);
+        adapter = new ArrayAdapter(PublicParties.this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -99,11 +100,6 @@ public class HomeScreen extends AppCompatActivity {
                 newParty();
             }
         });
-        publicparty.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                publicparty();
-            }
-        });
 
         getAllPartiesByUserId();
     }
@@ -113,10 +109,7 @@ public class HomeScreen extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
-    private void publicparty() {
-        Intent intent = new Intent(HomeScreen.this, PublicParties.class);
-        startActivity(intent);
-    }
+
     public void newParty() {
         Intent intent = new Intent(this, Create_Party.class);
         finish();
