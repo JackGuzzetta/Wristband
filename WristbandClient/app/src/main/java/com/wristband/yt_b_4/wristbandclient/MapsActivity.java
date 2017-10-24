@@ -26,6 +26,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.location.Geocoder;
+import java.util.Locale;
+import android.location.Location;
+import android.support.v4.content.ContextCompat;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.identity.intents.Address;
 import java.util.List;
@@ -58,6 +64,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+//    private void getLocationPermission() {
+//    /*
+//     * Request location permission, so that we can get the location of the
+//     * device. The result of the permission request is handled by a callback,
+//     * onRequestPermissionsResult.
+//     */
+//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+//                android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            mLocationPermissionGranted = true;
+//        } else {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+//                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+//        }
+//    }
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
@@ -77,10 +99,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        double longitude;
+        double latitude;
         mMap = googleMap;
-        Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+address));
-        startActivity(searchAddress);
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<android.location.Address> addresses = geocoder.getFromLocationName(address, 1);
+            android.location.Address address = addresses.get(0);
+            longitude = address.getLongitude();
+            latitude = address.getLatitude();
+            LatLng loc = new LatLng(latitude, longitude);
+            mMap.addMarker(new MarkerOptions().position(loc).title(party_name));
+            float zoomLevel = 16.0f; //This goes up to 21
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, zoomLevel));
+        }
+        catch (Exception e){
+            Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+address));
+            startActivity(searchAddress);
+
+        }
+
+
+
 
     }
 }
