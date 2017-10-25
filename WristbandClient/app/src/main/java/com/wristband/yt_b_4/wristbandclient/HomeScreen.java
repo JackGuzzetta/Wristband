@@ -99,7 +99,7 @@ public class HomeScreen extends AppCompatActivity {
                     view.setBackgroundColor(Color.LTGRAY);
                 }
                 else {
-                    view.setBackgroundColor(Color.BLACK);
+                    view.setBackgroundColor(Color.RED);
                 }
                 return view;
             }
