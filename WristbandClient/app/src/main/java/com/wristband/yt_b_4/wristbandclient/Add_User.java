@@ -227,17 +227,15 @@ public class Add_User extends AppCompatActivity {
 
     private void goBack(View view) {
         if(prev_class.equals("party")) {
-            Intent intent = new Intent(Add_User.this, CoHost.class);
-            intent.putExtra("prev", "party");
-            intent.putExtra("eventname", name1);
-            intent.putExtra("Date", date1);
-            intent.putExtra("Time", time1);
-            intent.putExtra("loc", loc1);
+            Intent intent = new Intent(this, GuestScreen.class);
+            intent.putExtra("party_name", name1);
+            finish();
             startActivity(intent);
         }
         else{
             Intent intent = new Intent(Add_User.this, GuestScreen.class);
             prev_class="add_user";
+            intent.putExtra("party_name", name1);
             intent.putExtra("prev", prev_class);
             startActivity(intent);
         }
