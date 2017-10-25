@@ -161,12 +161,13 @@ public class Create_Profile extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String db_username = response.getJSONObject(0).getString("username");
-                                    if (user.getUsername().equals(db_username)) {
+                                    String db_username = response.getJSONObject(0).getString("users");
+                                    if ("exists".equals(db_username)) {
                                         Toast fail = Toast.makeText(getApplicationContext(), "Username already exists", Toast.LENGTH_LONG);
                                         fail.show();
                                     }
                                     else {
+                                        sendDataToServer(user);
                                     }
                                 } catch (JSONException e) {
                                 }
@@ -175,7 +176,6 @@ public class Create_Profile extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         sendDataToServer(user);
-
                     }
                 });
                 AppController.getInstance().addToRequestQueue(req,
@@ -192,10 +192,24 @@ public class Create_Profile extends AppCompatActivity {
                         new Response.Listener < JSONObject > () {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getUsername(), Toast.LENGTH_LONG);
-                                pass.show();
-                                Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
-                                startActivity(intent);
+                                String username = null;
+                                try {
+                                    username = response.getString("user");
+                                    String id = response.getString("id");
+                                    SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = settings.edit();
+                                    //editor.putString("token", responseToken);
+                                    editor.putString("username", username);
+                                    editor.putString("id", id);
+                                    editor.commit();
+                                    Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getUsername(), Toast.LENGTH_LONG);
+                                    pass.show();
+                                    Intent intent = new Intent(Create_Profile.this, HomeScreen.class);
+                                    startActivity(intent);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
