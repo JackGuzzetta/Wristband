@@ -31,10 +31,11 @@ import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
+import com.wristband.yt_b_4.wristbandclient.models.Party;
 
 
 public class PublicParties extends AppCompatActivity {
-    Button NewPartyButton,publicparty;
+    Button btnback,publicparty;
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> party_ids = new ArrayList<String>();
@@ -46,11 +47,20 @@ public class PublicParties extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publicparty);
-        NewPartyButton = (Button) findViewById(R.id.button3);
+        btnback = (Button) findViewById(R.id.backbutton);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         initializeControls();
+
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                goBack(view);
+            }
+
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +68,7 @@ public class PublicParties extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -78,12 +89,13 @@ public class PublicParties extends AppCompatActivity {
     }
 
     private void initializeControls() {
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.list_view2);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
         adapter = new ArrayAdapter(PublicParties.this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
@@ -93,25 +105,14 @@ public class PublicParties extends AppCompatActivity {
 
             }
         });
-        publicparty=(Button) findViewById(R.id.publicparties);
-        NewPartyButton = (Button) findViewById(R.id.button3);
-        NewPartyButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                newParty();
-            }
-        });
 
-        getAllPartiesByUserId();
+
+        getAllPartiesBypub();
     }
+
     public void guestScreen(String party_name) {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
-        finish();
-        startActivity(intent);
-    }
-
-    public void newParty() {
-        Intent intent = new Intent(this, Create_Party.class);
         finish();
         startActivity(intent);
     }
@@ -133,22 +134,28 @@ public class PublicParties extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.hide();
     }
+    private void goBack(View view) {
+        Intent intent = new Intent(PublicParties.this, HomeScreen.class);
+        startActivity(intent);
+    }
 
-
-    private void getAllPartiesByUserId() {
+    private void getAllPartiesBypub() {
         new Thread(new Runnable() {
             public void run() {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION + user_id,
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
                             new Response.Listener < JSONArray > () {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
-                                            String id = response.getJSONObject(i).getString("party_id");
-                                            party_ids.add(id);
-                                            getDataFromServer(id);
+
+                                                String id = response.getJSONObject(i).getString("party_id");
+                                                party_ids.add(id);
+                                                getDataFromServer(id);
+
+
                                         }
                                     } catch (JSONException e) {}
                                 }
@@ -174,8 +181,13 @@ public class PublicParties extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 try {
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    list.add(name);
-                                    adapter.notifyDataSetChanged();
+                                    String privacy = response.getJSONObject(0).getString("privacy");
+                                    int priv = Integer.parseInt(privacy);
+                                    if(priv==1) {
+                                        list.add(name);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
                                 } catch (JSONException e) {}
                             }
                         }, new Response.ErrorListener() {
