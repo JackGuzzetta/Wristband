@@ -147,7 +147,7 @@ public class HomeScreen extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION_BY_ID + user_id,
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION + user_id,
                             new Response.Listener < JSONArray > () {
                                 @Override
                                 public void onResponse(JSONArray response) {

@@ -371,18 +371,18 @@ public class Create_Party extends AppCompatActivity {
                 //showProgressDialog();
                 try {
                     Thread.sleep(2000L); //wait for party to be created first
-                    sendRelationToServer(user_id, party_id);
+                    sendRelationToServer(user_id, party_id, "1");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
     }
-    private void sendRelationToServer(final String user, final String party) {
+    private void sendRelationToServer(final String user, final String party, final String relation) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                        Const.URL_RELATION_BY_ID, null,
+                        Const.URL_RELATION, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -406,6 +406,7 @@ public class Create_Party extends AppCompatActivity {
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user);
                         headers.put("party_id", party);
+                        headers.put("relation", relation);
                         return headers;
                     }
                 };

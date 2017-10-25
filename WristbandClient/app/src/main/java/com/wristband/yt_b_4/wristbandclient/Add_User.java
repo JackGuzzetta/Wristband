@@ -245,7 +245,7 @@ public class Add_User extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                        Const.URL_INVITE_RELATION, null,
+                        Const.URL_RELATION, null,
                         new Response.Listener < JSONObject > () {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -263,8 +263,9 @@ public class Add_User extends AppCompatActivity {
                     public Map< String, String > getHeaders() throws AuthFailureError {
                         HashMap< String, String > headers = new HashMap < String, String > ();
                         headers.put("Content-Type", "application/json");
+                        headers.put("user_id", user_id);
                         headers.put("party_id", party_id);
-                        headers.put("party_user_relation", user_id);
+                        headers.put("relation", "2");
                         return headers;
                     }
                 };

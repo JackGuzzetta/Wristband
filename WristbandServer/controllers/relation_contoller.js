@@ -1,9 +1,10 @@
 Relation = require('../models/relations');
 
-module.exports.createRelation = function(user_id, party_id, res) {
+module.exports.createRelation = function(user_id, party_id, relation, res) {
 	var relation = new Relation({
 	    user_id: user_id,
 	    party_id: party_id,
+	    party_user_relation: relation
 	});
 	relation.save(function(err) {
 		if (err) {

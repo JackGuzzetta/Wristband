@@ -13,8 +13,6 @@ public class Const {
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/parties";
     public static final String URL_PARTY_BY_NAME =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/party_name/";
-    public static final String URL_RELATION_BY_ID =
+    public static final String URL_RELATION =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/relation/";
-    public static final String URL_INVITE_RELATION =
-            "http://proj-309-yt-b-4.cs.iastate.edu:3000/relation_invite/";
 }
