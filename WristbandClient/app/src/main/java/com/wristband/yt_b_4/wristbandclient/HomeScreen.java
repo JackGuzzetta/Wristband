@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,7 +36,9 @@ public class HomeScreen extends AppCompatActivity {
     Button NewPartyButton,publicparty;
     ListView listView;
     List list = new ArrayList();
-    ArrayList<String> party_ids = new ArrayList<String>();
+    List relationList = new ArrayList();
+
+    ArrayList<String> party_ids = new ArrayList();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
     String user_id;
@@ -80,14 +83,43 @@ public class HomeScreen extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
-        adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list);
+        adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the current item from ListView
+                View view = super.getView(position,convertView,parent);
+                if (relationList.get(position).equals("1"))
+                {
+                    // Set a background color for ListView regular row/item
+                    view.setBackgroundColor(Color.CYAN);
+                }
+                else if (relationList.get(position).equals("2"))
+                {
+                    // Set the background color for alternate row/item
+                    view.setBackgroundColor(Color.LTGRAY);
+                }
+                else {
+                    view.setBackgroundColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
         listView.setAdapter(adapter);
+
+
+        for (int i=0;i<listView.getChildCount();i++){
+            listView.getChildAt(i).setBackgroundColor(Color.CYAN);
+        }
+
+        //listView.setBackgroundColor(Color.CYAN);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
                 String party_name = (String) parent.getItemAtPosition(position);
                 guestScreen(party_name);
+
                 // Display the selected item text on TextView
 
             }
@@ -154,7 +186,9 @@ public class HomeScreen extends AppCompatActivity {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
                                             String id = response.getJSONObject(i).getString("party_id");
+                                            String relation = response.getJSONObject(i).getString("party_user_relation");
                                             party_ids.add(id);
+                                            relationList.add(relation);
                                             getDataFromServer(id);
                                         }
                                     } catch (JSONException e) {}
