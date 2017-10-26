@@ -75,6 +75,7 @@ public class Create_Party extends AppCompatActivity {
     Switch swit;
     String user_id;
     String party_id;
+    String created;
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -202,11 +203,13 @@ public class Create_Party extends AppCompatActivity {
                     SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
                     String host = settings.getString("username", "default");
                     Party p = new Party(name, date, time, 0, 200, 0, host, location);
+                    created= "1";
                     Intent intent = new Intent(Create_Party.this, CoHost.class);
                     intent.putExtra("eventname",eventname.getText().toString());
                     intent.putExtra("Date",Date.getText().toString());
                     intent.putExtra("Time",Time.getText().toString());
                     intent.putExtra("loc",loc.getText().toString());
+                    intent.putExtra("activity",created);
                     intent.putExtra("prev","party");
                     if (s) {
                         p.makePartyPublic();
@@ -214,6 +217,7 @@ public class Create_Party extends AppCompatActivity {
                         getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);
                         blank.show();
+                        create.setVisibility(View.GONE);
                         startActivity(intent);
                     } else {
                         p.MakePartyPrivate();
@@ -221,6 +225,8 @@ public class Create_Party extends AppCompatActivity {
                         getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Private Party Created", Toast.LENGTH_LONG);
                         blank.show();
+                        create.setVisibility(View.GONE);
+
                         startActivity(intent);
                     }
                 }

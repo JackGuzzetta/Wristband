@@ -32,12 +32,18 @@ import com.wristband.yt_b_4.wristbandclient.R;
 
 public class CoHost extends AppCompatActivity {
     int max;
+    int created;
+    String c;
     private Button done, save,btnBack, enter;
     String name, date, time, loc, prev_class;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cohost);
+        c= getIntent().getStringExtra("activity");
+        created= Integer.parseInt(c);
         done = (Button) findViewById(R.id.done);
         save = (Button) findViewById(R.id.save);
         btnBack = (Button) findViewById(R.id.btnBack);
@@ -63,6 +69,8 @@ public class CoHost extends AppCompatActivity {
                 goNext(view);
             }
         });
+        Intent intent1 = getIntent();
+        if(created ==1){btnBack.setVisibility(View.GONE);}
         Intent intent = getIntent();
         name = intent.getStringExtra("eventname");
         date = intent.getStringExtra("Date");
