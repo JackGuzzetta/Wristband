@@ -53,6 +53,8 @@ import java.util.Calendar;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.telephony.SmsManager;
+
 
 /**
  * Created by Jackguzzetta on 9/26/17.
@@ -76,6 +78,7 @@ public class Create_Party extends AppCompatActivity {
     String user_id;
     String party_id;
     String created;
+
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -211,6 +214,7 @@ public class Create_Party extends AppCompatActivity {
                     intent.putExtra("loc",loc.getText().toString());
                     intent.putExtra("activity",created);
                     intent.putExtra("prev","party");
+                  //  sendSms("5554", "Hi You got a message!");
                     if (s) {
                         p.makePartyPublic();
                         sendDataToServer(p);
@@ -298,6 +302,15 @@ public class Create_Party extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+//    private void sendSms(String phoneNumber, String message) {
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "sms:" + phoneNumber ) );
+//        intent.putExtra( "sms_body", message );
+//        startActivity(intent);
+//    }
+//    private void sendsms(String phoneNumber, String message) {
+//        SmsManager sms = SmsManager.getDefault();
+//        sms.sendTextMessage(phoneNumber, null, message, null, null);
+//    }
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();

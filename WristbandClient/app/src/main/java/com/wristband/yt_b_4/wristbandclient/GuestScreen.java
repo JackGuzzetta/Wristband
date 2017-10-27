@@ -1,6 +1,11 @@
 package com.wristband.yt_b_4.wristbandclient;
 
 import com.facebook.login.LoginManager;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
@@ -11,6 +16,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,14 +36,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GuestScreen extends AppCompatActivity {
-    private Button btnCohost, btnBack, btnGuest, btnBlacklist, btnLocation, btnPhotos, btnComments;
+    private Button btnCohost, btnBack, btnGuest, btnBlacklist, btnLocation, btnPhotos, btnComments, btnQR;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ProgressDialog pDialog;
+    private String user_id;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
     private String party_id;
     private String party_name, prev_class,loc;
+    private List relationList = new ArrayList();
+    final Context context = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +67,24 @@ public class GuestScreen extends AppCompatActivity {
         timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
+        btnQR = (Button) findViewById(R.id.btnqr);
+        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+        user_id = settings.getString("id", "default");
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         party_name = getIntent().getStringExtra("party_name");
         getDataFromServer();
 
+
+        btnQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                QRGenerator(party_id,user_id);
+            }
+
+        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +93,7 @@ public class GuestScreen extends AppCompatActivity {
             }
 
         });
+
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,4 +244,20 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Comments.class);
         startActivity(intent);
     }
+    private void QRGenerator(String party_id, String user_id){
+        String text2Qr = party_id +" "+user_id;
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE, 200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            Intent intent = new Intent(context, QrActivity.class);
+            intent.putExtra("pic", bitmap);
+            context.startActivity(intent);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

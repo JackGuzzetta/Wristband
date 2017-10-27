@@ -108,7 +108,9 @@
         android:layout_height="50dp"
         android:text="Add Cohost"
         android:clickable="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_above="@+id/btnqr"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/btnGuest"
@@ -116,9 +118,20 @@
         android:layout_height="50dp"
         android:text="Add Guest"
         android:clickable="true"
+        android:layout_alignBaseline="@+id/btnCohost"
+        android:layout_alignBottom="@+id/btnCohost"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <Button
+        android:id="@+id/btnqr"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:text="View QR Code"
+        android:clickable="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
 
     <Button
         android:id="@+id/btnBlacklist"

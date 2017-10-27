@@ -17,6 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.BarcodeFormat;
+import android.graphics.Bitmap;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,8 +45,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Add_User extends AppCompatActivity {
+    final Context context = this;
     private Button btnBack, btnDone;
-    String prev_class, name1, date1, time1, loc1;
+    private String prev_class, name1, date1, time1, loc1;
     AutoCompleteTextView autoView;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
@@ -65,6 +74,7 @@ public class Add_User extends AppCompatActivity {
             }
 
         });
+
 
         Intent intent = getIntent();
         name1 = intent.getStringExtra("eventname");
@@ -108,6 +118,8 @@ public class Add_User extends AppCompatActivity {
         }
         return null;
     }
+
+
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
@@ -179,6 +191,8 @@ public class Add_User extends AppCompatActivity {
             Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
             textView.setText("");
+            Intent intent2 = new Intent(this, QrActivity.class);
+            startActivity(intent2);
         }
         else{
             Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
@@ -276,6 +290,7 @@ public class Add_User extends AppCompatActivity {
                 // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
+
     }
 
 }
