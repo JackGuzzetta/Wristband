@@ -38,7 +38,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(Optional) User ID:"
+        android:text="Phone Number:"
         android:textColor="@color/colorGray"
         android:textSize="45px"/>
         <AutoCompleteTextView
