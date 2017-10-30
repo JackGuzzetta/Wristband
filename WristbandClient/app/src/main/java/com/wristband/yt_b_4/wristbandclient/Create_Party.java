@@ -3,6 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 10/7/2017.
  */
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,7 +50,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import android.util.Log;
+
 import java.util.Calendar;
+
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -85,7 +88,6 @@ public class Create_Party extends AppCompatActivity {
     private ProgressDialog pDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -104,7 +106,6 @@ public class Create_Party extends AppCompatActivity {
         user_id = settings.getString("id", "default");
 
         swit = (Switch) findViewById(R.id.swittch);
-
 
 
         swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -141,7 +142,7 @@ public class Create_Party extends AppCompatActivity {
                         Create_Party.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
-                        year,month,day);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -168,7 +169,7 @@ public class Create_Party extends AppCompatActivity {
                 TimePickerDialog dialog = new TimePickerDialog(
                         Create_Party.this,
                         mTimeSetListener,
-                        hour,minute,true);
+                        hour, minute, true);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -206,15 +207,15 @@ public class Create_Party extends AppCompatActivity {
                     SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
                     String host = settings.getString("username", "default");
                     Party p = new Party(name, date, time, 0, 200, 0, host, location);
-                    created= "1";
+                    created = "1";
                     Intent intent = new Intent(Create_Party.this, HomeScreen.class);
-                    intent.putExtra("eventname",eventname.getText().toString());
-                    intent.putExtra("Date",Date.getText().toString());
-                    intent.putExtra("Time",Time.getText().toString());
-                    intent.putExtra("loc",loc.getText().toString());
-                    intent.putExtra("activity",created);
-                    intent.putExtra("prev","party");
-                  //  sendSms("5554", "Hi You got a message!");
+                    intent.putExtra("eventname", eventname.getText().toString());
+                    intent.putExtra("Date", Date.getText().toString());
+                    intent.putExtra("Time", Time.getText().toString());
+                    intent.putExtra("loc", loc.getText().toString());
+                    intent.putExtra("activity", created);
+                    intent.putExtra("prev", "party");
+                    //  sendSms("5554", "Hi You got a message!");
                     if (s) {
                         p.makePartyPublic();
                         sendDataToServer(p);
@@ -277,6 +278,7 @@ public class Create_Party extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -300,7 +302,8 @@ public class Create_Party extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-//    private void sendSms(String phoneNumber, String message) {
+
+    //    private void sendSms(String phoneNumber, String message) {
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "sms:" + phoneNumber ) );
 //        intent.putExtra( "sms_body", message );
 //        startActivity(intent);
@@ -318,23 +321,26 @@ public class Create_Party extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.hide();
     }
+
     //We need to get the party id from party name
     //we need the user id
     private void getDataFromServer(final String party_name) {
         new Thread(new Runnable() {
             public void run() {
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + party_name,
-                        new Response.Listener <JSONArray> () {
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
                                     party_id = response.getJSONObject(0).getString("id");
                                     sendRelationToServer(user_id, party_id, "1");
-                                } catch (JSONException e) {}
+                                } catch (JSONException e) {
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {}
+                    public void onErrorResponse(VolleyError error) {
+                    }
                 });
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);
@@ -387,6 +393,7 @@ public class Create_Party extends AppCompatActivity {
             }
         }).start();
     }
+
     private void sendRelationToServer(final String user, final String party_id, final String relation) {
         new Thread(new Runnable() {
             public void run() {

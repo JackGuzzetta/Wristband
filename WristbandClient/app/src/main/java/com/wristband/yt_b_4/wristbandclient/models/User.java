@@ -14,7 +14,8 @@ public class User {
         this.password = password;
         this.email = email;
     }
-    public User(String f_name, String l_name, String username, String password, String email, String reenter){
+
+    public User(String f_name, String l_name, String username, String password, String email, String reenter) {
         this.f_name = f_name;
         this.l_name = l_name;
         this.username = username;
@@ -26,15 +27,19 @@ public class User {
     public String getFirstName() {
         return this.f_name;
     }
+
     public String getLastName() {
         return this.l_name;
     }
+
     public String getUsername() {
         return this.username;
     }
+
     public String getEmail() {
         return this.email;
     }
+
     public String getPassword() {
         return this.password;
     }

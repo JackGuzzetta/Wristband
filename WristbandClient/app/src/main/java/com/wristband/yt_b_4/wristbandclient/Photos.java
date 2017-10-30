@@ -14,7 +14,7 @@ import android.widget.Button;
 import com.facebook.login.LoginManager;
 
 public class Photos extends AppCompatActivity {
-private Button btnBack;
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ private Button btnBack;
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:

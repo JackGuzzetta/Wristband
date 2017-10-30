@@ -19,35 +19,50 @@ public class Party {
         this.host = host;
         this.location = location;
     }
+
     public String getPartyName() {
         return this.party_name;
     }
+
     public String getDate() {
         return this.date;
     }
+
     public String getTime() {
         return this.time;
     }
+
     public int getPrivacy() {
         return this.privacy;
     }
+
     public int getMaxPeople() {
         return this.max_people;
     }
+
     public int getAlerts() {
         return this.alerts;
     }
-    public String getHost() { return this.host; }
-    public String getLocation() {return this.location; }
-    public int makePartyPublic(){
+
+    public String getHost() {
+        return this.host;
+    }
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public int makePartyPublic() {
         this.privacy = 1;
         return this.privacy;
     }
-    public int MakePartyPrivate(){
+
+    public int MakePartyPrivate() {
         this.privacy = 0;
         return this.privacy;
     }
-    public void setLocation(String location){
+
+    public void setLocation(String location) {
         this.location = location;
     }
 }

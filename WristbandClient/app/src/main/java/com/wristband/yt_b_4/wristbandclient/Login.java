@@ -3,6 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Mike on 9/23/2017.
  */
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -71,6 +72,7 @@ public class Login extends AppCompatActivity {
 
     CallbackManager callbackManager;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,7 @@ public class Login extends AppCompatActivity {
         }
         loginWithFB();
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.loginmenu, menu);
@@ -103,6 +106,7 @@ public class Login extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void initializeControls() {
         callbackManager = CallbackManager.Factory.create();
         txtStatus = (TextView) findViewById(R.id.txtstatus);
@@ -133,13 +137,14 @@ public class Login extends AppCompatActivity {
         if (!pDialog.isShowing())
             pDialog.show();
     }
+
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();
     }
 
     private void loginWithFB() {
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback < LoginResult > () {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -155,7 +160,7 @@ public class Login extends AppCompatActivity {
                                     String email = null;
                                     if (object.has("email"))
                                         email = object.getString("email");
-                                    user = new User(f_name,l_name,fb_id,null,email);
+                                    user = new User(f_name, l_name, fb_id, null, email);
                                     checkIfUserExists(user);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -184,6 +189,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
     public boolean isLoggedIn() {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         String username = settings.getString("username", null);
@@ -207,7 +213,7 @@ public class Login extends AppCompatActivity {
     private void PrintFBHashKey() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.wristband.yt_b_4.wristbandclient", PackageManager.GET_SIGNATURES);
-            for (Signature signature: info.signatures) {
+            for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
                 //msgResponse.setText("KeyHash:" + Base64.encodeToString(md.digest(), Base64.DEFAULT));
@@ -240,7 +246,7 @@ public class Login extends AppCompatActivity {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_USERS + "/login", null,
-                        new Response.Listener <JSONObject> () {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Toast toast;
@@ -280,8 +286,8 @@ public class Login extends AppCompatActivity {
                      * Passing some request headers
                      * */
                     @Override
-                    public Map< String, String > getHeaders() throws AuthFailureError {
-                        HashMap< String, String > headers = new HashMap < String, String > ();
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("username", username);
                         headers.put("password", password);
@@ -296,11 +302,12 @@ public class Login extends AppCompatActivity {
             }
         }).start();
     }
+
     private void checkIfUserExists(final User user) {
         new Thread(new Runnable() {
             public void run() {
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user.getUsername(),
-                        new Response.Listener <JSONArray> () {
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
@@ -317,18 +324,17 @@ public class Login extends AppCompatActivity {
                                         editor.commit();
                                         Intent intent = new Intent(Login.this, HomeScreen.class);
                                         startActivity(intent);
-                                    }
-                                    else {
+                                    } else {
                                         makeProfile(user);
                                     }
                                 } catch (JSONException e) {
-                                    txtStatus.setText("Error "+ e);
+                                    txtStatus.setText("Error " + e);
                                 }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        txtStatus.setText("Error "+ error);
+                        txtStatus.setText("Error " + error);
 
                     }
                 });
@@ -337,12 +343,13 @@ public class Login extends AppCompatActivity {
             }
         }).start();
     }
+
     private void makeProfile(final User user) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_USERS, null,
-                        new Response.Listener < JSONObject > () {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Toast pass = Toast.makeText(getApplicationContext(), "Welcome: " + user.getFirstName(), Toast.LENGTH_LONG);
@@ -362,7 +369,7 @@ public class Login extends AppCompatActivity {
                                     pass = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
                                     pass.show();
                                 } catch (JSONException e) {
-                                    pass = Toast.makeText(getApplicationContext(), "error: " , Toast.LENGTH_LONG);
+                                    pass = Toast.makeText(getApplicationContext(), "error: ", Toast.LENGTH_LONG);
                                     pass.show();
                                 }
                                 //stores user and token into encrypted storage accessible across activities
@@ -381,8 +388,8 @@ public class Login extends AppCompatActivity {
                      * Passing some request headers
                      * */
                     @Override
-                    public Map < String, String > getHeaders() throws AuthFailureError {
-                        HashMap < String, String > headers = new HashMap < String, String > ();
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("f_name", user.getFirstName());
                         headers.put("l_name", user.getLastName());

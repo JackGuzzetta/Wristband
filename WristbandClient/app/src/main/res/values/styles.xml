@@ -13,7 +13,7 @@
     </style>
 
     <style name="myCustomText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name = "android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

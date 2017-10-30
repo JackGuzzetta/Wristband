@@ -3,21 +3,25 @@ package com.wristband.yt_b_4.wristbandclient.examples;
 /**
  * Created by Mike on 10/6/2017.
  */
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.wristband.yt_b_4.wristbandclient.R;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.User;
@@ -26,6 +30,7 @@ import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +49,7 @@ public class exampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example);
         initializeControls();
-    //write login key
+        //write login key
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("key", "123");
@@ -52,10 +57,11 @@ public class exampleActivity extends AppCompatActivity {
 
 //        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
 //        String myString = settings.getString("username", "default");
-    //read login key
-        String  highScore = sharedPref.getString("key", "default");
+        //read login key
+        String highScore = sharedPref.getString("key", "default");
         msgStatus.setText(highScore);
     }
+
     private void initializeControls() {
         //initialize variables
         f_name = (EditText) findViewById(R.id.edit_firstName);
@@ -64,7 +70,7 @@ public class exampleActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.edit_Password);
         email = (EditText) findViewById(R.id.edit_Email);
         createAccountBtn = (Button) findViewById(R.id.button_createAccount);
-        msgStatus = (TextView) findViewById(R.id.textView) ;
+        msgStatus = (TextView) findViewById(R.id.textView);
 
         getUser = (EditText) findViewById(R.id.edit_getUser);
         getUserBtn = (Button) findViewById(R.id.button_getUser);
@@ -80,7 +86,7 @@ public class exampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                user = new User (f_name.getText().toString(), l_name.getText().toString(), username.getText().toString(), password.getText().toString(), email.getText().toString());
+                user = new User(f_name.getText().toString(), l_name.getText().toString(), username.getText().toString(), password.getText().toString(), email.getText().toString());
                 sendDataToServer(user);
             }
         });

@@ -44,17 +44,20 @@ public class Create_Profile extends AppCompatActivity {
     private TextView msgStatus;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create__profile);
         initializeControls();
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
@@ -72,6 +75,7 @@ public class Create_Profile extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void initializeControls() {
         first_name = (EditText) findViewById(R.id.fname);
         last_name = (EditText) findViewById(R.id.lname);
@@ -106,6 +110,7 @@ public class Create_Profile extends AppCompatActivity {
         if (!pDialog.isShowing())
             pDialog.show();
     }
+
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();
@@ -150,14 +155,16 @@ public class Create_Profile extends AppCompatActivity {
         }
 
     }
+
     private void finishProfile(final User user) {
 
     }
+
     private void checkIfUserExists(final User user) {
         new Thread(new Runnable() {
             public void run() {
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user.getUsername(),
-                        new Response.Listener < JSONArray > () {
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
@@ -165,8 +172,7 @@ public class Create_Profile extends AppCompatActivity {
                                     if ("exists".equals(db_username)) {
                                         Toast fail = Toast.makeText(getApplicationContext(), "Username already exists", Toast.LENGTH_LONG);
                                         fail.show();
-                                    }
-                                    else {
+                                    } else {
                                         sendDataToServer(user);
                                     }
                                 } catch (JSONException e) {
@@ -189,7 +195,7 @@ public class Create_Profile extends AppCompatActivity {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_USERS, null,
-                        new Response.Listener < JSONObject > () {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 String username = null;
@@ -221,8 +227,8 @@ public class Create_Profile extends AppCompatActivity {
                      * Passing some request headers
                      * */
                     @Override
-                    public Map < String, String > getHeaders() throws AuthFailureError {
-                        HashMap < String, String > headers = new HashMap < String, String > ();
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("f_name", user.getFirstName());
                         headers.put("l_name", user.getLastName());

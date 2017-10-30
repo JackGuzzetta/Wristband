@@ -18,7 +18,6 @@ public class QrActivity extends AppCompatActivity {
     private ImageView imageView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +36,7 @@ public class QrActivity extends AppCompatActivity {
         });
 
     }
+
     private void goBack(View view) {
         Intent intent = new Intent(QrActivity.this, GuestScreen.class);
         startActivity(intent);

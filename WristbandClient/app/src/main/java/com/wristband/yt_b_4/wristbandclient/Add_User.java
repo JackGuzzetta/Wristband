@@ -21,9 +21,10 @@ import android.widget.Toast;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.BarcodeFormat;
-import android.graphics.Bitmap;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import android.graphics.Bitmap;
+
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 
 import com.android.volley.AuthFailureError;
@@ -56,6 +57,7 @@ public class Add_User extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> userIDs;
     private AutoCompleteTextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,11 +97,10 @@ public class Add_User extends AppCompatActivity {
         textView.setAdapter(adapter);
 
 
-
         textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
+                if (!hasFocus) {
                     String text = textView.getText().toString();
                     //username.setText(getUserID(text));
                     getUserID(text);
@@ -158,6 +159,7 @@ public class Add_User extends AppCompatActivity {
             }
         }).start();
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -183,18 +185,17 @@ public class Add_User extends AppCompatActivity {
     }
 
     public void buttonClickParty(View view) {
-            String user_id;
-            boolean isChecked;
-            String coHost;
-            String text = textView.getText().toString();
-        if(text.isEmpty() == false) {
+        String user_id;
+        boolean isChecked;
+        String coHost;
+        String text = textView.getText().toString();
+        if (text.isEmpty() == false) {
             user_id = getUserID(text);
             isChecked = checkbox.isChecked();
             if (isChecked == true) {
                 //cohost = true
                 coHost = "3";
-            }
-            else {
+            } else {
                 coHost = "2";
             }
             Intent intent = getIntent();
@@ -205,8 +206,7 @@ public class Add_User extends AppCompatActivity {
             textView.setText("");
             //Intent intent2 = new Intent(this, QrActivity.class);
             //startActivity(intent2);
-        }
-        else{
+        } else {
             Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
             fail.show();
         }
@@ -218,15 +218,14 @@ public class Add_User extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        if(prev_class.equals("party")) {
+        if (prev_class.equals("party")) {
             Intent intent = new Intent(this, GuestScreen.class);
             intent.putExtra("party_name", name1);
             finish();
             startActivity(intent);
-        }
-        else{
+        } else {
             Intent intent = new Intent(Add_User.this, GuestScreen.class);
-            prev_class="add_user";
+            prev_class = "add_user";
             intent.putExtra("party_name", name1);
             intent.putExtra("prev", prev_class);
             startActivity(intent);
@@ -238,7 +237,7 @@ public class Add_User extends AppCompatActivity {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_RELATION, null,
-                        new Response.Listener < JSONObject > () {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                             }
@@ -252,8 +251,8 @@ public class Add_User extends AppCompatActivity {
                      * Passing some request headers
                      * */
                     @Override
-                    public Map< String, String > getHeaders() throws AuthFailureError {
-                        HashMap< String, String > headers = new HashMap < String, String > ();
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
                         headers.put("party_id", party_id);

@@ -3,6 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 /**
  * Created by Jackguzzetta on 10/23/17.
  */
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -25,17 +26,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.facebook.login.LoginManager;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 
 
 public class PublicParties extends AppCompatActivity {
-    Button btnback,publicparty;
+    Button btnback, publicparty;
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> party_ids = new ArrayList<String>();
@@ -43,6 +48,7 @@ public class PublicParties extends AppCompatActivity {
     ProgressDialog pDialog;
     String user_id;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,18 +128,22 @@ public class PublicParties extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
     @Override
     public void onBackPressed() {
         // Do Here what ever you want do on back press;
     }
+
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
+
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();
     }
+
     private void goBack(View view) {
         Intent intent = new Intent(PublicParties.this, HomeScreen.class);
         startActivity(intent);
@@ -145,21 +155,23 @@ public class PublicParties extends AppCompatActivity {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
                     JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
-                            new Response.Listener < JSONArray > () {
+                            new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
 
-                                                String id = response.getJSONObject(i).getString("party_id");
-                                                party_ids.add(id);
-                                                getDataFromServer(id);
+                                            String id = response.getJSONObject(i).getString("party_id");
+                                            party_ids.add(id);
+                                            getDataFromServer(id);
                                         }
-                                    } catch (JSONException e) {}
+                                    } catch (JSONException e) {
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {}
+                        public void onErrorResponse(VolleyError error) {
+                        }
                     });
                     AppController.getInstance().addToRequestQueue(req,
                             tag_json_arry);
@@ -169,28 +181,31 @@ public class PublicParties extends AppCompatActivity {
             }
         }).start();
     }
+
     private void getDataFromServer(final String id) {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
-                        new Response.Listener < JSONArray > () {
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
                                     String name = response.getJSONObject(0).getString("party_name");
                                     String privacy = response.getJSONObject(0).getString("privacy");
                                     int priv = Integer.parseInt(privacy);
-                                    if(priv==1) {
+                                    if (priv == 1) {
                                         list.add(name);
                                         adapter.notifyDataSetChanged();
                                     }
 
-                                } catch (JSONException e) {}
+                                } catch (JSONException e) {
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {}
+                    public void onErrorResponse(VolleyError error) {
+                    }
                 });
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);

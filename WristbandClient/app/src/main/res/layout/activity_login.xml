@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/loginscreen">
     android:background="@drawable/bg"
     android:textColor="@color/colorGray"
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -14,8 +16,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-
 
 
     </FrameLayout>
@@ -59,8 +59,7 @@
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:text="create new account"
-     />
+        android:text="create new account" />
 
     <Button
         android:id="@+id/btnLogin"

@@ -23,17 +23,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.facebook.login.LoginManager;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 
 public class HomeScreen extends AppCompatActivity {
 
-    Button NewPartyButton,publicparty;
+    Button NewPartyButton, publicparty;
     ListView listView;
     List list = new ArrayList();
     List relationList = new ArrayList();
@@ -43,6 +46,7 @@ public class HomeScreen extends AppCompatActivity {
     ProgressDialog pDialog;
     String user_id;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,23 +89,18 @@ public class HomeScreen extends AppCompatActivity {
         user_id = settings.getString("id", "default");
         adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){
+            public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-                if (relationList.get(position).equals("1"))
-                {
+                View view = super.getView(position, convertView, parent);
+                if (relationList.get(position).equals("1")) {
                     // Set a background color for ListView regular row/item
                     view.setBackgroundColor(Color.parseColor("#19c482"));
-                }
-                else if (relationList.get(position).equals("2"))
-                {
+                } else if (relationList.get(position).equals("2")) {
                     // Set the background color for alternate row/item
                     view.setBackgroundColor(Color.parseColor("#a6abae"));
-                }
-                else if (relationList.get(position).equals("3")){
+                } else if (relationList.get(position).equals("3")) {
                     view.setBackgroundColor(Color.parseColor("#326f93"));
-                }
-                else {
+                } else {
                     view.setBackgroundColor(Color.RED);
                 }
                 return view;
@@ -111,7 +110,7 @@ public class HomeScreen extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-        for (int i=0;i<listView.getChildCount();i++){
+        for (int i = 0; i < listView.getChildCount(); i++) {
             listView.getChildAt(i).setBackgroundColor(Color.CYAN);
         }
 
@@ -120,7 +119,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
-                String party_name = (String)parent.getItemAtPosition(position);
+                String party_name = (String) parent.getItemAtPosition(position);
                 String relation = relationList.get(position).toString();
                 guestScreen(party_name, relation);
 
@@ -128,7 +127,7 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         });
-        publicparty=(Button) findViewById(R.id.publicparties);
+        publicparty = (Button) findViewById(R.id.publicparties);
         NewPartyButton = (Button) findViewById(R.id.button3);
         NewPartyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -143,6 +142,7 @@ public class HomeScreen extends AppCompatActivity {
 
         getAllPartiesByUserId();
     }
+
     public void guestScreen(String party_name, String relation) {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
@@ -150,10 +150,12 @@ public class HomeScreen extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
     private void publicparty() {
         Intent intent = new Intent(HomeScreen.this, PublicParties.class);
         startActivity(intent);
     }
+
     public void newParty() {
         Intent intent = new Intent(this, Create_Party.class);
         finish();
@@ -165,14 +167,17 @@ public class HomeScreen extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
     @Override
     public void onBackPressed() {
         // Do Here what ever you want do on back press;
     }
+
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
+
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();
@@ -185,7 +190,7 @@ public class HomeScreen extends AppCompatActivity {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
                     JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION + user_id,
-                            new Response.Listener < JSONArray > () {
+                            new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
@@ -196,11 +201,13 @@ public class HomeScreen extends AppCompatActivity {
                                             relationList.add(relation);
                                             getDataFromServer(id);
                                         }
-                                    } catch (JSONException e) {}
+                                    } catch (JSONException e) {
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {}
+                        public void onErrorResponse(VolleyError error) {
+                        }
                     });
                     AppController.getInstance().addToRequestQueue(req,
                             tag_json_arry);
@@ -210,23 +217,26 @@ public class HomeScreen extends AppCompatActivity {
             }
         }).start();
     }
+
     private void getDataFromServer(final String id) {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
-                        new Response.Listener < JSONArray > () {
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
                                     String name = response.getJSONObject(0).getString("party_name");
                                     list.add(name);
                                     adapter.notifyDataSetChanged();
-                                } catch (JSONException e) {}
+                                } catch (JSONException e) {
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {}
+                    public void onErrorResponse(VolleyError error) {
+                    }
                 });
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);

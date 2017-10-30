@@ -15,6 +15,7 @@ import com.facebook.login.LoginManager;
 
 public class Blacklist extends AppCompatActivity {
     private Button btnBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class Blacklist extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:

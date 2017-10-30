@@ -12,6 +12,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +55,7 @@ public class GuestScreen extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private String party_id, user_id;
-    private String party_name, relation, prev_class,loc;
+    private String party_name, relation, prev_class, loc;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -121,43 +122,39 @@ public class GuestScreen extends AppCompatActivity {
         prev_class = intent.getStringExtra("prev");
 
 
-
-
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new ArrayAdapter(GuestScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){
+            public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-                if (relationList.get(position).equals("1"))
-                {
+                View view = super.getView(position, convertView, parent);
+                if (relationList.get(position).equals("1")) {
                     // Set a background color for ListView regular row/item
                     view.setBackgroundColor(Color.parseColor("#19c482"));
-                }
-                else if (relationList.get(position).equals("2"))
-                {
+                } else if (relationList.get(position).equals("2")) {
                     // Set the background color for alternate row/item
                     view.setBackgroundColor(Color.parseColor("#a6abae"));
-                }
-                else if (relationList.get(position).equals("3")){
+                } else if (relationList.get(position).equals("3")) {
                     view.setBackgroundColor(Color.parseColor("#326f93"));
-                }
-                else {
+                } else {
                     view.setBackgroundColor(Color.RED);
                 }
                 return view;
             }
         };
-        listView.setAdapter(adapter);;
+        listView.setAdapter(adapter);
+        ;
         getDataFromServer();
 
 
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.guestmenu, menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -191,14 +188,13 @@ public class GuestScreen extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void deleteUser() {
         if (relation.equals("1")) {
             deleteParty(party_id);
-        }
-        else if (relation.equals("2") || relation.equals("3")) {
-           deleteRelation(user_id, relation);
-        }
-        else {
+        } else if (relation.equals("2") || relation.equals("3")) {
+            deleteRelation(user_id, relation);
+        } else {
             //error
         }
     }
@@ -208,7 +204,7 @@ public class GuestScreen extends AppCompatActivity {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
                         Const.URL_RELATION, null,
-                        new Response.Listener < JSONObject > () {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                             }
@@ -222,8 +218,8 @@ public class GuestScreen extends AppCompatActivity {
                      * Passing some request headers
                      * */
                     @Override
-                    public Map< String, String > getHeaders() throws AuthFailureError {
-                        HashMap< String, String > headers = new HashMap < String, String > ();
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
                         headers.put("relation_id", relation);
@@ -244,7 +240,7 @@ public class GuestScreen extends AppCompatActivity {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
                         Const.URL_PARTY + party_id, null,
-                        new Response.Listener <JSONObject> () {
+                        new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                             }
@@ -257,8 +253,8 @@ public class GuestScreen extends AppCompatActivity {
                      * Passing some request headers
                      * */
                     @Override
-                    public Map< String, String > getHeaders() throws AuthFailureError {
-                        HashMap< String, String > headers = new HashMap < String, String > ();
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         //headers.put("party_id", party_id);
                         return headers;
@@ -272,11 +268,12 @@ public class GuestScreen extends AppCompatActivity {
             }
         }).start();
     }
+
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + party_name,
-                        new Response.Listener < JSONArray > () {
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
@@ -326,12 +323,14 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Photos.class);
         startActivity(intent);
     }
+
     private void goComments(View view) {
         Intent intent = new Intent(GuestScreen.this, Comments.class);
         startActivity(intent);
     }
-    private void QRGenerator(String party_id, String user_id){
-        String text2Qr = party_id +" "+user_id;
+
+    private void QRGenerator(String party_id, String user_id) {
+        String text2Qr = party_id + " " + user_id;
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE, 200, 200);
@@ -344,13 +343,14 @@ public class GuestScreen extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void getAllUsers() {
         new Thread(new Runnable() {
             public void run() {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
                     JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
-                            new Response.Listener < JSONArray > () {
+                            new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
@@ -364,11 +364,13 @@ public class GuestScreen extends AppCompatActivity {
                                             }
                                             //
                                         }
-                                    } catch (JSONException e) {}
+                                    } catch (JSONException e) {
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {}
+                        public void onErrorResponse(VolleyError error) {
+                        }
                     });
                     AppController.getInstance().addToRequestQueue(req,
                             tag_json_arry);
@@ -378,12 +380,13 @@ public class GuestScreen extends AppCompatActivity {
             }
         }).start();
     }
+
     private void getDataFromServer(final String id) {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS +"/" + id,
-                        new Response.Listener < JSONArray > () {
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS + "/" + id,
+                        new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
@@ -394,11 +397,13 @@ public class GuestScreen extends AppCompatActivity {
                                     list.add(name);
                                     adapter.notifyDataSetChanged();
 
-                                } catch (JSONException e) {}
+                                } catch (JSONException e) {
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {}
+                    public void onErrorResponse(VolleyError error) {
+                    }
                 });
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);

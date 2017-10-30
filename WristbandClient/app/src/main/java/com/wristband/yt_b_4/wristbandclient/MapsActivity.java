@@ -11,6 +11,7 @@ import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -27,15 +29,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.location.Geocoder;
+
 import java.util.Locale;
+
 import android.location.Location;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.identity.intents.Address;
-import java.util.List;
 
+import java.util.List;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -64,7 +68,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
-//    private void getLocationPermission() {
+
+    //    private void getLocationPermission() {
 //    /*
 //     * Request location permission, so that we can get the location of the
 //     * device. The result of the permission request is handled by a callback,
@@ -84,6 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (!pDialog.isShowing())
             pDialog.show();
     }
+
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();
@@ -112,15 +118,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.addMarker(new MarkerOptions().position(loc).title(party_name));
             float zoomLevel = 16.0f; //This goes up to 21
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, zoomLevel));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
-            Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+address));
+            Intent searchAddress = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + address));
             startActivity(searchAddress);
 
         }
-
-
 
 
     }
