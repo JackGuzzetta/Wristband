@@ -58,13 +58,9 @@ module.exports = function(app) {
     app.post('/relation', function(req, res) {
         Relation.createRelation(req.headers.user_id, req.headers.party_id, req.headers.relation, res)
     });
-    // app.put('/users/:id', function(req, res) {
-    //     User.updateUser(req.params.id, req.headers.f_name, req.headers.l_name, req.headers.username, req.headers.password, req.headers.email, res)
-    // });
-    // app.delete('/users/:id', function(req, res) {
-    //     User.deleteUser(req.params.id, res);
-    // });
-    //----------------------------
+    app.delete('/relation', function(req, res) {
+        Relation.deleteRelation(req.headers.user_id, req.headers.relation, res);
+    });
 
     app.post('/users/login', function(req, res) {
         User.login(req.headers.username, req.headers.password, res);

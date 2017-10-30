@@ -89,3 +89,21 @@ module.exports.findRelationByID = function(id, res) {
 		}
 	});
 }
+module.exports.deleteRelation = function(user_id, relation, res) {
+    relation = new Relation();
+    relation.set('user_id', user_id);
+    relation.set('party_user_relation', relation);
+    relation.remove(function(err) {
+        if (err) {
+            console.log("Tried to delete a null relation: ", id);
+            res.json({
+                relations: "Error"
+            })
+        } else {
+            console.log('Deleted relation: ', user_id, relation);
+            res.json({
+                relations: "Success"
+            })
+        }
+    });
+}
