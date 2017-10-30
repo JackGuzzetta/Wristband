@@ -229,7 +229,7 @@ public class GuestScreen extends AppCompatActivity {
                         HashMap< String, String > headers = new HashMap < String, String > ();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
-                        headers.put("relation", relation);
+                        headers.put("relation_id", relation);
                         return headers;
                     }
                 };

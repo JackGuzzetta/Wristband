@@ -89,18 +89,16 @@ module.exports.findRelationByID = function(id, res) {
 		}
 	});
 }
-module.exports.deleteRelation = function(user_id, relation, res) {
+module.exports.deleteRelation = function(user_id, relation_id, res) {
     relation = new Relation();
-    relation.set('user_id', user_id);
-    relation.set('party_user_relation', relation);
-    relation.remove(function(err) {
+    relation.query("DELETE FROM party_relation WHERE user_id=\"" + user_id+ "\" AND party_user_relation=\"" + relation_id + "\"", function(err, rows, fields) {
         if (err) {
-            console.log("Tried to delete a null relation: ", id);
+            console.log("Tried to delete a null relation: ", user_id, err);
             res.json({
                 relations: "Error"
             })
         } else {
-            console.log('Deleted relation: ', user_id, relation);
+            console.log('Deleted relation: ', user_id, relation_id);
             res.json({
                 relations: "Success"
             })
