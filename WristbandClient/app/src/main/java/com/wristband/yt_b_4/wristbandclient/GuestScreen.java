@@ -176,8 +176,8 @@ public class GuestScreen extends AppCompatActivity {
                 return true;
             case R.id.delete:
                 deleteUser();
-                intent = new Intent(GuestScreeng.this, HomeScreen.class);
-                startActivity(intent);
+                intent = new Intent(GuestScreen.this, HomeScreen.class);
+                //startActivity(intent);
                 //startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
@@ -197,7 +197,7 @@ public class GuestScreen extends AppCompatActivity {
             deleteParty(party_id);
         }
         else if (relation.equals("2") || relation.equals("3")) {
-           //deleteRelation("77", "1");
+           deleteRelation(user_id, relation);
         }
         else {
             //error
@@ -205,6 +205,8 @@ public class GuestScreen extends AppCompatActivity {
     }
 
     private void deleteRelation(final String user_id, final String relation) {
+        Toast pass = Toast.makeText(getApplicationContext(), user_id + " " + relation , Toast.LENGTH_LONG);
+        pass.show();
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
