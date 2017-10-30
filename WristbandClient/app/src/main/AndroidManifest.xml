@@ -36,10 +36,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CoHost"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Create_Party"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />

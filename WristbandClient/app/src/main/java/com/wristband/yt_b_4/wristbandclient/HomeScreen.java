@@ -91,12 +91,15 @@ public class HomeScreen extends AppCompatActivity {
                 if (relationList.get(position).equals("1"))
                 {
                     // Set a background color for ListView regular row/item
-                    view.setBackgroundColor(Color.CYAN);
+                    view.setBackgroundColor(Color.parseColor("#19c482"));
                 }
                 else if (relationList.get(position).equals("2"))
                 {
                     // Set the background color for alternate row/item
-                    view.setBackgroundColor(Color.LTGRAY);
+                    view.setBackgroundColor(Color.parseColor("#a6abae"));
+                }
+                else if (relationList.get(position).equals("3")){
+                    view.setBackgroundColor(Color.parseColor("#326f93"));
                 }
                 else {
                     view.setBackgroundColor(Color.RED);
@@ -117,8 +120,9 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
-                String party_name = (String) parent.getItemAtPosition(position);
-                guestScreen(party_name);
+                String party_name = (String)parent.getItemAtPosition(position);
+                String relation = relationList.get(position).toString();
+                guestScreen(party_name, relation);
 
                 // Display the selected item text on TextView
 
@@ -139,9 +143,10 @@ public class HomeScreen extends AppCompatActivity {
 
         getAllPartiesByUserId();
     }
-    public void guestScreen(String party_name) {
+    public void guestScreen(String party_name, String relation) {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
+        intent.putExtra("relation", relation);
         finish();
         startActivity(intent);
     }
@@ -209,7 +214,7 @@ public class HomeScreen extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY +"/" + id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
                         new Response.Listener < JSONArray > () {
                             @Override
                             public void onResponse(JSONArray response) {

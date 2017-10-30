@@ -207,7 +207,7 @@ public class Create_Party extends AppCompatActivity {
                     String host = settings.getString("username", "default");
                     Party p = new Party(name, date, time, 0, 200, 0, host, location);
                     created= "1";
-                    Intent intent = new Intent(Create_Party.this, CoHost.class);
+                    Intent intent = new Intent(Create_Party.this, HomeScreen.class);
                     intent.putExtra("eventname",eventname.getText().toString());
                     intent.putExtra("Date",Date.getText().toString());
                     intent.putExtra("Time",Time.getText().toString());
@@ -218,7 +218,7 @@ public class Create_Party extends AppCompatActivity {
                     if (s) {
                         p.makePartyPublic();
                         sendDataToServer(p);
-                        getDataFromServer(p.getPartyName());
+                        //getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.GONE);
@@ -226,11 +226,10 @@ public class Create_Party extends AppCompatActivity {
                     } else {
                         p.MakePartyPrivate();
                         sendDataToServer(p);
-                        getDataFromServer(p.getPartyName());
+                        //getDataFromServer(p.getPartyName());
                         Toast blank = Toast.makeText(getApplicationContext(), "Private Party Created", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.GONE);
-
                         startActivity(intent);
                     }
                 }
@@ -242,7 +241,6 @@ public class Create_Party extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GaleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
                 startActivityForResult(GaleryIntent, RESULT_LOAD_IMAGE);
             }
 
@@ -325,17 +323,13 @@ public class Create_Party extends AppCompatActivity {
     private void getDataFromServer(final String party_name) {
         new Thread(new Runnable() {
             public void run() {
-                try {
-                    Thread.sleep(500L); //wait for party to be created first
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + party_name,
                         new Response.Listener <JSONArray> () {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
                                     party_id = response.getJSONObject(0).getString("id");
+                                    sendRelationToServer(user_id, party_id, "1");
                                 } catch (JSONException e) {}
                             }
                         }, new Response.ErrorListener() {
@@ -356,11 +350,7 @@ public class Create_Party extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    response.getString("users");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                getDataFromServer(party.getPartyName());
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -388,16 +378,16 @@ public class Create_Party extends AppCompatActivity {
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
                 //showProgressDialog();
-                try {
-                    Thread.sleep(2000L); //wait for party to be created first
-                    sendRelationToServer(user_id, party_id, "1");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(2000L); //wait for party to be created first
+//                    sendRelationToServer(user_id, party_id, "1");
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
         }).start();
     }
-    private void sendRelationToServer(final String user, final String party, final String relation) {
+    private void sendRelationToServer(final String user, final String party_id, final String relation) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -424,7 +414,7 @@ public class Create_Party extends AppCompatActivity {
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user);
-                        headers.put("party_id", party);
+                        headers.put("party_id", party_id);
                         headers.put("relation", relation);
                         return headers;
                     }

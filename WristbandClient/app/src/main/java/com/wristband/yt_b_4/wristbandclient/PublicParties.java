@@ -154,8 +154,6 @@ public class PublicParties extends AppCompatActivity {
                                                 String id = response.getJSONObject(i).getString("party_id");
                                                 party_ids.add(id);
                                                 getDataFromServer(id);
-
-
                                         }
                                     } catch (JSONException e) {}
                                 }
@@ -175,7 +173,7 @@ public class PublicParties extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY +"/" + id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
                         new Response.Listener < JSONArray > () {
                             @Override
                             public void onResponse(JSONArray response) {

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ import java.util.Map;
 public class Add_User extends AppCompatActivity {
     final Context context = this;
     private Button btnBack, btnDone;
+    private CheckBox checkbox;
     private String prev_class, name1, date1, time1, loc1;
     AutoCompleteTextView autoView;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -74,7 +76,7 @@ public class Add_User extends AppCompatActivity {
             }
 
         });
-
+        checkbox = (CheckBox) findViewById(R.id.checkBox);
 
         Intent intent = getIntent();
         name1 = intent.getStringExtra("eventname");
@@ -182,56 +184,32 @@ public class Add_User extends AppCompatActivity {
 
     public void buttonClickParty(View view) {
             String user_id;
+            boolean isChecked;
+            String coHost;
             String text = textView.getText().toString();
         if(text.isEmpty() == false) {
             user_id = getUserID(text);
+            isChecked = checkbox.isChecked();
+            if (isChecked == true) {
+                //cohost = true
+                coHost = "3";
+            }
+            else {
+                coHost = "2";
+            }
             Intent intent = getIntent();
             String party_id = intent.getStringExtra("party_id");
-            inviteUser(party_id, user_id);
+            inviteUser(party_id, user_id, coHost);
             Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
             textView.setText("");
-            Intent intent2 = new Intent(this, QrActivity.class);
-            startActivity(intent2);
+            //Intent intent2 = new Intent(this, QrActivity.class);
+            //startActivity(intent2);
         }
         else{
             Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
             fail.show();
         }
-//        //Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        EditText person_name = (EditText) findViewById(R.id.invitee);
-//        EditText person_num = (EditText) findViewById(R.id.number);
-//        //text in name box
-//        String name = person_name.getText().toString();
-//        //text in number box
-//        String number = person_num.getText().toString();
-//
-//        /*This will check the blacklist, users, party, and party_list tables to verify and/or add
-//        the person to the table.
-//         */
-//
-//        //make sure party is not at capacity by checking max people value from party table
-//
-//        //search by number
-//        if (name.isEmpty() && !number.isEmpty()) {
-//            //find user from users table and add that user to the party_list table
-//            //if no user is found from number, search by name
-//            //check name to see if it is on blacklist, if it is, show toast that person is blacklisted
-//            //check to see if user has a profile, otherwise add blank entry to party_list table
-//            Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to party", Toast.LENGTH_LONG);
-//            pass.show();
-//            //if no user is found from number, give a toast that user number is not found
-//            //Toast fail = Toast.makeText(getApplicationContext(), "Failed to find person with that user number", Toast.LENGTH_LONG);
-//            //fail.show();
-//
-//        } else if (!name.isEmpty()) {
-//            //search for person by name, if not found, add person to both users and party_list tables
-//            Toast pass = Toast.makeText(getApplicationContext(), "Added " + name + " to party", Toast.LENGTH_LONG);
-//            pass.show();
-//        } else {
-//            Toast blank = Toast.makeText(getApplicationContext(), "Enter the name or user number of person to add", Toast.LENGTH_LONG);
-//            blank.show();
-//        }
     }
 
     private void back_Homescreen(View view) {
@@ -255,7 +233,7 @@ public class Add_User extends AppCompatActivity {
         }
     }
 
-    private void inviteUser(final String party_id, final String user_id) {
+    private void inviteUser(final String party_id, final String user_id, final String privladges) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -279,7 +257,7 @@ public class Add_User extends AppCompatActivity {
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
                         headers.put("party_id", party_id);
-                        headers.put("relation", "2");
+                        headers.put("relation", privladges); //2 = normal guest, 3=cohost
                         return headers;
                     }
                 };
@@ -290,7 +268,6 @@ public class Add_User extends AppCompatActivity {
                 // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
-
     }
 
 }
