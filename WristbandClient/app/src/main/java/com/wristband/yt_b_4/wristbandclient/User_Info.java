@@ -16,13 +16,19 @@ import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public class User_Info extends AppCompatActivity {
     private Button btnBack;
     private TextView txtuser, txtfirst, txtlast, txtid;
-    private String user_id, user_name;
+    private String user_id, user_name, lname;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
-
-
+    private ArrayList<String> names;
+    private ArrayList<String> userIDs;
+    String firstName;
+    String lastName;
+    String userId;
+    String fullName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,29 +48,46 @@ public class User_Info extends AppCompatActivity {
             }
 
         });
-        txtuser.setText("Username: " + user_name);
-        txtid.setText("User ID: " + user_id);
+        names = new ArrayList<>();
+        userIDs = new ArrayList<>();
         getDataFromServer();
+        user_id = getUserID(user_name);
+        txtuser.setText("Username: " + user_name);
+        txtfirst.setText("First name: " + user_name.split(" ")[0]);
+        lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
+        txtlast.setText("Last name: " + lname);
+        txtid.setText("User ID: " + user_id);
+    }
+
+    private String getUserID(String fullName) {
+        String ID;
+        if (names.contains(fullName)) {
+            int idx = names.indexOf(fullName);
+            ID = userIDs.get(idx);
+            return ID;
+        }
+        return null;
     }
 
 
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user_id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String name = response.getJSONObject(0).getString("party_name");
-                                    String fname = response.getJSONObject(0).getString("date");
-                                    String lname = response.getJSONObject(0).getString("location");
-                                    txtuser.setText("Username: " + user_name);
-                                    txtfirst.setText("First name: " + fname);
-                                    txtlast.setText("Last name: " + lname);
+                                    for (int i = 0; i < response.length(); i++) {
+                                        firstName = response.getJSONObject(i).getString("f_name");
+                                        lastName = response.getJSONObject(i).getString("l_name");
+                                        userId = response.getJSONObject(i).getString("id");
+                                        fullName = firstName + " " + lastName;
+                                        names.add(fullName);
+                                        userIDs.add(userId);
+                                    }
                                 } catch (JSONException e) {
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -73,11 +96,10 @@ public class User_Info extends AppCompatActivity {
                 });
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);
-                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
-
             }
         }).start();
     }
+
 
     private void goBack(View view) {
         Intent intent = new Intent(this, GuestScreen.class);
