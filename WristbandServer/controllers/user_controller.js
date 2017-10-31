@@ -178,14 +178,22 @@ module.exports = function(app) {
                     }])
                 } else {
                     var id = rows[0].id;
+                    var f_name = rows[0].f_name;
+                    var l_name = rows[0].l_name;
+                    var email = rows[0].email;
+                    var uname = rows[0].username;
                     console.log("found user: ", username);
+                    console.log("found user: ", rows[0]);
                     token = createToken(username, expires);
                     res.contentType('application/json');
                     res.json([{
                                 users: "exists",
                                 token: token,
                                 id: id,
-                                username: username
+                                f_name: f_name,
+                                l_name: l_name,
+                                username: uname,
+                                email: email
                             }])
                 }
             }
