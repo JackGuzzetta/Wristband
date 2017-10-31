@@ -1,6 +1,7 @@
 package com.wristband.yt_b_4.wristbandclient.app;
 
 
+import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
 
@@ -18,10 +19,14 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
  * Created by Mike on 10/30/2017.
  */
 
-public class QRGenerator  extends Application {
+ class QRGenerator  extends Activity {
     private String text2Qr;
     MultiFormatWriter multiFormatWriter;
 
+    public QRGenerator() {
+        this.text2Qr = null;
+        this.multiFormatWriter = null;
+    }
     public QRGenerator(String username) {
         this.text2Qr = username;
         this.multiFormatWriter =  new MultiFormatWriter();;

@@ -1,12 +1,14 @@
 package com.wristband.yt_b_4.wristbandclient;
 
+import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.DataSetObserver;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextWatcher;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,14 +20,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.BarcodeFormat;
-
-import android.graphics.Bitmap;
-
-import com.journeyapps.barcodescanner.BarcodeEncoder;
-
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,7 +29,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
-import com.wristband.yt_b_4.wristbandclient.models.User;
+import com.wristband.yt_b_4.wristbandclient.app.PhoneController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
@@ -50,8 +44,9 @@ public class Add_User extends AppCompatActivity {
     final Context context = this;
     private Button btnBack, btnDone;
     private CheckBox checkbox;
-    private String prev_class, name1, date1, time1, loc1;
-    AutoCompleteTextView autoView;
+    private String prev_class, name1, date1, time1, loc1, relation;
+    private AutoCompleteTextView autoView;
+    private EditText phoneNumber;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -79,12 +74,13 @@ public class Add_User extends AppCompatActivity {
 
         });
         checkbox = (CheckBox) findViewById(R.id.checkBox);
-
+        phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         Intent intent = getIntent();
-        name1 = intent.getStringExtra("eventname");
-        date1 = intent.getStringExtra("Date");
-        time1 = intent.getStringExtra("Time");
         loc1 = intent.getStringExtra("loc");
+        name1 = intent.getStringExtra("party_name");
+        relation = intent.getStringExtra("relation");
+
+        intent.putExtra("relation", relation);
         prev_class = intent.getStringExtra("prev");
         names = new ArrayList<>();
 
@@ -107,6 +103,9 @@ public class Add_User extends AppCompatActivity {
                 }
             }
         });
+        ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.SEND_SMS},1);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE},1);
+
     }
 
     private String getUserID(String fullName) {
@@ -208,6 +207,9 @@ public class Add_User extends AppCompatActivity {
             Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
             fail.show();
         }
+
+        PhoneController p = new PhoneController();
+        p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
     }
 
     private void back_Homescreen(View view) {
@@ -219,6 +221,7 @@ public class Add_User extends AppCompatActivity {
         if (prev_class.equals("party")) {
             Intent intent = new Intent(this, GuestScreen.class);
             intent.putExtra("party_name", name1);
+            intent.putExtra("relation", relation);
             finish();
             startActivity(intent);
         } else {

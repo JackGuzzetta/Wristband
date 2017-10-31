@@ -147,7 +147,6 @@ public class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
         intent.putExtra("relation", relation);
-        finish();
         startActivity(intent);
     }
 

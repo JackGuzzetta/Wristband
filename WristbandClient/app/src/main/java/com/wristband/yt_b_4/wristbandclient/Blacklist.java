@@ -15,7 +15,7 @@ import com.facebook.login.LoginManager;
 
 public class Blacklist extends AppCompatActivity {
     private Button btnBack;
-
+    private String party_id, relation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,9 @@ public class Blacklist extends AppCompatActivity {
             }
 
         });
+        Intent intent = getIntent();
+        party_id = intent.getStringExtra("party_name");
+        relation = intent.getStringExtra("relation");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +61,9 @@ public class Blacklist extends AppCompatActivity {
 
     private void goBack(View view) {
         Intent intent = new Intent(Blacklist.this, GuestScreen.class);
+        intent.putExtra("party_name", party_id);
+        intent.putExtra("relation", relation);
+
         startActivity(intent);
     }
 }

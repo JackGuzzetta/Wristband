@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/autoCompleteTextView2"
+        android:layout_alignTop="@+id/phoneNumber"
         android:text="Phone Number:"
         android:textColor="@color/colorGray"
         android:textSize="45px" />
@@ -48,14 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/autoCompleteTextView2"
+        android:layout_below="@+id/phoneNumber"
         android:layout_marginTop="57dp"
         android:text="Is CoHost?"
         android:textColor="@color/colorGray"
         android:textSize="45px" />
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView2"
+    <EditText
+        android:id="@+id/phoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="67dp"

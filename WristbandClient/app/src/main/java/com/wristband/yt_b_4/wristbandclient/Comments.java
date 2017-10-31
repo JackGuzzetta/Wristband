@@ -15,11 +15,12 @@ import com.facebook.login.LoginManager;
 
 public class Comments extends AppCompatActivity {
     private Button btnBack;
-
+    private String party_id, relation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
+        Intent intent = getIntent();
         btnBack = (Button) findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +31,8 @@ public class Comments extends AppCompatActivity {
             }
 
         });
+        party_id = intent.getStringExtra("party_name");
+        relation = intent.getStringExtra("relation");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +61,9 @@ public class Comments extends AppCompatActivity {
 
     private void goBack(View view) {
         Intent intent = new Intent(Comments.this, GuestScreen.class);
+        intent.putExtra("party_name", party_id);
+        intent.putExtra("relation", relation);
+
         startActivity(intent);
     }
 }

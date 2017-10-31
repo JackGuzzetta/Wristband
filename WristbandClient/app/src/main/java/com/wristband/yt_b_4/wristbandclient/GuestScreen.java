@@ -165,10 +165,14 @@ public class GuestScreen extends AppCompatActivity {
                 intent = new Intent(GuestScreen.this, Add_User.class);
                 intent.putExtra("prev", "guest");
                 intent.putExtra("party_id", party_id);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
                 startActivity(intent);
                 return true;
             case R.id.blacklist:
                 intent = new Intent(GuestScreen.this, Blacklist.class);
+                intent.putExtra("party_name", party_id);
+                intent.putExtra("relation", relation);
                 startActivity(intent);
                 return true;
             case R.id.delete:
@@ -315,17 +319,25 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, MapsActivity.class);
         intent.putExtra("party_location", party_name);
         intent.putExtra("prev", "guest");
+        intent.putExtra("party_name", party_id);
+        intent.putExtra("relation", relation);
         finish();
         startActivity(intent);
     }
 
     private void goPhotos(View view) {
         Intent intent = new Intent(GuestScreen.this, Photos.class);
+        intent.putExtra("party_name", party_id);
+        intent.putExtra("relation", relation);
+
         startActivity(intent);
     }
 
     private void goComments(View view) {
+
         Intent intent = new Intent(GuestScreen.this, Comments.class);
+        intent.putExtra("party_name", party_id);
+        intent.putExtra("relation", relation);
         startActivity(intent);
     }
 

@@ -49,8 +49,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private Party party;
-    private String party_id;
     private String party_name, prev_class;
+    private String party_id, relation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +65,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
+        Intent intent = getIntent();
+        party_id = intent.getStringExtra("party_name");
+        relation = intent.getStringExtra("relation");
     }
 
     //    private void getLocationPermission() {
