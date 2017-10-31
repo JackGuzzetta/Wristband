@@ -204,8 +204,6 @@ public class Add_User extends AppCompatActivity {
             Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
             textView.setText("");
-            //Intent intent2 = new Intent(this, QrActivity.class);
-            //startActivity(intent2);
         } else {
             Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
             fail.show();

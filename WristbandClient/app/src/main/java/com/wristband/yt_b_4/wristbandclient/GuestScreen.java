@@ -329,20 +329,7 @@ public class GuestScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void QRGenerator(String party_id, String user_id) {
-        String text2Qr = party_id + " " + user_id;
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE, 200, 200);
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            Intent intent = new Intent(context, QrActivity.class);
-            intent.putExtra("pic", bitmap);
-            context.startActivity(intent);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private void getAllUsers() {
         new Thread(new Runnable() {
