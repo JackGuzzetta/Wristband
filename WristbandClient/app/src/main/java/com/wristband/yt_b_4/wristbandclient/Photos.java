@@ -60,7 +60,7 @@ public class Photos extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        Intent intent = new Intent(Photos.this, GuestScreen.class);
+        Intent intent = new Intent(Photos.this, HostScreen.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
 

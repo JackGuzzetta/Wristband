@@ -15,9 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -121,7 +119,21 @@ public class HomeScreen extends AppCompatActivity {
                 // Get the selected item text from ListView
                 String party_name = (String) parent.getItemAtPosition(position);
                 String relation = relationList.get(position).toString();
-                guestScreen(party_name, relation);
+                if (relation.equals("1")) {
+                    //Host
+                    hostScreen(1,party_name, relation);
+                }
+                else if (relation.equals("2")) {
+                    hostScreen(2,party_name, relation);
+                    //Guest
+                }
+                else if (relation.equals("3")) {
+                    hostScreen(3,party_name, relation);
+                    //CoHost
+                }
+                else {
+                    //Error
+                }
 
                 // Display the selected item text on TextView
 
@@ -143,11 +155,26 @@ public class HomeScreen extends AppCompatActivity {
         getAllPartiesByUserId();
     }
 
-    public void guestScreen(String party_name, String relation) {
-        Intent intent = new Intent(this, GuestScreen.class);
-        intent.putExtra("party_name", party_name);
-        intent.putExtra("relation", relation);
-        startActivity(intent);
+    public void hostScreen(int screen, String party_name, String relation) {
+        Intent intent;
+        switch (screen) {
+            case 1:
+                intent = new Intent(this, HostScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                break;
+            case 2:
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                break;
+            case 3:
+                break;
+            default:
+        }
+
     }
 
     private void publicparty() {

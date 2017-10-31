@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GuestScreen extends AppCompatActivity {
+public class HostScreen extends AppCompatActivity {
     private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ProgressDialog pDialog;
@@ -54,7 +54,7 @@ public class GuestScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_screen);
+        setContentView(R.layout.activity_host_screen);
         btnLocation = (Button) findViewById(R.id.button7);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnPhotos = (Button) findViewById(R.id.button5);
@@ -112,7 +112,7 @@ public class GuestScreen extends AppCompatActivity {
 
 
         listView = (ListView) findViewById(R.id.list_view);
-        adapter = new ArrayAdapter(GuestScreen.this, android.R.layout.simple_list_item_1, list) {
+        adapter = new ArrayAdapter(HostScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the current item from ListView
@@ -137,7 +137,7 @@ public class GuestScreen extends AppCompatActivity {
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l){
-                Intent intent = new Intent(GuestScreen.this, User_Info.class);
+                Intent intent = new Intent(HostScreen.this, User_Info.class);
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("user_name", user_name);
@@ -149,14 +149,34 @@ public class GuestScreen extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.guestmenu, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
-            case R.id.about:
-                //startActivity(new Intent(this, About.class));
+            case R.id.edit:
+                //TODO
+                return true;
+            case R.id.invite:
+                intent = new Intent(HostScreen.this, Add_User.class);
+                intent.putExtra("prev", "guest");
+                intent.putExtra("party_id", party_id);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                return true;
+            case R.id.blacklist:
+                intent = new Intent(HostScreen.this, Blacklist.class);
+                intent.putExtra("party_name", party_id);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                return true;
+            case R.id.delete:
+                deleteUser();
+                intent = new Intent(HostScreen.this, HomeScreen.class);
+                startActivity(intent);
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
@@ -289,12 +309,12 @@ public class GuestScreen extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
+        Intent intent = new Intent(HostScreen.this, HomeScreen.class);
         startActivity(intent);
     }
 
     private void goLocation(String party_name) {
-        Intent intent = new Intent(GuestScreen.this, MapsActivity.class);
+        Intent intent = new Intent(HostScreen.this, MapsActivity.class);
         intent.putExtra("party_location", party_name);
         intent.putExtra("prev", "guest");
         intent.putExtra("party_name", party_id);
@@ -304,7 +324,7 @@ public class GuestScreen extends AppCompatActivity {
     }
 
     private void goPhotos(View view) {
-        Intent intent = new Intent(GuestScreen.this, Photos.class);
+        Intent intent = new Intent(HostScreen.this, Photos.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
 
@@ -313,7 +333,7 @@ public class GuestScreen extends AppCompatActivity {
 
     private void goComments(View view) {
 
-        Intent intent = new Intent(GuestScreen.this, Comments.class);
+        Intent intent = new Intent(HostScreen.this, Comments.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
         startActivity(intent);

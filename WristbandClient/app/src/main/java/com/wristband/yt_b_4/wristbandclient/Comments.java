@@ -60,7 +60,7 @@ public class Comments extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        Intent intent = new Intent(Comments.this, GuestScreen.class);
+        Intent intent = new Intent(Comments.this, HostScreen.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
 

@@ -1,6 +1,5 @@
 package com.wristband.yt_b_4.wristbandclient;
 
-import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.content.SharedPreferences;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +27,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
-import com.wristband.yt_b_4.wristbandclient.app.PhoneController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
@@ -208,8 +205,8 @@ public class Add_User extends AppCompatActivity {
             fail.show();
         }
 
-        PhoneController p = new PhoneController();
-        p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
+        //PhoneController p = new PhoneController();
+        //p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
     }
 
     private void back_Homescreen(View view) {
@@ -219,13 +216,13 @@ public class Add_User extends AppCompatActivity {
 
     private void goBack(View view) {
         if (prev_class.equals("party")) {
-            Intent intent = new Intent(this, GuestScreen.class);
+            Intent intent = new Intent(this, HostScreen.class);
             intent.putExtra("party_name", name1);
             intent.putExtra("relation", relation);
             finish();
             startActivity(intent);
         } else {
-            Intent intent = new Intent(Add_User.this, GuestScreen.class);
+            Intent intent = new Intent(Add_User.this, HostScreen.class);
             prev_class = "add_user";
             intent.putExtra("party_name", name1);
             intent.putExtra("prev", prev_class);

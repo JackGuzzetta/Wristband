@@ -332,8 +332,15 @@ public class Create_Party extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    party_id = response.getJSONObject(0).getString("id");
-                                    sendRelationToServer(user_id, party_id, "1");
+                                    try {
+                                        Thread.sleep(200L); //wait for party to be created first
+                                        //sendRelationToServer(user_id, party_id, "1");
+                                        party_id = response.getJSONObject(0).getString("id");
+                                        sendRelationToServer(user_id, party_id, "1");
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 } catch (JSONException e) {
                                 }
                             }

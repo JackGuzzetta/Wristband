@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,9 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,8 +32,6 @@ import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import com.wristband.yt_b_4.wristbandclient.models.Party;
 
 
 public class PublicParties extends AppCompatActivity {
@@ -117,7 +112,7 @@ public class PublicParties extends AppCompatActivity {
     }
 
     public void guestScreen(String party_name) {
-        Intent intent = new Intent(this, GuestScreen.class);
+        Intent intent = new Intent(this, HostScreen.class);
         intent.putExtra("party_name", party_name);
         finish();
         startActivity(intent);
