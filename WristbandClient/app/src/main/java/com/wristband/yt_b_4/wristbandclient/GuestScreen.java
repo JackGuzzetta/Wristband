@@ -55,7 +55,7 @@ public class GuestScreen extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private String party_id, user_id;
-    private String party_name, relation, prev_class, loc;
+    private String party_name, user_name, relation, prev_class, loc;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -145,7 +145,16 @@ public class GuestScreen extends AppCompatActivity {
         listView.setAdapter(adapter);
         ;
         getDataFromServer();
-
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int i, long l){
+                Intent intent = new Intent(GuestScreen.this, User_Info.class);
+                user_name = (listView.getItemAtPosition(i)).toString();
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_name", user_name);
+                startActivity(intent);
+            }
+        });
 
     }
 

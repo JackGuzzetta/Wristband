@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
-
     <application
         android:name=".app.AppController"
         android:allowBackup="true"
@@ -91,7 +90,8 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".User_Info"></activity>
     </application>
 
 </manifest>
