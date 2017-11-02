@@ -1,5 +1,6 @@
 package com.wristband.yt_b_4.wristbandclient;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,20 +10,46 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.facebook.login.LoginManager;
+import com.wristband.yt_b_4.wristbandclient.app.AppController;
+import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Comments extends AppCompatActivity {
-    private Button btnBack;
-    private String party_id, relation;
+    Button btnBack, btnComment;
+    ListView listView;
+    List list = new ArrayList();
+    ArrayList<String> comments = new ArrayList<String>();
+    ArrayAdapter adapter;
+    ProgressDialog pDialog;
+    String user_id;
+    String comment;
+    String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
-        Intent intent = getIntent();
-        btnBack = (Button) findViewById(R.id.btnBack);
-
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
+        btnBack = (Button) findViewById(R.id.back);
+        btnComment = (Button) findViewById(R.id.send);
+        EditText cmt = (EditText) findViewById(R.id.editText);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,8 +58,16 @@ public class Comments extends AppCompatActivity {
             }
 
         });
-        party_id = intent.getStringExtra("party_name");
-        relation = intent.getStringExtra("relation");
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                EditText cmt = (EditText) findViewById(R.id.editText);
+                comment = cmt.getText().toString();
+                sendComment(view);
+            }
+
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +75,6 @@ public class Comments extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
@@ -59,11 +93,32 @@ public class Comments extends AppCompatActivity {
         }
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(Comments.this, HostScreen.class);
-        intent.putExtra("party_name", party_id);
-        intent.putExtra("relation", relation);
+    private void initializeControls() {
+        listView = (ListView) findViewById(R.id.list_view);
+        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+        user_id = settings.getString("id", "default");
+        adapter = new ArrayAdapter(Comments.this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected item text from ListView
+                String party_name = (String) parent.getItemAtPosition(position);
+                // Display the selected item text on TextView
 
+            }
+        });
+        btnComment = (Button) findViewById(R.id.send);
+
+    }
+
+    private void sendComment(View view) {
+        list.add("Hello World!");
+        adapter.notifyDataSetChanged();
+    }
+
+    private void goBack(View view) {
+        Intent intent = new Intent(Comments.this, GuestScreen.class);
         startActivity(intent);
     }
 }

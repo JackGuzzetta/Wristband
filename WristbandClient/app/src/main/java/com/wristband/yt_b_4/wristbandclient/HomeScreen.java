@@ -17,19 +17,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class HomeScreen extends AppCompatActivity {
@@ -74,6 +80,10 @@ public class HomeScreen extends AppCompatActivity {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.clear();
                 editor.commit();
+                startActivity(new Intent(this, Login.class));
+                return true;
+            case R.id.delete:
+                deleteAccount(user_id);
                 startActivity(new Intent(this, Login.class));
                 return true;
             default:
@@ -180,6 +190,40 @@ public class HomeScreen extends AppCompatActivity {
     private void publicparty() {
         Intent intent = new Intent(HomeScreen.this, PublicParties.class);
         startActivity(intent);
+    }
+
+    private void deleteAccount(final String user_id) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
+                        Const.URL_USERS + user_id, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("user_id", user_id);
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+            }
+        }).start();
     }
 
     public void newParty() {

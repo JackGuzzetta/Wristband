@@ -7,5 +7,5 @@
         android:title="Logout" />
     <item
         android:id="@+id/delete"
-        android:title="Delete Account" />
+        android:title="Delete Profile" />
 </menu>
