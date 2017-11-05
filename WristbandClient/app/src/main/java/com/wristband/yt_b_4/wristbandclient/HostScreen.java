@@ -6,6 +6,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.util.Log;
+
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -145,6 +150,36 @@ public class HostScreen extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void scanNow(View view){
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.DATA_MATRIX_TYPES);
+        integrator.setPrompt("Scan a barcode");
+        //integrator.setResultDisplayDuration(0);
+        //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
+        integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.initiateScan();
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        //retrieve scan result
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        if (scanningResult != null) {
+            //we have a result
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+
+            // display it on screen
+            //formatTxt.setText("FORMAT: " + scanFormat);
+            //contentTxt.setText("CONTENT: " + scanContent);
+
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
