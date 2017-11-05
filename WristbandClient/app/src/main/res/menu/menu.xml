@@ -3,6 +3,9 @@
         android:id="@+id/about"
         android:title="About" />
     <item
+        android:id="@+id/account"
+        android:title="My Account" />
+    <item
         android:id="@+id/logout"
         android:title="Logout" />
     <item
