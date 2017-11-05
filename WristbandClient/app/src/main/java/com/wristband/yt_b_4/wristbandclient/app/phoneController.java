@@ -11,7 +11,7 @@ import android.widget.Toast;
  * Created by Mike on 10/30/2017.
  */
 
-public class PhoneController extends Application {
+public class phoneController extends Application {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     @Override
     public void onCreate() {

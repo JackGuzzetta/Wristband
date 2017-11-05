@@ -74,6 +74,9 @@ public class HomeScreen extends AppCompatActivity {
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
                 return true;
+            case R.id.account:
+                User_Info(user_id);
+                return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
@@ -164,7 +167,11 @@ public class HomeScreen extends AppCompatActivity {
 
         getAllPartiesByUserId();
     }
-
+    public void User_Info(String User_Id){
+        Intent intent = new Intent(HomeScreen.this, User_Info.class);
+        intent.putExtra("user_id", User_Id);
+        startActivity(intent);
+    }
     public void hostScreen(int screen, String party_name, String relation) {
         Intent intent;
         switch (screen) {
@@ -185,6 +192,10 @@ public class HomeScreen extends AppCompatActivity {
             default:
         }
 
+    }
+    private void account(View view) {
+        Intent intent = new Intent(HomeScreen.this, User_Info.class);
+        startActivity(intent);
     }
 
     private void publicparty() {
