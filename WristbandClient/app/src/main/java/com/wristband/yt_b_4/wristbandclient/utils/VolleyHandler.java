@@ -19,13 +19,14 @@ import java.util.Map;
  */
 
 public class VolleyHandler extends Application {
-    private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    static final String tag_json_obj = "jobj_req";
+    final String tag_json_arry = "jarray_req";
 
 
 
 
     //Used by Add_User
-    public void inviteUser(final String party_id, final String user_id, final String privladges) {
+    public static void inviteUser(final String party_id, final String user_id, final String privladges) {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_RELATION, null,
                         new Response.Listener<JSONObject>() {
@@ -60,7 +61,7 @@ public class VolleyHandler extends Application {
     }
 
     //Used by Add_User
-    public void invitebyNumber(final String number) {
+    public static void invitebyNumber(final String number) {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_TEXT, null,
                         new Response.Listener<JSONObject>() {
