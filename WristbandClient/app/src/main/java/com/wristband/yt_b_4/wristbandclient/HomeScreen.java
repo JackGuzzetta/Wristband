@@ -70,20 +70,27 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
         switch (item.getItemId()) {
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
-                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
+                settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                editor = settings.edit();
                 editor.clear();
                 editor.commit();
                 startActivity(new Intent(this, Login.class));
                 return true;
             case R.id.delete:
                 deleteAccount(user_id);
+                LoginManager.getInstance().logOut();
+                settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                editor = settings.edit();
+                editor.clear();
+                editor.commit();
                 startActivity(new Intent(this, Login.class));
                 return true;
             default:
@@ -196,10 +203,11 @@ public class HomeScreen extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
-                        Const.URL_USERS + user_id, null,
+                        Const.URL_USERS + "/" + user_id, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
+
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -213,7 +221,6 @@ public class HomeScreen extends AppCompatActivity {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
-                        headers.put("user_id", user_id);
                         return headers;
                     }
                 };
