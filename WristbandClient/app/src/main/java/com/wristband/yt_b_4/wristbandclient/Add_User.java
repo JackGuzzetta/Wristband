@@ -27,8 +27,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
-import com.wristband.yt_b_4.wristbandclient.app.phoneController;
-
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
@@ -207,7 +205,7 @@ public class Add_User extends AppCompatActivity {
             fail.show();
         }
 
-        //phoneController p = new phoneController();
+        //PhoneController p = new PhoneController();
         //p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
     }
 

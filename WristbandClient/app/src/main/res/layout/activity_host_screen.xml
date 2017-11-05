@@ -91,27 +91,6 @@
         android:clickable="true"
         android:text="Back" />
 
-    <Button android:id="@+id/scan_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/scan"
-        android:onClick="scanNow" />
-    <TextView
-        android:id="@+id/scan_format"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/scan_button" />
-    <TextView
-        android:id="@+id/scan_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/scan_format" />
-
     <TextView
         android:id="@+id/dateTxt"
         android:layout_width="wrap_content"
@@ -123,7 +102,6 @@
         android:layout_below="@+id/partyTxt"
         android:layout_alignRight="@+id/time"
         android:layout_alignEnd="@+id/time" />
-
 
     <ListView
         android:id="@+id/list_view"
