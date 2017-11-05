@@ -276,7 +276,8 @@ module.exports = function(app) {
         module.exports.text = function(number, res) {
         var retVal = "success";
         var QRCode = require('qrcode')
-        var path = "http://proj-309-yt-b-4.cs.iastate.edu:3000/images/" + number + ".png";
+        var file_path = "images/" + number + ".png";
+        var img_path = "http://proj-309-yt-b-4.cs.iastate.edu:3000/images/" + number + ".png";
         QRCode.toFile("images/" + number + ".png", number, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
@@ -286,31 +287,34 @@ module.exports = function(app) {
         for (a = 0; a < 4; a++) {
             switch(a) {
                 case 0:
-                    sendText(number + "@mms.att.net", path)
+                    sendText(number + "@mms.att.net", file_path, img_path)
                     break;
                 case 1:
-                    sendText(number + "@vzwpix.com ", path)
+                    sendText(number + "@vzwpix.com ", file_path, img_path)
                     break;
                 case 2:
-                    sendText(number + "@messaging.sprintpcs.com", path)
+                    sendText(number + "@messaging.sprintpcs.com", file_path, img_path)
                     break;
                 case 3:
-                    sendText(number + "@mms.uscc.net", path)
+                    sendText(number + "@mms.uscc.net", file_path, img_path)
                     break;
                 default:
                 break;
             }
         }
+        res.json({
+            text: retVal
+        })
        console.log("Sending text to: ", number)
     }
-    function sendText(number, path) {
+    function sendText(number, file_path, img_path) {
        console.log("Sending text to: ", number)
         var send = require('gmail-send')({
           to: number,
           user: 'wristbandparties@gmail.com',
           pass: 'mdnzohgoucduzmjh',
           subject: 'Wristband Party Invite',
-          text: path                           // Array of files to attach 
+          text: img_path                           // Array of files to attach 
         });
         send({}, function (err) {
               if (err) {
