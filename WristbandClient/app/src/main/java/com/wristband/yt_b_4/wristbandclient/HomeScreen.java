@@ -76,9 +76,9 @@ public class HomeScreen extends AppCompatActivity {
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
                 return true;
-            case R.id.account:
-                User_Info(user_id);
-                return true;
+//            case R.id.account:
+//                User_Info(user_id);
+//                return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 settings = getSharedPreferences("account", Context.MODE_PRIVATE);

@@ -272,19 +272,19 @@ module.exports = function(app) {
             email: retVal
         })
     }
-        module.exports.text = function(number, username, res) {
+        module.exports.text = function(number, res) {
         var carrier;
         var send = require('gmail-send')({
           user: 'wristbandparties@gmail.com',
           pass: 'wristband1',
           to:   number,
           subject: 'Wristband Party Invite',
-          text:    "Here is your invite: ", username,         // Plain text 
+          text:    "Here is your invite: ", number,         // Plain text 
         });
         var retVal = "success";
 
         var QRCode = require('qrcode')
-        QRCode.toFile("images/" + username + ".png", username, {type:'png'}, function (err, string) {
+        QRCode.toFile("images/" + number + ".png", number, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
             }
@@ -306,13 +306,12 @@ module.exports = function(app) {
                 default:
                     carrier = null
                 break;
-
             }
             send({
                 to: number + carrier,
                 files: [                                    // Array of files to attach 
                     {
-                      path: "images/" + username + ".png",
+                      path: "images/" + number + ".png",
                     }
                   ]
             }, function (err) {

@@ -204,7 +204,10 @@ public class Add_User extends AppCompatActivity {
             Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
             fail.show();
         }
-
+        String number = phoneNumber.getText().toString();
+        if (!number.isEmpty()) {
+            invitebyNumber(number);
+        }
         //PhoneController p = new PhoneController();
         //p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
     }
@@ -255,6 +258,41 @@ public class Add_User extends AppCompatActivity {
                         headers.put("user_id", user_id);
                         headers.put("party_id", party_id);
                         headers.put("relation", privladges); //2 = normal guest, 3=cohost
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+            }
+        }).start();
+    }
+
+    private void invitebyNumber(final String number) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_TEXT, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //msgStatus.setText("Error creating account: " + error);
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("number", number);
                         return headers;
                     }
                 };

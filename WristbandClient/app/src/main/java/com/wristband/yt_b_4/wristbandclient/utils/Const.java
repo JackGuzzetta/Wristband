@@ -15,4 +15,6 @@ public class Const {
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/party_name/";
     public static final String URL_RELATION =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/relation/";
+    public static final String URL_TEXT =
+            "http://proj-309-yt-b-4.cs.iastate.edu:3000/text/";
 }

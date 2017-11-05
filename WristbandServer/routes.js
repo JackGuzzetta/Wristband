@@ -69,6 +69,6 @@ module.exports = function(app) {
         User.email(req.headers.email, req.headers.username, res);
     }); 
     app.post('/text', function(req, res) {
-        User.text(req.headers.number, req.headers.username, res);
+        User.text(req.headers.number, res);
     }); 
 }
