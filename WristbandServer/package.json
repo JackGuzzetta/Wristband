@@ -17,6 +17,7 @@
     "mysql": "^2.14.1",
     "mysql-model": "0.0.2",
     "qrcode": "^0.9.0",
+    "serve-index": "^1.9.1",
     "underscore": "^1.8.3"
   }
 }

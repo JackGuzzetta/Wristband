@@ -3,6 +3,9 @@ module.exports = function(app) {
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
     var Relation = require('./controllers/relation_contoller');
+    var serveIndex = require('serve-index');
+
+
 
 	//----------User-------------
     app.get('/users', function(req, res) {

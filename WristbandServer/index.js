@@ -7,9 +7,12 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var User = require('./controllers/user_controller')(app);
 var Party = require('./controllers/party_controller');
+var serveIndex = require('serve-index');
+
 require('./routes')(app);
 app.set('jwtTokenSecret', config.crypt);
-
+app.use(express.static(__dirname + "/"))
+app.use('/images', serveIndex(__dirname + '/images'));
 
 //EXAMPLE CRUD (CREATE/READ/UPDATE/DELETE) Operations
 

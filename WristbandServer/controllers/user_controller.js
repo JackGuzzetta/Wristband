@@ -263,7 +263,8 @@ module.exports = function(app) {
               ]
         }, function (err) {
           if (err) {
-            retVal = "error"
+            retVal = "error";
+            console.log(err);
           }
 
         });
@@ -273,57 +274,49 @@ module.exports = function(app) {
         })
     }
         module.exports.text = function(number, res) {
-        var carrier;
-        var send = require('gmail-send')({
-          user: 'wristbandparties@gmail.com',
-          pass: 'wristband1',
-          to:   number,
-          subject: 'Wristband Party Invite',
-          text:    "Here is your invite: ", number,         // Plain text 
-        });
         var retVal = "success";
-
         var QRCode = require('qrcode')
+        var path = "images/" + number + ".png";
         QRCode.toFile("images/" + number + ".png", number, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
             }
         })
+
         for (a = 0; a < 4; a++) {
             switch(a) {
                 case 0:
-                    carrier = "@mms.att.net"
+                    sendText(number + "@mms.att.net", path)
                     break;
                 case 1:
-                    carrier = "@vzwpix.com "
+                    sendText(number + "@vzwpix.com ", path)
                     break;
                 case 2:
-                    carrier = "@messaging.sprintpcs.com"
+                    sendText(number + "@messaging.sprintpcs.com", path)
                     break;
                 case 3:
-                    carrier = "@mms.uscc.net"
+                    sendText(number + "@mms.uscc.net", path)
                     break;
                 default:
-                    carrier = null
                 break;
             }
-            send({
-                to: number + carrier,
-                files: [                                    // Array of files to attach 
-                    {
-                      path: "images/" + number + ".png",
-                    }
-                  ]
-            }, function (err) {
-              if (err) {
-                retVal = "error"
-              }
-
-            });
         }
-        res.json({
-            email: retVal
-        })
        console.log("Sending text to: ", number)
+    }
+    function sendText(number, path) {
+       console.log("Sending text to: ", number)
+        var send = require('gmail-send')({
+          to: number,
+          user: 'wristbandparties@gmail.com',
+          pass: 'mdnzohgoucduzmjh',
+          subject: 'Wristband Party Invite'
+          text: 'http://proj-309-yt-b-4.cs.iastate.edu:3000/' + path                               // Array of files to attach 
+        });
+        send({}, function (err) {
+              if (err) {
+                console.log(err);
+                retVal = "error";
+              }
+        });
     }
 }
