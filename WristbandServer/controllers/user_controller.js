@@ -276,7 +276,7 @@ module.exports = function(app) {
         module.exports.text = function(number, res) {
         var retVal = "success";
         var QRCode = require('qrcode')
-        var path = "images/" + number + ".png";
+        var path = "http://proj-309-yt-b-4.cs.iastate.edu:3000/images/" + number + ".png";
         QRCode.toFile("images/" + number + ".png", number, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
@@ -309,8 +309,8 @@ module.exports = function(app) {
           to: number,
           user: 'wristbandparties@gmail.com',
           pass: 'mdnzohgoucduzmjh',
-          subject: 'Wristband Party Invite'
-          text: 'http://proj-309-yt-b-4.cs.iastate.edu:3000/' + path                               // Array of files to attach 
+          subject: 'Wristband Party Invite',
+          text: path                           // Array of files to attach 
         });
         send({}, function (err) {
               if (err) {
