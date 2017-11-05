@@ -19,7 +19,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
  * Created by Mike on 10/30/2017.
  */
 
- class QRGenerator  extends Activity {
+ public class QRGenerator  extends Activity {
     private String text2Qr;
     MultiFormatWriter multiFormatWriter;
 

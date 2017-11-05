@@ -48,7 +48,7 @@ public class HomeScreen extends AppCompatActivity {
     ArrayList<String> party_ids = new ArrayList();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
-    String user_id;
+    String user_id, user_name;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
 
     @Override
@@ -75,6 +75,9 @@ public class HomeScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
+                return true;
+            case R.id.account:
+                User_Info(user_id);
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
@@ -248,6 +251,12 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Do Here what ever you want do on back press;
+    }
+    public void User_Info(String User_Id){
+        Intent intent = new Intent(HomeScreen.this, User_Info.class);
+        intent.putExtra("user_id", User_Id);
+        intent.putExtra("user_name", User_Id);
+        startActivity(intent);
     }
 
     private void showProgressDialog() {

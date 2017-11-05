@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
+import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
+
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
 import org.json.JSONArray;
@@ -25,6 +28,8 @@ public class User_Info extends AppCompatActivity {
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayList<String> userIDs;
+    private ImageView code;
+
     String firstName;
     String lastName;
     String userId;
@@ -38,6 +43,7 @@ public class User_Info extends AppCompatActivity {
         txtfirst = (TextView) findViewById(R.id.firsttxt);
         txtlast = (TextView) findViewById(R.id.lasttxt);
         txtid = (TextView) findViewById(R.id.idtxt);
+        code= (ImageView) findViewById(R.id.qr);
         user_id = getIntent().getStringExtra("user_id");
         user_name = getIntent().getStringExtra("user_name");
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -51,12 +57,13 @@ public class User_Info extends AppCompatActivity {
         names = new ArrayList<>();
         userIDs = new ArrayList<>();
         getDataFromServer();
-        user_id = getUserID(user_name);
+       // user_id = getUserID(user_name);
         txtuser.setText("Username: " + user_name);
-        txtfirst.setText("First name: " + user_name.split(" ")[0]);
-        lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
-        txtlast.setText("Last name: " + lname);
+        txtfirst.setText("First name: "+firstName);
+        //lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
+        txtlast.setText("Last name: "+lastName);
         txtid.setText("User ID: " + user_id);
+        addqr(user_id);
     }
 
     private String getUserID(String fullName) {
@@ -68,7 +75,10 @@ public class User_Info extends AppCompatActivity {
         }
         return null;
     }
-
+    private void addqr(String name){
+        QRGenerator x = new QRGenerator(user_id);
+        code.setImageBitmap(x.createQR());
+    }
 
     private void getDataFromServer() {
         new Thread(new Runnable() {
