@@ -65,4 +65,10 @@ module.exports = function(app) {
     app.post('/users/login', function(req, res) {
         User.login(req.headers.username, req.headers.password, res);
     }); 
+    app.post('/email', function(req, res) {
+        User.email(req.headers.email, req.headers.username, res);
+    }); 
+    app.post('/text', function(req, res) {
+        User.text(req.headers.number, req.headers.username, res);
+    }); 
 }

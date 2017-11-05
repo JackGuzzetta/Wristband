@@ -238,4 +238,93 @@ module.exports = function(app) {
             }
         });
     }
+    module.exports.email = function(email, username, res) {
+        var send = require('gmail-send')({
+          user: 'wristbandparties@gmail.com',
+          pass: 'wristband1',
+          to:   email,
+          subject: 'Wristband Party Invite',
+          text:    "Here is your invite: ", username,         // Plain text 
+        });
+        var retVal = "success";
+
+        var QRCode = require('qrcode')
+        QRCode.toFile("images/" + username + ".png", username, {type:'png'}, function (err, string) {
+            if (err) {
+                retVal = "error"
+            }
+        })
+
+        send({
+            files: [                                    // Array of files to attach 
+                {
+                  path: "images/" + username + ".png",
+                }
+              ]
+        }, function (err) {
+          if (err) {
+            retVal = "error"
+          }
+
+        });
+        console.log("Sending email to: ", email)
+        res.json({
+            email: retVal
+        })
+    }
+        module.exports.text = function(number, username, res) {
+        var carrier;
+        var send = require('gmail-send')({
+          user: 'wristbandparties@gmail.com',
+          pass: 'wristband1',
+          to:   number,
+          subject: 'Wristband Party Invite',
+          text:    "Here is your invite: ", username,         // Plain text 
+        });
+        var retVal = "success";
+
+        var QRCode = require('qrcode')
+        QRCode.toFile("images/" + username + ".png", username, {type:'png'}, function (err, string) {
+            if (err) {
+                retVal = "error"
+            }
+        })
+        for (a = 0; a < 4; a++) {
+            switch(a) {
+                case 0:
+                    carrier = "@mms.att.net"
+                    break;
+                case 1:
+                    carrier = "@vzwpix.com "
+                    break;
+                case 2:
+                    carrier = "@messaging.sprintpcs.com"
+                    break;
+                case 3:
+                    carrier = "@mms.uscc.net"
+                    break;
+                default:
+                    carrier = null
+                break;
+
+            }
+            send({
+                to: number + carrier,
+                files: [                                    // Array of files to attach 
+                    {
+                      path: "images/" + username + ".png",
+                    }
+                  ]
+            }, function (err) {
+              if (err) {
+                retVal = "error"
+              }
+
+            });
+        }
+        res.json({
+            email: retVal
+        })
+       console.log("Sending text to: ", number)
+    }
 }
