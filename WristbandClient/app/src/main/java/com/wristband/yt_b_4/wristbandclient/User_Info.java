@@ -112,7 +112,7 @@ public class User_Info extends AppCompatActivity {
 
 
     private void goBack(View view) {
-        Intent intent = new Intent(this, HostScreen.class);
+        Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
     }
 }
