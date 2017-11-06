@@ -10,18 +10,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 
-public class Blacklist extends AppCompatActivity {
+public class About extends AppCompatActivity {
     private Button btnBack;
-    private String party_id, relation;
+    private TextView txtuser, txtid, txtfirst, txtlast;
+    private String user_id, user_name, fname, lname, fullname, prev_class;
+    private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blacklist);
+        setContentView(R.layout.activity_about);
         btnBack = (Button) findViewById(R.id.btnBack);
-
+        txtuser = (TextView) findViewById(R.id.usertxt);
+        //txtfirst = (TextView) findViewById(R.id.firsttxt);
+        //txtlast = (TextView) findViewById(R.id.lasttxt);
+        txtid = (TextView) findViewById(R.id.idtxt);
+        //fullname = getIntent().getStringExtra("user_name");
+        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+        user_id = settings.getString("id", "default");
+        user_name = settings.getString("username", "default");
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,9 +40,8 @@ public class Blacklist extends AppCompatActivity {
             }
 
         });
-        Intent intent = getIntent();
-        party_id = intent.getStringExtra("party_name");
-        relation = intent.getStringExtra("relation");
+        prev_class = getIntent().getStringExtra("prev");
+        About();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,7 +53,7 @@ public class Blacklist extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                startActivity(new Intent(this, About.class));
+                //startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
@@ -59,11 +68,18 @@ public class Blacklist extends AppCompatActivity {
         }
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(Blacklist.this, HostScreen.class);
-        intent.putExtra("party_name", party_id);
-        intent.putExtra("relation", relation);
+    private void About(){
+        txtuser.setText("Username: " + user_name);
+        //fname = fullname.split(" ")[0];
+        //txtfirst.setText("First name: "+fname);
+        //lname = fullname.substring(fullname.split(" ")[0].length()+1, fullname.length());
+        //txtlast.setText("Last name: "+lname);
+        txtid.setText("User ID: " + user_id);
+    }
 
+    private void goBack(View view) {
+        Intent intent = new Intent(About.this, HomeScreen.class);
         startActivity(intent);
     }
+
 }

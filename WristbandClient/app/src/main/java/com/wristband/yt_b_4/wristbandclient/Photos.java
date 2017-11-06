@@ -37,14 +37,14 @@ public class Photos extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                //startActivity(new Intent(this, About.class));
+                startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();

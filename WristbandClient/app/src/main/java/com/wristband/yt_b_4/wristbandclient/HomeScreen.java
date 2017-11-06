@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.app.Dialog;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -40,10 +42,11 @@ import org.json.JSONObject;
 
 public class HomeScreen extends AppCompatActivity {
 
-    Button NewPartyButton, publicparty;
+    Button NewPartyButton, publicparty, yes, no;
     ListView listView;
     List list = new ArrayList();
     List relationList = new ArrayList();
+    Dialog DeleteDialog;
 
     ArrayList<String> party_ids = new ArrayList();
     ArrayAdapter adapter;
@@ -65,7 +68,7 @@ public class HomeScreen extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
@@ -74,11 +77,8 @@ public class HomeScreen extends AppCompatActivity {
         SharedPreferences.Editor editor;
         switch (item.getItemId()) {
             case R.id.about:
-                //startActivity(new Intent(this, About.class));
+                startActivity(new Intent(this, About.class));
                 return true;
-//            case R.id.account:
-//                User_Info(user_id);
-//                return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 settings = getSharedPreferences("account", Context.MODE_PRIVATE);
@@ -88,13 +88,7 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(new Intent(this, Login.class));
                 return true;
             case R.id.delete:
-                deleteAccount(user_id);
-                LoginManager.getInstance().logOut();
-                settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-                editor = settings.edit();
-                editor.clear();
-                editor.commit();
-                startActivity(new Intent(this, Login.class));
+                deletionDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -257,6 +251,42 @@ public class HomeScreen extends AppCompatActivity {
         intent.putExtra("user_id", User_Id);
         intent.putExtra("user_name", User_Id);
         startActivity(intent);
+    }
+
+    public void deletionDialog() {
+        final SharedPreferences[] settings = new SharedPreferences[1];
+        final SharedPreferences.Editor[] editor = new SharedPreferences.Editor[1];
+        DeleteDialog = new Dialog(HomeScreen.this);
+        DeleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DeleteDialog.setContentView(R.layout.delete_dialog);
+        DeleteDialog.setTitle("Are you sure?");
+
+        yes = (Button)DeleteDialog.findViewById(R.id.yes);
+        no = (Button)DeleteDialog.findViewById(R.id.no);
+
+        yes.setEnabled(true);
+        no.setEnabled(true);
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteAccount(user_id);
+                LoginManager.getInstance().logOut();
+                settings[0] = getSharedPreferences("account", Context.MODE_PRIVATE);
+                editor[0] = settings[0].edit();
+                editor[0].clear();
+                editor[0].commit();
+                startActivity(new Intent(HomeScreen.this, Login.class));
+            }
+        });
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteDialog.cancel();
+            }
+        });
+
+        DeleteDialog.show();
     }
 
     private void showProgressDialog() {

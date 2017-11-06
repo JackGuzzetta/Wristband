@@ -54,7 +54,7 @@ public class Create_Profile extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.loginmenu, menu);
         return true;
     }
 
@@ -62,14 +62,6 @@ public class Create_Profile extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
-                return true;
-            case R.id.logout:
-                LoginManager.getInstance().logOut();
-                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.clear();
-                editor.commit();
-                startActivity(new Intent(this, Login.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
