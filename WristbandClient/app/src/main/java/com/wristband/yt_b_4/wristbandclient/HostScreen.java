@@ -212,6 +212,7 @@ public class HostScreen extends AppCompatActivity  {
             Toast toast = Toast.makeText(getApplicationContext(),
                     scanContent, Toast.LENGTH_SHORT);
             toast.show();
+
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),
