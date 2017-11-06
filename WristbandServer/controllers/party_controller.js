@@ -1,6 +1,7 @@
 Party = require('../models/parties');
 
 module.exports.createParty = function(party_name, date, time, privacy, max_people, alerts, host, location, res) {
+	var party1 = new Party();
 	party = new Party({
 	    party_name: party_name,
 	    date: date,
@@ -11,18 +12,36 @@ module.exports.createParty = function(party_name, date, time, privacy, max_peopl
 	    host: host,
 	    location: location
 	});
-	party.save(function(err) {
+	party1.find('all', {where: 'party_name=' + '\'' + party_name+ '\''}, function(err, rows, fields) {
 		if (err) {
-			console.log("Unable to create party");
+			console.log("error");
 			res.json({
 			    parties: "Error"
 			})
 		}
 		else {
-			console.log("Created new party: ", party_name);
-			res.json({
-				party_name: party_name
-			})
+			if (rows.length == 0) {
+				party.save(function(err) {
+					if (err) {
+						console.log("Unable to create party");
+						res.json({
+						    parties: "Unable to create party, err"
+						})
+					}
+					else {
+						console.log("Created new party: ", party_name);
+						res.json({
+							parties: "Created new party",
+							party_name: party_name
+						})
+					}
+				});
+			}
+			else {
+				res.json({
+					parties: "Party already exists"
+				})
+			}
 		}
 	});
 }

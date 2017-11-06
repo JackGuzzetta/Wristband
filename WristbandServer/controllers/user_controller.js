@@ -66,6 +66,7 @@ module.exports = function(app) {
     }
 
     module.exports.createUser = function(f_name, l_name, username, password, email, res) {
+        var user1 = new User();
         var expires = moment().add(7, 'days').valueOf();
         user = new User({
             f_name: f_name,
@@ -74,43 +75,72 @@ module.exports = function(app) {
             password: password,
             email: email,
         });
-        user.save(function(err) {
+        user.find('all', {
+            where: 'username=' + '\'' + username + '\''
+        }, function(err, rows, fields) {
             if (err) {
-                console.log("Unable to create user");
-                res.json({
+                console.log("error");
+                res.json([{
                     users: "Error"
-                })
+                }])
             } else {
-                console.log("Created new user: ", username);
-                var user = new User();
-                user.find('all', {
-                    where: 'username=' + '\'' + username + '\''
-                }, function(err, rows, fields) {
-                    if (err) {
-                        console.log("error");
-                        res.json({
-                            users: "Error"
-                        })
-                    } else {
-                        if (rows.length == 0) {
-                            console.log("User not found.");
+                if (rows.length == 0) {
+                    user.save(function(err) {
+                        if (err) {
+                            console.log("Unable to create user");
                             res.json({
                                 users: "Error"
                             })
                         } else {
-                            id = rows[0].id;
-                            token = createToken(username, expires);
-                            console.log(token);
-                            res.json({
-                                token: token,
-                                id: id,
-                                user: username
-                            })
+                            console.log("Created new user: ", username);
+                            var user = new User();
+                            user.find('all', {
+                                where: 'username=' + '\'' + username + '\''
+                            }, function(err, rows, fields) {
+                                if (err) {
+                                    console.log("error");
+                                    res.json({
+                                        users: "Error"
+                                    })
+                                } else {
+                                    if (rows.length == 0) {
+                                        console.log("User not found.");
+                                        res.json({
+                                            users: "Error"
+                                        })
+                                    } else {
+                                        id = rows[0].id;
+                                        token = createToken(username, expires);
+                                        console.log(token);
+                                        res.json({
+                                            token: token,
+                                            id: id,
+                                            user: username
+                                        })
+                                    }
+                                }
+                            });
                         }
-                    }
-                });
+                    });
+                } else {
+                    res.contentType('application/json');
+                    res.json([{
+                        users: "Already exists"
+                    }])
+                }
             }
         });
+
+
+
+
+
+
+
+
+
+
+        
     }
     module.exports.findAllUsers = function(res) {
         var user = new User();
