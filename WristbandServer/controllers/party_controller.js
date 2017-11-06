@@ -116,7 +116,7 @@ module.exports.deleteParty = function(id, res) {
 		}
 	});
 }
-module.exports.updateParty = function(id, party_name, date, time, privacy, alerts, host, location, res) {
+module.exports.updateParty = function(id, party_name, date, time, privacy, max_people, alerts, host, location, res) {
 	party = new Party({
 		id: id,
 	    party_name: party_name,
@@ -124,20 +124,20 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, alert
 	    time: time,
 	    privacy: privacy,
 	    alerts: alerts,
-	    host: host,
 	    location: location
 	});
 	party.save(function(err) {
 		if (err) {
-			console.log("Unable to update party");
+			console.log("Unable to create party");
 			res.json({
 			    parties: "Error"
 			})
 		}
 		else {
-			console.log('Updated party: ', id);
+			console.log("Updated new party: ", party_name);
 			res.json({
-				    parties: "Success"
+				parties: "Success",
+				party_name: party_name
 			})
 		}
 	});
