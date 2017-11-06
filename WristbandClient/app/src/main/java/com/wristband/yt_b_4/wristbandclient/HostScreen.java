@@ -127,6 +127,7 @@ public class HostScreen extends AppCompatActivity {
 
 
         listView = (ListView) findViewById(R.id.list_view);
+        getDataFromServer();
         adapter = new ArrayAdapter(HostScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -147,15 +148,19 @@ public class HostScreen extends AppCompatActivity {
             }
         };
         listView.setAdapter(adapter);
-        ;
-        getDataFromServer();
+
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l){
                 Intent intent = new Intent(HostScreen.this, User_Info.class);
                 user_name = (listView.getItemAtPosition(i)).toString();
+                intent.putExtra("user_rel", relation);
+                relation = relationList.get(i).toString();
+                intent.putExtra("prev", "host");
                 intent.putExtra("user_id", user_id);
+                intent.putExtra("party_name", party_name);
                 intent.putExtra("user_name", user_name);
+                intent.putExtra("relation", relation);
                 startActivity(intent);
             }
         });

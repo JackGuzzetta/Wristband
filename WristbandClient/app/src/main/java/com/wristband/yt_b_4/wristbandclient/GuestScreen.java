@@ -134,29 +134,35 @@ public class GuestScreen extends AppCompatActivity {
         listView.setAdapter(adapter);
         ;
         getDataFromServer();
-        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l){
                 Intent intent = new Intent(GuestScreen.this, User_Info.class);
                 user_name = (listView.getItemAtPosition(i)).toString();
+                intent.putExtra("user_rel", relation);
+                relation = relationList.get(i).toString();
+                intent.putExtra("prev", "guest");
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("user_name", user_name);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                //startActivity(new Intent(this, About.class));
+                startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
