@@ -9,6 +9,12 @@ import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.support.v7.app.AlertDialog;
+import android.widget.EditText;
+import android.content.DialogInterface;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +55,11 @@ public class HostScreen extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private String party_id, user_id;
-    private String party_name, user_name, relation, prev_class, loc;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+
+
+    private String party_name, user_name, relation, prev_class, priv, date, time, loc, maxp, alert, hosts;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -194,6 +204,9 @@ public class HostScreen extends AppCompatActivity {
             case R.id.edit:
                 //TODO
                 return true;
+            case R.id.newname:
+                editname();
+                return true;
             case R.id.invite:
                 intent = new Intent(HostScreen.this, Add_User.class);
                 intent.putExtra("prev", "guest");
@@ -306,6 +319,49 @@ public class HostScreen extends AppCompatActivity {
         }).start();
     }
 
+    private void editParty(final String party_id) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
+                        Const.URL_PARTY + party_id, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Toast blank = Toast.makeText(getApplicationContext(), party_name, Toast.LENGTH_LONG);
+                        blank.show();
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("party_id", party_id);
+                        headers.put("party_name", party_name);
+                        headers.put("date", date);
+                        headers.put("time", time);
+                        headers.put("privacy", priv);
+                        headers.put("max_people", maxp);
+                        headers.put("alerts", alert);
+                        headers.put("host", hosts);
+                        headers.put("location", loc);
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+            }
+        }).start();
+    }
+
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
@@ -314,13 +370,18 @@ public class HostScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
+
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    String date = response.getJSONObject(0).getString("date");
+                                    date = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
-                                    String time = response.getJSONObject(0).getString("time");
+                                    time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
                                     party_id = response.getJSONObject(0).getString("id");
+                                    priv = response.getJSONObject(0).getString("privacy");
                                     loc = location;
+                                    maxp = response.getJSONObject(0).getString("max_people");
+                                    alert= response.getJSONObject(0).getString("alerts");
+                                    hosts = host;
                                     partyText.setText("Party name: " + name);
                                     dateText.setText("Date: " + date);
                                     locationTxt.setText("Location: " + location);
@@ -372,6 +433,33 @@ public class HostScreen extends AppCompatActivity {
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
         startActivity(intent);
+    }
+    private void editname(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("New Party Name");
+        alert.setMessage("Message");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                party_name= input.getText().toString();
+
+                editParty(party_id);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 
 

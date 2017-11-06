@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WristbandClient.iml" filepath="$PROJECT_DIR$/WristbandClient.iml" />
       <module fileurl="file://C:\Users\Mike\Desktop\YT_B_4_ProjectName\WristbandClient\WristbandClient.iml" filepath="C:\Users\Mike\Desktop\YT_B_4_ProjectName\WristbandClient\WristbandClient.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Mike\Desktop\YT_B_4_ProjectName\WristbandClient\app\app.iml" filepath="C:\Users\Mike\Desktop\YT_B_4_ProjectName\WristbandClient\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WristbandClient.iml" filepath="$PROJECT_DIR$/WristbandClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WristbandClient.iml" filepath="$PROJECT_DIR$/WristbandClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

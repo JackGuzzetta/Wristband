@@ -97,6 +97,7 @@ public class Create_Party extends AppCompatActivity {
         this.create = (Button) findViewById(R.id.create);
         btnBack = (Button) findViewById(R.id.btnBack);
         EditText eventname = (EditText) findViewById(R.id.eventName);
+
         EditText loc = (EditText) findViewById(R.id.locat);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
