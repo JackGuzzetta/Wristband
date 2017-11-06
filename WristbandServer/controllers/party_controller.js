@@ -141,7 +141,9 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, max_p
 	    party_name: party_name,
 	    date: date,
 	    time: time,
+	    host: host,
 	    privacy: privacy,
+	    max_people: max_people,
 	    alerts: alerts,
 	    location: location
 	});
