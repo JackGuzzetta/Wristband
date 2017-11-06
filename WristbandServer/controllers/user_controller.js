@@ -314,7 +314,7 @@ module.exports = function(app) {
           user: 'wristbandparties@gmail.com',
           pass: 'mdnzohgoucduzmjh',
           subject: 'Wristband Party Invite',
-          text: img_path                           // Array of files to attach 
+          files: file_path                           // Array of files to attach 
         });
         send({}, function (err) {
               if (err) {

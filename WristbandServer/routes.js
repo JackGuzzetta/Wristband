@@ -3,7 +3,6 @@ module.exports = function(app) {
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
     var Relation = require('./controllers/relation_contoller');
-    var serveIndex = require('serve-index');
 
 
 
@@ -43,8 +42,8 @@ module.exports = function(app) {
     app.post('/parties', function(req, res) {
         Party.createParty(req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, req.headers.location, res)
     });
-    app.put('/parties/:id', function(req, res) {
-        Party.updateParty(req.params.id, req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, req.headers.location, res)
+    app.put('/parties/', function(req, res) {
+        Party.updateParty(req.headers.id, req.headers.party_name, req.headers.date, req.headers.time, req.headers.privacy, req.headers.max_people, req.headers.alerts, req.headers.host, req.headers.location, res)
     });
     app.delete('/parties/:id', function(req, res) {
         Party.deleteParty(req.params.id, res);

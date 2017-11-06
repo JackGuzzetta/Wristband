@@ -50,7 +50,6 @@ public class Add_User extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> userIDs;
     private AutoCompleteTextView textView;
-    private VolleyHandler volley;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,7 +196,7 @@ public class Add_User extends AppCompatActivity {
             }
             Intent intent = getIntent();
             String party_id = intent.getStringExtra("party_id");
-            volley.inviteUser(party_id, user_id, coHost);
+            VolleyHandler.inviteUser(party_id, user_id, coHost);
             Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
             textView.setText("");
@@ -207,7 +206,7 @@ public class Add_User extends AppCompatActivity {
         }
         String number = phoneNumber.getText().toString();
         if (!number.isEmpty()) {
-            volley.invitebyNumber(number);
+            VolleyHandler.invitebyNumber(number);
         }
         //PhoneController p = new PhoneController();
         //p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
