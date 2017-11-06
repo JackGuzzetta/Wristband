@@ -99,6 +99,7 @@ public class HomeScreen extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
+        user_name= settings.getString("username", "default");
         adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -249,7 +250,7 @@ public class HomeScreen extends AppCompatActivity {
     public void User_Info(String User_Id){
         Intent intent = new Intent(HomeScreen.this, User_Info.class);
         intent.putExtra("user_id", User_Id);
-        intent.putExtra("user_name", User_Id);
+        intent.putExtra("user_name", user_name);
         startActivity(intent);
     }
 

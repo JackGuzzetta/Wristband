@@ -10,21 +10,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
 
 public class About extends AppCompatActivity {
     private Button btnBack;
     private TextView txtuser, txtid, txtfirst, txtlast;
     private String user_id, user_name, fname, lname, fullname, prev_class;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private ImageView code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         btnBack = (Button) findViewById(R.id.btnBack);
         txtuser = (TextView) findViewById(R.id.usertxt);
+        code= (ImageView) findViewById(R.id.qr);
         //txtfirst = (TextView) findViewById(R.id.firsttxt);
         //txtlast = (TextView) findViewById(R.id.lasttxt);
         txtid = (TextView) findViewById(R.id.idtxt);
@@ -67,6 +72,10 @@ public class About extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void addqr(String name){
+        QRGenerator x = new QRGenerator(user_name);
+        code.setImageBitmap(x.createQR());
+    }
 
     private void About(){
         txtuser.setText("Username: " + user_name);
@@ -75,6 +84,8 @@ public class About extends AppCompatActivity {
         //lname = fullname.substring(fullname.split(" ")[0].length()+1, fullname.length());
         //txtlast.setText("Last name: "+lname);
         txtid.setText("User ID: " + user_id);
+        addqr(user_name);
+
     }
 
     private void goBack(View view) {

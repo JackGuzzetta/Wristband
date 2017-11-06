@@ -15,6 +15,10 @@ import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.models.User;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.common.api.Status;
 
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -56,6 +60,7 @@ import java.util.Calendar;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import com.google.android.gms.maps.model.LatLng;
 import android.telephony.SmsManager;
 
 
@@ -70,6 +75,7 @@ public class Create_Party extends AppCompatActivity {
     private TextView mDisplayTime;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+    private PlaceAutocompleteFragment autocompleteFragment;
     ImageButton pic;
     String name;
     String location;
@@ -81,6 +87,7 @@ public class Create_Party extends AppCompatActivity {
     String user_id;
     String party_id;
     String created;
+    LatLng fromadd;
 
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
@@ -97,7 +104,22 @@ public class Create_Party extends AppCompatActivity {
         this.create = (Button) findViewById(R.id.create);
         btnBack = (Button) findViewById(R.id.btnBack);
         EditText eventname = (EditText) findViewById(R.id.eventName);
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                fromadd = place.getLatLng();
+                double lat = fromadd.latitude;
+                double lng = fromadd.longitude;
+            }
 
+            @Override
+            public void onError(Status status) {
+                Toast.makeText(getBaseContext(),"failure",Toast.LENGTH_LONG).show();
+
+            }
+        });
         EditText loc = (EditText) findViewById(R.id.locat);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
@@ -138,6 +160,7 @@ public class Create_Party extends AppCompatActivity {
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
+
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         Create_Party.this,

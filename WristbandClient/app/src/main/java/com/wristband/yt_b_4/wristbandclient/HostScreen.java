@@ -4,10 +4,25 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
+import com.google.zxing.qrcode.QRCodeReader;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.Result;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
+
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -38,6 +53,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+//import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 
 import com.android.volley.Response;
@@ -49,17 +65,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HostScreen extends AppCompatActivity {
+public class HostScreen extends AppCompatActivity  {
     private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
+    private ArrayList<String> usernames = new ArrayList<String>();
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private String party_id, user_id;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+    private static final int REQUEST_CAMERA = 1;
+   // private ZXingScannerView mScannerView;
 
 
-    private String party_name, user_name, relation, prev_class, priv, date, time, loc, maxp, alert, hosts;
+    String party_name, user_name, relation, prev_class, priv, date, time, loc, maxp, alert, hosts;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -78,6 +97,7 @@ public class HostScreen extends AppCompatActivity {
         timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
+        //mScannerView = new ZXingScannerView(this);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
         pDialog = new ProgressDialog(this);
@@ -85,6 +105,7 @@ public class HostScreen extends AppCompatActivity {
         pDialog.setCancelable(false);
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
+
 
 //                QRGenerator(party_id,user_id);
 
@@ -167,35 +188,57 @@ public class HostScreen extends AppCompatActivity {
 
     }
 
+
+
+
     public void scanNow(View view){
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.DATA_MATRIX_TYPES);
-        integrator.setPrompt("Scan a barcode");
-        //integrator.setResultDisplayDuration(0);
+        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        scanIntegrator.initiateScan();
+
+       // setContentView(mScannerView);
+        //IntentIntegrator integrator = new IntentIntegrator(this);
+        //integrator.setDesiredBarcodeFormats(IntentIntegrator.DATA_MATRIX_TYPES);
+        //integrator.setPrompt("Scan a barcode");
+        //integrator.set;
         //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
-        integrator.setCameraId(0);  // Use a specific camera of the device
-        integrator.initiateScan();
+        //integrator.setCameraId(1);  // Use a specific camera of the device
+        //integrator.initiateScan(IntentIntegrator.DATA_MATRIX_TYPES);
     }
-
-
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        //retrieve scan result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-
         if (scanningResult != null) {
-            //we have a result
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-
-            // display it on screen
-            //formatTxt.setText("FORMAT: " + scanFormat);
-            //contentTxt.setText("CONTENT: " + scanContent);
-
-        }else{
-            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    scanContent, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
+//
+//
+//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        //retrieve scan result
+//        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+//
+//        if (scanningResult != null) {
+//            //we have a result
+//            String scanContent = scanningResult.getContents();
+//            String scanFormat = scanningResult.getFormatName();
+//
+//            // display it on screen
+//           // formatTxt.setText("FORMAT: " + scanFormat);
+//            //contentTxt.setText("CONTENT: " + scanContent);
+//
+//        }else{
+//            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+//    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -211,6 +254,7 @@ public class HostScreen extends AppCompatActivity {
                 return true;
             case R.id.newname:
                 editname();
+                getDataFromServer();
                 return true;
             case R.id.invite:
                 intent = new Intent(HostScreen.this, Add_User.class);
@@ -325,13 +369,17 @@ public class HostScreen extends AppCompatActivity {
     }
 
     private void editParty(final String party_id) {
+
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
-                        Const.URL_PARTY + party_id, null,
+                        Const.URL_PARTY, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
+
+
+                                //getDataFromServer(party.getPartyName());
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -340,31 +388,38 @@ public class HostScreen extends AppCompatActivity {
                 }) {
                     /**
                      * Passing some request headers
-                     * */
+                     */
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        Toast blank = Toast.makeText(getApplicationContext(), party_name, Toast.LENGTH_LONG);
-                        blank.show();
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("party_id", party_id);
+                        headers.put("Content-Type", "application/json");
+                        headers.put("id",party_id);
                         headers.put("party_name", party_name);
-                        headers.put("date", date);
-                        headers.put("time", time);
-                        headers.put("privacy", priv);
-                        headers.put("max_people", maxp);
-                        headers.put("alerts", alert);
-                        headers.put("host", hosts);
-                        headers.put("location", loc);
+//                        headers.put("date", date);
+//                        headers.put("time", time);
+//                        headers.put("privacy", priv);
+//                        headers.put("max_people", maxp);
+//                        headers.put("alerts", alert);
+//                        headers.put("host", hosts);
+//                        headers.put("location", loc);
                         return headers;
                     }
                 };
-                // Adding request to request queue
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
-                // Cancelling request
-                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+                //showProgressDialog();
+//                try {
+//                    Thread.sleep(2000L); //wait for party to be created first
+//                    sendRelationToServer(user_id, party_id, "1");
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
         }).start();
+
+
+
+
     }
 
     private void getDataFromServer() {
@@ -482,7 +537,9 @@ public class HostScreen extends AppCompatActivity {
                                         for (int i = 0; i < response.length(); i++) {
                                             String Pid = response.getJSONObject(i).getString("party_id");
                                             String Uid = response.getJSONObject(i).getString("user_id");
+                                            String UN = response.getJSONObject(i).getString("user_id");
                                             String Relation = response.getJSONObject(i).getString("party_user_relation");
+                                           // usernames.add()
                                             if (party_id.equals(Pid)) {
                                                 relationList.add(Relation);
                                                 getDataFromServer(Uid);
@@ -535,4 +592,33 @@ public class HostScreen extends AppCompatActivity {
             }
         }).start();
     }
+
+
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
+//        mScannerView.startCamera();          // Start camera on resume
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mScannerView.stopCamera();           // Stop camera on pause
+//    }
+//
+//    @Override
+//    public void handleResult(Result rawResult) {
+//        // Do something with the result here
+//        String  result= rawResult.getText();
+//        Toast blank = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG);
+//        blank.show();
+//        //setContentView(R.layout.activity_host_screen);
+//        Intent intent = new Intent(HostScreen.this, HomeScreen.class);
+//        startActivity(intent);
+//        // onBackPressed();
+//
+//    }
+
 }
