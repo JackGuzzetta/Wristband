@@ -109,6 +109,7 @@ public class User_Info extends AppCompatActivity {
         }
         return null;
     }
+
     private void addqr(String name){
         QRGenerator x = new QRGenerator(user_id);
         code.setImageBitmap(x.createQR());
@@ -116,7 +117,7 @@ public class User_Info extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_info, menu);
+        inflater.inflate(R.menu.regular, menu);
         return true;
     }
 
