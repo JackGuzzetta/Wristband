@@ -354,3 +354,24 @@ module.exports = function(app) {
         });
     }
 }
+    module.exports.joinByUserId = function(id, res) {
+        var user = new User();
+        user.query("SELECT users.id, party_relation.party_id, party_relation.user_id, party_relation.party_user_relation, parties.party_name FROM users join party_relation ON users.id=party_relation.user_id join parties ON parties.id=party_relation.party_id WHERE party_relation.user_id=\"" + id  + "\";", function(err, rows, fields) {
+            if (err) {
+                console.log("error");
+                res.json({
+                    users: "Error"
+                })
+            } else {
+                if (rows.length == 0) {
+                    console.log("User not found.");
+                    res.json({
+                        users: "Error"
+                    })
+                } else {
+                    res.contentType('application/json');
+                    res.send(JSON.stringify(rows));
+                }
+            }
+        });
+    }

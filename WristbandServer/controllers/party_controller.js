@@ -163,3 +163,31 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, max_p
 		}
 	});
 }
+module.exports.updateParty = function(id, party_name, date, time, privacy, max_people, alerts, host, location, res) {
+	party = new Party({
+		id: id,
+	    party_name: party_name,
+	    date: date,
+	    time: time,
+	    host: host,
+	    privacy: privacy,
+	    max_people: max_people,
+	    alerts: alerts,
+	    location: location
+	});
+	party.save(function(err) {
+		if (err) {
+			console.log("Unable to create party", err);
+			res.json({
+			    parties: "Error"
+			})
+		}
+		else {
+			console.log("Updated new party: ", party_name);
+			res.json({
+				parties: "Success",
+				party_name: party_name
+			})
+		}
+	});
+}
