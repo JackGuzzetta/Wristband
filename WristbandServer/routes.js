@@ -25,7 +25,7 @@ module.exports = function(app) {
     app.delete('/users/:id', function(req, res) {
         User.deleteUser(req.params.id, res);
     });
-    app.get('/join:id', function(req, res) {
+    app.get('/join/:id', function(req, res) {
         User.joinByUserId(req.params.id, res);
     });
 	//----------------------------
