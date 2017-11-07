@@ -88,7 +88,7 @@ public class Create_Party extends AppCompatActivity {
     String party_id;
     String created;
     LatLng fromadd;
-
+    Intent finalIntent;
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -232,13 +232,13 @@ public class Create_Party extends AppCompatActivity {
                     String host = settings.getString("username", "default");
                     Party p = new Party(name, date, time, 0, 200, 0, host, location);
                     created = "1";
-                    Intent intent = new Intent(Create_Party.this, HomeScreen.class);
-                    intent.putExtra("eventname", eventname.getText().toString());
-                    intent.putExtra("Date", Date.getText().toString());
-                    intent.putExtra("Time", Time.getText().toString());
-                    intent.putExtra("loc", loc.getText().toString());
-                    intent.putExtra("activity", created);
-                    intent.putExtra("prev", "party");
+                    finalIntent = new Intent(Create_Party.this, HomeScreen.class);
+                    finalIntent.putExtra("eventname", eventname.getText().toString());
+                    finalIntent.putExtra("Date", Date.getText().toString());
+                    finalIntent.putExtra("Time", Time.getText().toString());
+                    finalIntent.putExtra("loc", loc.getText().toString());
+                    finalIntent.putExtra("activity", created);
+                    finalIntent.putExtra("prev", "party");
                     //  sendSms("5554", "Hi You got a message!");
                     if (s) {
                         p.makePartyPublic();
@@ -247,7 +247,7 @@ public class Create_Party extends AppCompatActivity {
                         Toast blank = Toast.makeText(getApplicationContext(), "Public Party Created!", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.GONE);
-                        startActivity(intent);
+                        //startActivity(finalIntent);
                     } else {
                         p.MakePartyPrivate();
                         sendDataToServer(p);
@@ -255,7 +255,7 @@ public class Create_Party extends AppCompatActivity {
                         Toast blank = Toast.makeText(getApplicationContext(), "Private Party Created", Toast.LENGTH_LONG);
                         blank.show();
                         create.setVisibility(View.GONE);
-                        startActivity(intent);
+                        //startActivity(finalIntent);
                     }
                 }
 
@@ -407,13 +407,6 @@ public class Create_Party extends AppCompatActivity {
                 };
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
-                //showProgressDialog();
-//                try {
-//                    Thread.sleep(2000L); //wait for party to be created first
-//                    sendRelationToServer(user_id, party_id, "1");
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
             }
         }).start();
     }
@@ -426,11 +419,7 @@ public class Create_Party extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    response.getString("users");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                startActivity(finalIntent);
                             }
                         }, new Response.ErrorListener() {
                     @Override
