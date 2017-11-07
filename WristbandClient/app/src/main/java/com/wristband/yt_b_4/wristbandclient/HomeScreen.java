@@ -297,63 +297,23 @@ public class HomeScreen extends AppCompatActivity {
         DeleteDialog.show();
     }
 
-    private void showProgressDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (pDialog.isShowing())
-            pDialog.hide();
-    }
-
-
     private void getAllPartiesByUserId() {
         new Thread(new Runnable() {
             public void run() {
-                try {
-                    Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN + user_id,
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    try {
-                                        for (int i = 0; i < response.length(); i++) {
-                                            String id = response.getJSONObject(i).getString("party_id");
-                                            String relation = response.getJSONObject(i).getString("party_user_relation");
-                                            party_ids.add(id);
-                                            relationList.add(relation);
-                                            getDataFromServer(id);
-                                        }
-                                    } catch (JSONException e) {
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-                    AppController.getInstance().addToRequestQueue(req,
-                            tag_json_arry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void getDataFromServer(final String id) {
-        new Thread(new Runnable() {
-            public void run() {
-                //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN + user_id,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String name = response.getJSONObject(0).getString("party_name");
-                                    list.add(name);
-                                    adapter.notifyDataSetChanged();
+                                    for (int i = 0; i < response.length(); i++) {
+                                        String id = response.getJSONObject(i).getString("party_id");
+                                        String relation = response.getJSONObject(i).getString("party_user_relation");
+                                        String name = response.getJSONObject(i).getString("party_name");
+                                        list.add(name);
+                                        party_ids.add(id);
+                                        relationList.add(relation);
+                                        adapter.notifyDataSetChanged();
+                                    }
                                 } catch (JSONException e) {
                                 }
                             }
