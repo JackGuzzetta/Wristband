@@ -83,7 +83,7 @@ public class HostScreen extends AppCompatActivity  {
    // private ZXingScannerView mScannerView;
 
 
-    String party_name, user_name, relation, prev_class, priv, date, time, loc, maxp, alert, hosts;
+    String party_name, user_name, relation, prev_class, priv, dat, time, loc, maxp, alert, hosts;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -195,6 +195,8 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     public void scanNow(View view){
+
+
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
 
@@ -213,8 +215,11 @@ public class HostScreen extends AppCompatActivity  {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
             Toast toast = Toast.makeText(getApplicationContext(),
-                    scanContent, Toast.LENGTH_SHORT);
+                    usernames.get(0), Toast.LENGTH_SHORT);
             toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(),
+//                    scanContent, Toast.LENGTH_SHORT);
+//            toast.show();
 
         }
         else{
@@ -383,7 +388,7 @@ public class HostScreen extends AppCompatActivity  {
                         headers.put("Content-Type", "application/json");
                         headers.put("id",party_id);
                         headers.put("party_name", party_name);
-                        headers.put("date", date);
+                        headers.put("date", dat);
                         headers.put("time", time);
                         headers.put("privacy", priv);
                         headers.put("max_people", maxp);
@@ -409,7 +414,7 @@ public class HostScreen extends AppCompatActivity  {
                                 try {
 
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    date = response.getJSONObject(0).getString("date");
+                                    dat = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
                                     time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
@@ -420,7 +425,7 @@ public class HostScreen extends AppCompatActivity  {
                                     alert= response.getJSONObject(0).getString("alerts");
                                     hosts = host;
                                     partyText.setText("Party name: " + name);
-                                    dateText.setText("Date: " + date);
+                                    dateText.setText("Date: " + dat);
                                     locationTxt.setText("Location: " + location);
                                     timeTxt.setText("Time: " + time);
                                     getAllUsers();
@@ -473,57 +478,58 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     private void editdate(){
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+        alert.setTitle("New Party Date");
 
-        DatePickerDialog dialog = new DatePickerDialog(
-                HostScreen.this,
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener,
-                year, month, day);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
 
-                date = year + "-" + month + "-" + day;
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                dat= input.getText().toString();
+
+                editParty(party_id);
             }
-        };
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
 
     }
     private void edittime(){
-        Toast blank = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
-        blank.show();
-                Calendar cal = Calendar.getInstance();
-                int hour = cal.get(Calendar.HOUR);
-                int minute = cal.get(Calendar.MINUTE);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-                TimePickerDialog dialog = new TimePickerDialog(
-                        HostScreen.this,
-                        mTimeSetListener,
-                        hour, minute, true);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-         hour = cal.get(Calendar.HOUR);
-         minute = cal.get(Calendar.MINUTE);
+        alert.setTitle("New Party Time");
 
-        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
 
-                Log.d(TAG, "onDateSet: hh:mm: " + hour + ":" + minute);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
 
-                time = hour + ":" + minute + ":00";
-                Toast blank = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
-                blank.show();
+                time= input.getText().toString();
+
+                editParty(party_id);
             }
-        };
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
 
 
     }
@@ -600,6 +606,7 @@ public class HostScreen extends AppCompatActivity  {
                                 name += response.getJSONObject(i).getString("l_name");
                                 list.add(name);
                                 adapter.notifyDataSetChanged();
+                                usernames.add(response.getJSONObject(i).getString("user_id"));
                             }
                         } catch (JSONException e) {
                         }
