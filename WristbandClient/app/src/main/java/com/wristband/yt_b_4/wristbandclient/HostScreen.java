@@ -183,6 +183,7 @@ public class HostScreen extends AppCompatActivity  {
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_rel", relation);
                 relation = relationList.get(i).toString();
+                user_id = findID(user_name);
                 intent.putExtra("prev", "host");
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("party_name", party_name);
@@ -449,6 +450,15 @@ public class HostScreen extends AppCompatActivity  {
     private void goBack(View view) {
         Intent intent = new Intent(HostScreen.this, HomeScreen.class);
         startActivity(intent);
+    }
+
+    private String findID(String user_name){
+        for(int i = 0; i < list.size()-1; i++){
+            if(list.get(i).equals(user_name)){
+                return usernames.get(i);
+            }
+        }
+        return "ID not found";
     }
 
     private void goLocation(String party_name) {

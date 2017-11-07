@@ -117,7 +117,7 @@ public class User_Info extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.regular, menu);
+        inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 

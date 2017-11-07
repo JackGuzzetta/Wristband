@@ -173,21 +173,21 @@ public class HomeScreen extends AppCompatActivity {
     public void hostScreen(int screen, String party_name, String relation) {
         Intent intent;
         switch (screen) {
-            case 1:
+            case 1://host
                 intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
                 finish();
                 break;
-            case 2:
+            case 2://guest
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
                 finish();
                 break;
-            case 3:
+            case 3://cohost
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
