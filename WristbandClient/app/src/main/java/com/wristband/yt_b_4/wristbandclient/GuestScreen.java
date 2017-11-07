@@ -328,69 +328,29 @@ public class GuestScreen extends AppCompatActivity {
 
 
     private void getAllUsers() {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    try {
-                                        for (int i = 0; i < response.length(); i++) {
-                                            String Pid = response.getJSONObject(i).getString("party_id");
-                                            String Uid = response.getJSONObject(i).getString("user_id");
-                                            String Relation = response.getJSONObject(i).getString("party_user_relation");
-                                            if (party_id.equals(Pid)) {
-                                                relationList.add(Relation);
-                                                getDataFromServer(Uid);
-                                            }
-                                            //
-                                        }
-                                    } catch (JSONException e) {
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-                    AppController.getInstance().addToRequestQueue(req,
-                            tag_json_arry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void getDataFromServer(final String id) {
-        new Thread(new Runnable() {
-            public void run() {
-                //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS + "/" + id,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                try {
-
-                                    String name = response.getJSONObject(0).getString("f_name");
-                                    name += " ";
-                                    name += response.getJSONObject(0).getString("l_name");
-                                    list.add(name);
-                                    adapter.notifyDataSetChanged();
-
-                                } catch (JSONException e) {
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                String Relation = response.getJSONObject(i).getString("party_user_relation");
+                                relationList.add(Relation);
+                                String name = response.getJSONObject(i).getString("f_name");
+                                name += " ";
+                                name += response.getJSONObject(i).getString("l_name");
+                                list.add(name);
+                                adapter.notifyDataSetChanged();
+                            }
+                        } catch (JSONException e) {
+                        }
                     }
-                });
-                AppController.getInstance().addToRequestQueue(req,
-                        tag_json_arry);
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
             }
-        }).start();
+        });
+        AppController.getInstance().addToRequestQueue(req,
+                tag_json_arry);
     }
 }

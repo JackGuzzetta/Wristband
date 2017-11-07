@@ -188,9 +188,6 @@ public class HostScreen extends AppCompatActivity  {
 
     }
 
-
-
-
     public void scanNow(View view){
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
@@ -220,26 +217,6 @@ public class HostScreen extends AppCompatActivity  {
             toast.show();
         }
     }
-//
-//
-//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//        //retrieve scan result
-//        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-//
-//        if (scanningResult != null) {
-//            //we have a result
-//            String scanContent = scanningResult.getContents();
-//            String scanFormat = scanningResult.getFormatName();
-//
-//            // display it on screen
-//           // formatTxt.setText("FORMAT: " + scanFormat);
-//            //contentTxt.setText("CONTENT: " + scanContent);
-//
-//        }else{
-//            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
-//            toast.show();
-//        }
-//    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -326,11 +303,8 @@ public class HostScreen extends AppCompatActivity  {
                         return headers;
                     }
                 };
-                // Adding request to request queue
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
-                // Cancelling request
-                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
     }
@@ -360,11 +334,8 @@ public class HostScreen extends AppCompatActivity  {
                         return headers;
                     }
                 };
-                // Adding request to request queue
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
-                // Cancelling request
-                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
     }
@@ -378,9 +349,7 @@ public class HostScreen extends AppCompatActivity  {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-
-
-                                //getDataFromServer(party.getPartyName());
+                                getDataFromServer();
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -396,31 +365,20 @@ public class HostScreen extends AppCompatActivity  {
                         headers.put("Content-Type", "application/json");
                         headers.put("id",party_id);
                         headers.put("party_name", party_name);
-//                        headers.put("date", date);
-//                        headers.put("time", time);
-//                        headers.put("privacy", priv);
-//                        headers.put("max_people", maxp);
-//                        headers.put("alerts", alert);
-//                        headers.put("host", hosts);
-//                        headers.put("location", loc);
+                        headers.put("date", date);
+                        headers.put("time", time);
+                        headers.put("privacy", priv);
+                        headers.put("max_people", maxp);
+                        headers.put("alerts", alert);
+                        headers.put("host", hosts);
+                        headers.put("location", loc);
                         return headers;
                     }
                 };
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
-                //showProgressDialog();
-//                try {
-//                    Thread.sleep(2000L); //wait for party to be created first
-//                    sendRelationToServer(user_id, party_id, "1");
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
             }
         }).start();
-
-
-
-
     }
 
     private void getDataFromServer() {
@@ -523,102 +481,30 @@ public class HostScreen extends AppCompatActivity  {
         alert.show();
     }
 
-
-
     private void getAllUsers() {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    try {
-                                        for (int i = 0; i < response.length(); i++) {
-                                            String Pid = response.getJSONObject(i).getString("party_id");
-                                            String Uid = response.getJSONObject(i).getString("user_id");
-                                            String Relation = response.getJSONObject(i).getString("party_user_relation");
-                                           // usernames.add()
-                                            if (party_id.equals(Pid)) {
-                                                relationList.add(Relation);
-                                                getDataFromServer(Uid);
-                                            }
-                                            //
-                                        }
-                                    } catch (JSONException e) {
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-                    AppController.getInstance().addToRequestQueue(req,
-                            tag_json_arry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void getDataFromServer(final String id) {
-        new Thread(new Runnable() {
-            public void run() {
-                //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS + "/" + id,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                try {
-
-                                    String name = response.getJSONObject(0).getString("f_name");
-                                    name += " ";
-                                    name += response.getJSONObject(0).getString("l_name");
-                                    list.add(name);
-                                    adapter.notifyDataSetChanged();
-
-                                } catch (JSONException e) {
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                String Relation = response.getJSONObject(i).getString("party_user_relation");
+                                relationList.add(Relation);
+                                String name = response.getJSONObject(i).getString("f_name");
+                                name += " ";
+                                name += response.getJSONObject(i).getString("l_name");
+                                list.add(name);
+                                adapter.notifyDataSetChanged();
+                            }
+                        } catch (JSONException e) {
+                        }
                     }
-                });
-                AppController.getInstance().addToRequestQueue(req,
-                        tag_json_arry);
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
             }
-        }).start();
+        });
+        AppController.getInstance().addToRequestQueue(req,
+                tag_json_arry);
     }
-
-
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-//        mScannerView.startCamera();          // Start camera on resume
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        mScannerView.stopCamera();           // Stop camera on pause
-//    }
-//
-//    @Override
-//    public void handleResult(Result rawResult) {
-//        // Do something with the result here
-//        String  result= rawResult.getText();
-//        Toast blank = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG);
-//        blank.show();
-//        //setContentView(R.layout.activity_host_screen);
-//        Intent intent = new Intent(HostScreen.this, HomeScreen.class);
-//        startActivity(intent);
-//        // onBackPressed();
-//
-//    }
-
 }
