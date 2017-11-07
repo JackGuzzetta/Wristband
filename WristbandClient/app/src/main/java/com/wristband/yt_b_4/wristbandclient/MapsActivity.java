@@ -11,6 +11,8 @@ import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+import android.view.MenuInflater;
+import android.view.Menu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,6 +92,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mapsmenu, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.back:
+                Intent intent1 = new Intent(MapsActivity.this, HomeScreen.class);
+                startActivity(intent1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     private void hideProgressDialog() {
