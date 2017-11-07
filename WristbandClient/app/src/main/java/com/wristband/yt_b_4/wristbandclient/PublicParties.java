@@ -155,7 +155,6 @@ public class PublicParties extends AppCompatActivity {
                                 public void onResponse(JSONArray response) {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
-
                                             String id = response.getJSONObject(i).getString("party_id");
                                             party_ids.add(id);
                                             getDataFromServer(id);

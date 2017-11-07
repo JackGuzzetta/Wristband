@@ -172,6 +172,10 @@ public class GuestScreen extends AppCompatActivity {
                 editor.commit();
                 startActivity(new Intent(this, Login.class));
                 return true;
+            case R.id.delete:
+                deleteUser();
+                startActivity(new Intent(GuestScreen.this, HomeScreen.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
