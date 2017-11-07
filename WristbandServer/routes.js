@@ -25,9 +25,6 @@ module.exports = function(app) {
     app.delete('/users/:id', function(req, res) {
         User.deleteUser(req.params.id, res);
     });
-    app.get('/join/:id', function(req, res) {
-        User.joinByUserId(req.params.id, res);
-    });
 	//----------------------------
 
 
@@ -75,5 +72,13 @@ module.exports = function(app) {
     }); 
     app.post('/text', function(req, res) {
         User.text(req.headers.number, res);
-    }); 
+    });
+
+
+    app.get('/join_user/:id', function(req, res) {
+        User.joinByUserId(req.params.id, res);
+    });
+    app.get('/join_party/:id', function(req, res) {
+        Party.joinByPartyId(req.params.id, res);
+    });
 }

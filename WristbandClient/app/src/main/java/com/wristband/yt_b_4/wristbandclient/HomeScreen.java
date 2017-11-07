@@ -300,7 +300,7 @@ public class HomeScreen extends AppCompatActivity {
     private void getAllPartiesByUserId() {
         new Thread(new Runnable() {
             public void run() {
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN + user_id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_USER + user_id,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {

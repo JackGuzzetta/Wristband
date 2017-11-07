@@ -538,7 +538,6 @@ public class HostScreen extends AppCompatActivity  {
                                         for (int i = 0; i < response.length(); i++) {
                                             String Pid = response.getJSONObject(i).getString("party_id");
                                             String Uid = response.getJSONObject(i).getString("user_id");
-                                            String UN = response.getJSONObject(i).getString("user_id");
                                             String Relation = response.getJSONObject(i).getString("party_user_relation");
                                            // usernames.add()
                                             if (party_id.equals(Pid)) {
