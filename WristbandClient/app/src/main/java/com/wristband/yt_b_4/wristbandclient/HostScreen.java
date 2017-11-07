@@ -563,6 +563,7 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     private void getAllUsers() {
+        list.clear();
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
                 new Response.Listener<JSONArray>() {
                     @Override
