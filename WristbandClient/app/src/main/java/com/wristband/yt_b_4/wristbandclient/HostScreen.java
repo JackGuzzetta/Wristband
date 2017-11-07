@@ -453,7 +453,7 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     private String findID(String user_name){
-        for(int i = 0; i < list.size()-1; i++){
+        for(int i = 0; i < list.size(); i++){
             if(list.get(i).equals(user_name)){
                 return usernames.get(i);
             }
@@ -473,9 +473,10 @@ public class HostScreen extends AppCompatActivity  {
 
     private void goPhotos(View view) {
         Intent intent = new Intent(HostScreen.this, Photos.class);
-        intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
-
+        intent.putExtra("user_id", user_id);
+        intent.putExtra("party_name", party_name);
+        intent.putExtra("prev", "host");
         startActivity(intent);
     }
 
@@ -484,6 +485,7 @@ public class HostScreen extends AppCompatActivity  {
         Intent intent = new Intent(HostScreen.this, Comments.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
+        intent.putExtra("prev", "host");
         startActivity(intent);
     }
 

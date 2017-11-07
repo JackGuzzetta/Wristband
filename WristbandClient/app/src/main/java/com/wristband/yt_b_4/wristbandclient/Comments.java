@@ -37,7 +37,7 @@ public class Comments extends AppCompatActivity {
     ArrayList<String> comments = new ArrayList<String>();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
-    String user_id;
+    String user_id, party_name, relation, prev_class;
     String comment;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     @Override
@@ -68,6 +68,11 @@ public class Comments extends AppCompatActivity {
             }
 
         });
+        Intent intent = getIntent();
+        party_name = intent.getStringExtra("party_name");
+        relation = intent.getStringExtra("relation");
+        prev_class = intent.getStringExtra("prev");
+        initializeControls();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,7 +123,16 @@ public class Comments extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        Intent intent = new Intent(Comments.this, GuestScreen.class);
+        Intent intent;
+        if(prev_class.equals("host")) {
+            intent = new Intent(Comments.this, HostScreen.class);
+        }
+        else{
+            intent = new Intent(Comments.this, GuestScreen.class);
+        }
+        intent.putExtra("party_name", party_name);
+        intent.putExtra("relation", relation);
+        intent.putExtra("prev", "comments");
         startActivity(intent);
     }
 }

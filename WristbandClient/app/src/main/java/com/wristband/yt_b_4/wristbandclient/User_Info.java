@@ -100,16 +100,6 @@ public class User_Info extends AppCompatActivity {
 
 
 
-    private String getUserID(String fullName) {
-        String ID;
-        if (names.contains(fullName)) {
-            int idx = names.indexOf(fullName);
-            ID = userIDs.get(idx);
-            return ID;
-        }
-        return null;
-    }
-
     private void addqr(String name){
         QRGenerator x = new QRGenerator(user_id);
         code.setImageBitmap(x.createQR());

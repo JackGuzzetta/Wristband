@@ -15,7 +15,7 @@ import com.facebook.login.LoginManager;
 
 public class Photos extends AppCompatActivity {
     private Button btnBack;
-    private String party_id, relation;
+    private String party_name, relation, user_id, prev_class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +31,15 @@ public class Photos extends AppCompatActivity {
 
         });
         Intent intent = getIntent();
-        party_id = intent.getStringExtra("party_name");
+        party_name = intent.getStringExtra("party_name");
         relation = intent.getStringExtra("relation");
+        user_id = intent.getStringExtra("user_id");
+        prev_class = getIntent().getStringExtra("prev");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.regular, menu);
+        inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
@@ -60,10 +62,16 @@ public class Photos extends AppCompatActivity {
     }
 
     private void goBack(View view) {
-        Intent intent = new Intent(Photos.this, HostScreen.class);
-        intent.putExtra("party_name", party_id);
+        Intent intent;
+        if(prev_class.equals("host")) {
+            intent = new Intent(Photos.this, HostScreen.class);
+        }
+        else{
+            intent = new Intent(Photos.this, GuestScreen.class);
+        }
+        intent.putExtra("party_name", party_name);
         intent.putExtra("relation", relation);
-
+        intent.putExtra("prev", "photos");
         startActivity(intent);
     }
 }

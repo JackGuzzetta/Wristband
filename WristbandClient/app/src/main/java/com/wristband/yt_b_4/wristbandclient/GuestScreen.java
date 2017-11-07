@@ -317,7 +317,7 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Photos.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
-
+        intent.putExtra("prev", "guest");
         startActivity(intent);
     }
 
@@ -326,6 +326,7 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Comments.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
+        intent.putExtra("prev", "guest");
         startActivity(intent);
     }
 
