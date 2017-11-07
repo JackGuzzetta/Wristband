@@ -17,4 +17,6 @@ public class Const {
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/relation/";
     public static final String URL_TEXT =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/text/";
+    public static final String URL_JOIN =
+            "http://proj-309-yt-b-4.cs.iastate.edu:3000/join/";
 }
