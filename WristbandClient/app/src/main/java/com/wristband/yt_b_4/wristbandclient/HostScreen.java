@@ -13,6 +13,7 @@ import com.google.zxing.Result;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
@@ -51,6 +52,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.util.Log;
 //import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -61,11 +63,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HostScreen extends AppCompatActivity  {
+    private static final String TAG = "Date";
     private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ArrayList<String> usernames = new ArrayList<String>();
@@ -97,6 +101,7 @@ public class HostScreen extends AppCompatActivity  {
         timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
+
         //mScannerView = new ZXingScannerView(this);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -232,6 +237,18 @@ public class HostScreen extends AppCompatActivity  {
                 return true;
             case R.id.newname:
                 editname();
+                getDataFromServer();
+                return true;
+            case R.id.newdate:
+                editdate();
+                getDataFromServer();
+                return true;
+            case R.id.newtime:
+                edittime();
+                getDataFromServer();
+                return true;
+            case R.id.newlocation:
+                editlocation();
                 getDataFromServer();
                 return true;
             case R.id.invite:
@@ -452,6 +469,70 @@ public class HostScreen extends AppCompatActivity  {
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
         startActivity(intent);
+    }
+
+    private void editdate(){
+
+    }
+    private void edittime(){
+        Toast blank = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
+        blank.show();
+                Calendar cal = Calendar.getInstance();
+                int hour = cal.get(Calendar.HOUR);
+                int minute = cal.get(Calendar.MINUTE);
+
+                TimePickerDialog dialog = new TimePickerDialog(
+                        HostScreen.this,
+                        mTimeSetListener,
+                        hour, minute, true);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+         hour = cal.get(Calendar.HOUR);
+         minute = cal.get(Calendar.MINUTE);
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+
+                Log.d(TAG, "onDateSet: hh:mm: " + hour + ":" + minute);
+
+                time = hour + ":" + minute + ":00";
+                Toast blank = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
+                blank.show();
+            }
+        };
+
+
+    }
+
+
+
+    private void editlocation(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("New Party Location");
+        alert.setMessage("Message");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                loc= input.getText().toString();
+
+                editParty(party_id);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
     private void editname(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
