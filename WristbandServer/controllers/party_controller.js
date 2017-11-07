@@ -149,7 +149,7 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, max_p
 	});
 	party.save(function(err) {
 		if (err) {
-			console.log("Unable to create party");
+			console.log("Unable to create party", err);
 			res.json({
 			    parties: "Error"
 			})

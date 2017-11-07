@@ -396,13 +396,13 @@ public class HostScreen extends AppCompatActivity  {
                         headers.put("Content-Type", "application/json");
                         headers.put("id",party_id);
                         headers.put("party_name", party_name);
-//                        headers.put("date", date);
-//                        headers.put("time", time);
-//                        headers.put("privacy", priv);
-//                        headers.put("max_people", maxp);
-//                        headers.put("alerts", alert);
-//                        headers.put("host", hosts);
-//                        headers.put("location", loc);
+                        headers.put("date", date);
+                        headers.put("time", time);
+                        headers.put("privacy", priv);
+                        headers.put("max_people", maxp);
+                        headers.put("alerts", alert);
+                        headers.put("host", hosts);
+                        headers.put("location", loc);
                         return headers;
                     }
                 };
