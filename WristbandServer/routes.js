@@ -15,7 +15,7 @@ module.exports = function(app) {
         shell.exec('git pull')
     });
 
-
+//tests
 	//----------User-------------
     app.get('/users', function(req, res) {
     	User.findAllUsers(res);
