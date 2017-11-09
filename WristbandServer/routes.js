@@ -8,6 +8,9 @@ module.exports = function(app) {
 app.get('/',function(req,res) {
   res.send("Hello World");
 });
+app.post('/gitlab', function(req, res) {
+	console.log("hello, world");
+});
 
 
 	//----------User-------------
