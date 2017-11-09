@@ -1,6 +1,5 @@
-forever stopall
-echo "stopped server"
-git pull
-echo "downloading files"
-forever start index.js
-echo "started server"
+echo "updaing server" >> log.txt
+git pull >> log.txt
+echo "downloading files" >> log.txt
+forever restartall >> log.txt
+echo "started server" >> log.txt

@@ -11,7 +11,7 @@ module.exports = function(app) {
     });
     app.post('/gitlab', function(req, res) {
     	console.log("Updating git");
-        require('child_process').spawn('sh', ['test.sh'], {stdio: 'inherit'});
+        require('child_process').spawn('bash', ['test.sh'], {stdio: 'inherit'});
     });
 
 	//----------User-------------

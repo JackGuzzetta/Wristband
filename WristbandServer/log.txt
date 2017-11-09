@@ -1,0 +1,14 @@
+updaing server
+Updating 242caff..65c3f9b
+downloading files
+[32minfo[39m:    Forever restarted processes:
+[90mdata[39m:    [37m   [39m [37muid[39m  [90mcommand[39m       [90mscript[39m   [37mforever[39m [37mpid[39m   [37mid[39m [35mlogfile[39m                 [33muptime[39m       
+[90mdata[39m:    [0] zwNR [90m/usr/bin/node[39m [90mindex.js[39m 18998   19197    [35m/root/.forever/zwNR.log[39m [33m0:0:0:55.498[39m 
+started server
+updaing server
+Updating 242caff..65c3f9b
+downloading files
+[32minfo[39m:    Forever restarted processes:
+[90mdata[39m:    [37m   [39m [37muid[39m  [90mcommand[39m       [90mscript[39m   [37mforever[39m [37mpid[39m   [37mid[39m [35mlogfile[39m                 [33muptime[39m      
+[90mdata[39m:    [0] zwNR [90m/usr/bin/node[39m [90mindex.js[39m 18998   19255    [35m/root/.forever/zwNR.log[39m [33m0:0:0:6.923[39m 
+started server
