@@ -1,3 +1,5 @@
+//test
+
 module.exports = function(app) {
    
 	var User = require('./controllers/user_controller');
