@@ -7,14 +7,13 @@ module.exports = function(app) {
     	var Relation = require('./controllers/relation_contoller');
 
     app.get('/',function(req,res) {
-      res.send("Hello World");
+      res.send("Hello World this is a test");
     });
     app.post('/gitlab', function(req, res) {
     	console.log("Updating git");
         require('child_process').spawn('bash', ['test.sh'], {stdio: 'inherit'});
     });
 
-//tests
 	//----------User-------------
     app.get('/users', function(req, res) {
     	User.findAllUsers(res);
