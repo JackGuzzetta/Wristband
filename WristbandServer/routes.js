@@ -8,7 +8,7 @@ module.exports = function(app) {
     var shell = require('shelljs');
 
     app.get('/',function(req,res) {
-      res.send("Hello World");
+      res.send("Hello World this is a test");
     });
     app.post('/gitlab', function(req, res) {
     	console.log("Updating git");
