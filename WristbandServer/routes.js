@@ -5,12 +5,15 @@ module.exports = function(app) {
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
     var Relation = require('./controllers/relation_contoller');
-app.get('/',function(req,res) {
-  res.send("Hello World");
-});
-app.post('/gitlab', function(req, res) {
-	console.log("hello, world");
-});
+    var shell = require('shelljs');
+
+    app.get('/',function(req,res) {
+      res.send("Hello World");
+    });
+    app.post('/gitlab', function(req, res) {
+    	console.log("Updating git");
+        shell.exec('git pull')
+    });
 
 
 	//----------User-------------
