@@ -4,15 +4,14 @@ module.exports = function(app) {
    
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
-    var Relation = require('./controllers/relation_contoller');
-    var shell = require('shelljs');
+    	var Relation = require('./controllers/relation_contoller');
 
     app.get('/',function(req,res) {
       res.send("Hello World this is a test");
     });
     app.post('/gitlab', function(req, res) {
     	console.log("Updating git");
-        shell.exec('git pull')
+        require('child_process').spawn('sh', ['test.sh'], {stdio: 'inherit'});
     });
 
 	//----------User-------------
