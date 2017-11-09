@@ -7,7 +7,7 @@ module.exports = function(app) {
     	var Relation = require('./controllers/relation_contoller');
 
     app.get('/',function(req,res) {
-      res.send("Wristband");
+      res.send("Wristband - Our app is only available on android!");
     });
     app.post('/gitlab', function(req, res) {
     	console.log("Updating git");
