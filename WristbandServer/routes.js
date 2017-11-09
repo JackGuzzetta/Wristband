@@ -14,7 +14,7 @@ module.exports = function(app) {
         require('child_process').spawn('sh', ['test.sh'], {stdio: 'inherit'});
     });
 
-
+//tests
 	//----------User-------------
     app.get('/users', function(req, res) {
     	User.findAllUsers(res);
