@@ -4,6 +4,15 @@ module.exports = function(app) {
 	var Party = require('./controllers/party_controller');
     var Relation = require('./controllers/relation_contoller');
     var Comment = require('./controllers/comment_controller');
+    
+    app.get('/',function(req,res) {
+      res.send("Wristband - Our app is only available on android! Please download it.");
+    });
+    app.post('/gitlab', function(req, res) {
+    	console.log("Updating git");
+        require('child_process').spawn('bash', ['test.sh'], {stdio: 'inherit'});
+    });
+
 
 
 
