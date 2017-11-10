@@ -7,6 +7,7 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var User = require('./controllers/user_controller')(app);
 var Party = require('./controllers/party_controller');
+var Comment = require('./controllers/comment_controller');
 var serveIndex = require('serve-index');
 
 require('./routes')(app);

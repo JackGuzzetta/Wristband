@@ -1,18 +1,11 @@
-//test
-
 module.exports = function(app) {
    
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
-    	var Relation = require('./controllers/relation_contoller');
+    var Relation = require('./controllers/relation_contoller');
+    var Comment = require('./controllers/comment_controller');
 
-    app.get('/',function(req,res) {
-      res.send("Wristband - Our app is only available on android! Please download it.");
-    });
-    app.post('/gitlab', function(req, res) {
-    	console.log("Updating git");
-        require('child_process').spawn('bash', ['test.sh'], {stdio: 'inherit'});
-    });
+
 
 	//----------User-------------
     app.get('/users', function(req, res) {
@@ -89,4 +82,24 @@ module.exports = function(app) {
     app.get('/join_party/:id', function(req, res) {
         Party.joinByPartyId(req.params.id, res);
     });
+    
+    //----------------------------
+    
+    //----------COMMENT-------------
+    app.get('/comments', function(req, res) {
+        Comment.findAllComments(res);
+    });
+    app.get('/get_comments/:id', function(req, res) {
+        Comment.getAllCommentsByPartyId(req.params.id, res);
+    });
+    app.get('/comments/:id', function(req, res) {
+        Comment.findCommentByID(req.params.id, res);
+    });
+    app.post('/comments', function(req, res) {
+        Comment.newComment(req.headers.party_id, req.headers.username, req.headers.cmt, res)
+    });
+    app.delete('/comments/:id', function(req, res) {
+        Comment.deleteComment(req.params.id, res);
+    });
+	//----------------------------
 }

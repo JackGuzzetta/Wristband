@@ -155,7 +155,7 @@ public class GuestScreen extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_info, menu);
+        inflater.inflate(R.menu.regular, menu);
         return true;
     }
 
@@ -171,10 +171,6 @@ public class GuestScreen extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 startActivity(new Intent(this, Login.class));
-                return true;
-            case R.id.delete:
-                deleteUser();
-                startActivity(new Intent(GuestScreen.this, HomeScreen.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -317,7 +313,7 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Photos.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
-        intent.putExtra("prev", "guest");
+
         startActivity(intent);
     }
 
@@ -326,7 +322,6 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Comments.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
-        intent.putExtra("prev", "guest");
         startActivity(intent);
     }
 

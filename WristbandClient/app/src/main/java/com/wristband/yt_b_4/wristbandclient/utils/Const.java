@@ -21,4 +21,8 @@ public class Const {
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/join_user/";
     public static final String URL_JOIN_Party =
             "http://proj-309-yt-b-4.cs.iastate.edu:3000/join_party/";
+    public static final String URL_GET_COMMENTS =
+            "http://proj-309-yt-b-4.cs.iastate.edu:3000/get_comments/";
+    public static final String URL_COMMENTS =
+            "http://proj-309-yt-b-4.cs.iastate.edu:3000/comments/";
 }

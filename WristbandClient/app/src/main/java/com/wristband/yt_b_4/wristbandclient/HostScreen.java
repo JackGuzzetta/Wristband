@@ -13,12 +13,10 @@ import com.google.zxing.Result;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.vision.Frame;
@@ -53,7 +51,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.util.Log;
 //import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -64,13 +61,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HostScreen extends AppCompatActivity  {
-    private static final String TAG = "Date";
     private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ArrayList<String> usernames = new ArrayList<String>();
@@ -83,7 +78,7 @@ public class HostScreen extends AppCompatActivity  {
    // private ZXingScannerView mScannerView;
 
 
-    String party_name, user_name, relation, prev_class, priv, dat, time, loc, maxp, alert, hosts;
+    String party_name, user_name, relation, prev_class, priv, date, time, loc, maxp, alert, hosts;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -102,7 +97,6 @@ public class HostScreen extends AppCompatActivity  {
         timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
-
         //mScannerView = new ZXingScannerView(this);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -183,7 +177,6 @@ public class HostScreen extends AppCompatActivity  {
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_rel", relation);
                 relation = relationList.get(i).toString();
-                user_id = findID(user_name);
                 intent.putExtra("prev", "host");
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("party_name", party_name);
@@ -196,8 +189,6 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     public void scanNow(View view){
-
-
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
 
@@ -216,11 +207,8 @@ public class HostScreen extends AppCompatActivity  {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
             Toast toast = Toast.makeText(getApplicationContext(),
-                    usernames.get(0), Toast.LENGTH_SHORT);
+                    scanContent, Toast.LENGTH_SHORT);
             toast.show();
-//            Toast toast = Toast.makeText(getApplicationContext(),
-//                    scanContent, Toast.LENGTH_SHORT);
-//            toast.show();
 
         }
         else{
@@ -244,18 +232,6 @@ public class HostScreen extends AppCompatActivity  {
                 return true;
             case R.id.newname:
                 editname();
-                getDataFromServer();
-                return true;
-            case R.id.newdate:
-                editdate();
-                getDataFromServer();
-                return true;
-            case R.id.newtime:
-                edittime();
-                getDataFromServer();
-                return true;
-            case R.id.newlocation:
-                editlocation();
                 getDataFromServer();
                 return true;
             case R.id.invite:
@@ -389,7 +365,7 @@ public class HostScreen extends AppCompatActivity  {
                         headers.put("Content-Type", "application/json");
                         headers.put("id",party_id);
                         headers.put("party_name", party_name);
-                        headers.put("date", dat);
+                        headers.put("date", date);
                         headers.put("time", time);
                         headers.put("privacy", priv);
                         headers.put("max_people", maxp);
@@ -415,7 +391,7 @@ public class HostScreen extends AppCompatActivity  {
                                 try {
 
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    dat = response.getJSONObject(0).getString("date");
+                                    date = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
                                     time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
@@ -426,7 +402,7 @@ public class HostScreen extends AppCompatActivity  {
                                     alert= response.getJSONObject(0).getString("alerts");
                                     hosts = host;
                                     partyText.setText("Party name: " + name);
-                                    dateText.setText("Date: " + dat);
+                                    dateText.setText("Date: " + date);
                                     locationTxt.setText("Location: " + location);
                                     timeTxt.setText("Time: " + time);
                                     getAllUsers();
@@ -452,15 +428,6 @@ public class HostScreen extends AppCompatActivity  {
         startActivity(intent);
     }
 
-    private String findID(String user_name){
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals(user_name)){
-                return usernames.get(i);
-            }
-        }
-        return "ID not found";
-    }
-
     private void goLocation(String party_name) {
         Intent intent = new Intent(HostScreen.this, MapsActivity.class);
         intent.putExtra("party_location", party_name);
@@ -473,107 +440,20 @@ public class HostScreen extends AppCompatActivity  {
 
     private void goPhotos(View view) {
         Intent intent = new Intent(HostScreen.this, Photos.class);
+        intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
-        intent.putExtra("user_id", user_id);
-        intent.putExtra("party_name", party_name);
-        intent.putExtra("prev", "host");
+
         startActivity(intent);
     }
 
     private void goComments(View view) {
 
         Intent intent = new Intent(HostScreen.this, Comments.class);
-        intent.putExtra("party_name", party_id);
+        intent.putExtra("party_id", party_id);
+        intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
-        intent.putExtra("prev", "host");
+        intent.putExtra("party_name", party_name);
         startActivity(intent);
-    }
-
-    private void editdate(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("New Party Date");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                dat= input.getText().toString();
-
-                editParty(party_id);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
-
-
-    }
-    private void edittime(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("New Party Time");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                time= input.getText().toString();
-
-                editParty(party_id);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
-
-
-    }
-
-
-
-    private void editlocation(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("New Party Location");
-        alert.setMessage("Message");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                loc= input.getText().toString();
-
-                editParty(party_id);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
     }
     private void editname(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -604,7 +484,6 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     private void getAllUsers() {
-        list.clear();
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -618,7 +497,6 @@ public class HostScreen extends AppCompatActivity  {
                                 name += response.getJSONObject(i).getString("l_name");
                                 list.add(name);
                                 adapter.notifyDataSetChanged();
-                                usernames.add(response.getJSONObject(i).getString("user_id"));
                             }
                         } catch (JSONException e) {
                         }
