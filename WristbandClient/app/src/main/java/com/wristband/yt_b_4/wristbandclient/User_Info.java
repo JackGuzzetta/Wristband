@@ -95,7 +95,7 @@ public class User_Info extends AppCompatActivity {
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
         txtlast.setText("Last name: "+lname);
         txtid.setText("User ID: " + user_id);
-        addqr(user_name);
+        //addqr(user_name);
     }
 
 

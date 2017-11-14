@@ -176,6 +176,7 @@ public class GuestScreen extends AppCompatActivity {
                 deleteUser();
                 startActivity(new Intent(GuestScreen.this, HomeScreen.class));
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

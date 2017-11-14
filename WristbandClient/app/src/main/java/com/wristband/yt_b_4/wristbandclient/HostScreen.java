@@ -13,13 +13,15 @@ import com.google.zxing.Result;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.graphics.drawable.ColorDrawable;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
+import java.util.Calendar;
 import android.widget.TextView;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -53,7 +55,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.util.Log;
 //import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -64,7 +65,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +80,7 @@ public class HostScreen extends AppCompatActivity  {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private static final int REQUEST_CAMERA = 1;
-   // private ZXingScannerView mScannerView;
+    // private ZXingScannerView mScannerView;
 
 
     String party_name, user_name, relation, prev_class, priv, dat, time, loc, maxp, alert, hosts;
@@ -102,7 +102,6 @@ public class HostScreen extends AppCompatActivity  {
         timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
-
         //mScannerView = new ZXingScannerView(this);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -196,12 +195,10 @@ public class HostScreen extends AppCompatActivity  {
     }
 
     public void scanNow(View view){
-
-
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
 
-       // setContentView(mScannerView);
+        // setContentView(mScannerView);
         //IntentIntegrator integrator = new IntentIntegrator(this);
         //integrator.setDesiredBarcodeFormats(IntentIntegrator.DATA_MATRIX_TYPES);
         //integrator.setPrompt("Scan a barcode");
@@ -218,9 +215,6 @@ public class HostScreen extends AppCompatActivity  {
             Toast toast = Toast.makeText(getApplicationContext(),
                     usernames.get(0), Toast.LENGTH_SHORT);
             toast.show();
-//            Toast toast = Toast.makeText(getApplicationContext(),
-//                    scanContent, Toast.LENGTH_SHORT);
-//            toast.show();
 
         }
         else{
@@ -246,6 +240,14 @@ public class HostScreen extends AppCompatActivity  {
                 editname();
                 getDataFromServer();
                 return true;
+            case R.id.invite:
+                intent = new Intent(HostScreen.this, Add_User.class);
+                intent.putExtra("prev", "guest");
+                intent.putExtra("party_id", party_id);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                return true;
             case R.id.newdate:
                 editdate();
                 getDataFromServer();
@@ -258,14 +260,7 @@ public class HostScreen extends AppCompatActivity  {
                 editlocation();
                 getDataFromServer();
                 return true;
-            case R.id.invite:
-                intent = new Intent(HostScreen.this, Add_User.class);
-                intent.putExtra("prev", "guest");
-                intent.putExtra("party_id", party_id);
-                intent.putExtra("party_name", party_name);
-                intent.putExtra("relation", relation);
-                startActivity(intent);
-                return true;
+
             case R.id.blacklist:
                 intent = new Intent(HostScreen.this, Blacklist.class);
                 intent.putExtra("party_name", party_id);
@@ -461,6 +456,7 @@ public class HostScreen extends AppCompatActivity  {
         return "ID not found";
     }
 
+
     private void goLocation(String party_name) {
         Intent intent = new Intent(HostScreen.this, MapsActivity.class);
         intent.putExtra("party_location", party_name);
@@ -473,20 +469,51 @@ public class HostScreen extends AppCompatActivity  {
 
     private void goPhotos(View view) {
         Intent intent = new Intent(HostScreen.this, Photos.class);
+        intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
         intent.putExtra("user_id", user_id);
         intent.putExtra("party_name", party_name);
         intent.putExtra("prev", "host");
+
         startActivity(intent);
     }
 
     private void goComments(View view) {
 
         Intent intent = new Intent(HostScreen.this, Comments.class);
-        intent.putExtra("party_name", party_id);
+        intent.putExtra("party_id", party_id);
+        intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
+        intent.putExtra("party_name", party_name);
         intent.putExtra("prev", "host");
         startActivity(intent);
+    }
+    private void editname(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("New Party Name");
+        alert.setMessage("Message");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                party_name= input.getText().toString();
+
+                editParty(party_id);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 
     private void editdate(){
@@ -575,33 +602,7 @@ public class HostScreen extends AppCompatActivity  {
 
         alert.show();
     }
-    private void editname(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("New Party Name");
-        alert.setMessage("Message");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                party_name= input.getText().toString();
-
-                editParty(party_id);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
-    }
 
     private void getAllUsers() {
         list.clear();
