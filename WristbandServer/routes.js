@@ -4,10 +4,16 @@ module.exports = function(app) {
    
 	var User = require('./controllers/user_controller');
 	var Party = require('./controllers/party_controller');
-    	var Relation = require('./controllers/relation_contoller');
+    var Relation = require('./controllers/relation_contoller');
+    var path = require('path');
+    app.set('view engine', 'pug');
 
     app.get('/',function(req,res) {
-      res.send("Wristband - Our app is only available on android! Please download it.");
+        var data;
+        app.get('/users', function(req, res) {
+            data = User.findAllUsers(res);
+    });
+      res.render('index', { title: 'Users', users: 'Hello there!'});
     });
     app.post('/gitlab', function(req, res) {
     	console.log("Updating git");

@@ -160,6 +160,7 @@ module.exports = function(app) {
                     console.log(rows);
                     res.contentType('application/json');
                     res.send(JSON.stringify(rows));
+                    return rows;
                 }
             }
         });
