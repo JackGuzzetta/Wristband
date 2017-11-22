@@ -89,19 +89,19 @@ public class User_Info extends AppCompatActivity {
         getDataFromServer();
 
        // user_id = getUserID(user_name);
-        txtuser.setText("Full name: " + user_name);
+        txtuser.setText(user_name);
         fname = user_name.split(" ")[0];
         txtfirst.setText("First name: "+fname);
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
         txtlast.setText("Last name: "+lname);
         txtid.setText("User ID: " + user_id);
-        //addqr(user_name);
+        addqr(user_name);
     }
 
 
 
     private void addqr(String name){
-        QRGenerator x = new QRGenerator(user_id);
+        QRGenerator x = new QRGenerator(user_name);
         code.setImageBitmap(x.createQR());
     }
 

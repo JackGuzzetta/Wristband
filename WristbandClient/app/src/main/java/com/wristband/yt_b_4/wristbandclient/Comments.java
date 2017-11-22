@@ -46,7 +46,7 @@ import java.util.Map;
 
 
 public class Comments extends AppCompatActivity {
-    Button btnBack, btnComment, viewBtn, deleteBtn, cancelBtn, yes, no;
+    Button btnComment, viewBtn, deleteBtn, cancelBtn, yes, no;
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> comments = new ArrayList<String>();
@@ -69,7 +69,6 @@ public class Comments extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
-        btnBack = (Button) findViewById(R.id.back);
         btnComment = (Button) findViewById(R.id.send);
 
         cancelBtn = (Button) findViewById(R.id.cancel);
@@ -77,14 +76,7 @@ public class Comments extends AppCompatActivity {
         party_id = getIntent().getStringExtra("party_id");
         relation = getIntent().getStringExtra("relation");
         party_name = getIntent().getStringExtra("party_name");
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
 
-        });
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

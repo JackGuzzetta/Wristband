@@ -70,7 +70,7 @@ import android.telephony.SmsManager;
 
 public class Create_Party extends AppCompatActivity {
     private static final String TAG = "Date";
-    Button create, btnBack;
+    Button create;
     private TextView mDisplayDate;
     private TextView mDisplayTime;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -100,9 +100,10 @@ public class Create_Party extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_party);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         this.pic = (ImageButton) findViewById(R.id.pict);
         this.create = (Button) findViewById(R.id.create);
-        btnBack = (Button) findViewById(R.id.btnBack);
         EditText eventname = (EditText) findViewById(R.id.eventName);
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -135,13 +136,6 @@ public class Create_Party extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 s = isChecked;
             }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goBack(view);
-            }
-
         });
         Intent intent = getIntent();
         name = intent.getStringExtra("eventname");
@@ -311,6 +305,9 @@ public class Create_Party extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -326,7 +323,11 @@ public class Create_Party extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Create_Party.this, HomeScreen.class);
+        startActivity(intent);
+    }
     //    private void sendSms(String phoneNumber, String message) {
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "sms:" + phoneNumber ) );
 //        intent.putExtra( "sms_body", message );

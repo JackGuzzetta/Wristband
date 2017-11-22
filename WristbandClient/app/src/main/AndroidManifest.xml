@@ -37,16 +37,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Add_User"
+            android:name=".Add_User" android:parentActivityName=".HostScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Create_Party"
+            android:name=".Create_Party" android:parentActivityName=".HomeScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Create_Profile"
+            android:name=".Create_Profile" android:parentActivityName=".Login"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity android:name=".examples.exampleActivity" />
@@ -56,11 +56,11 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HostScreen"
+            android:name=".HostScreen" android:parentActivityName=".HomeScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GuestScreen"
+            android:name=".GuestScreen" android:parentActivityName=".HomeScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
@@ -69,21 +69,37 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".Photos"
+            android:name=".Photos" android:parentActivityName=".HostScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Comments"
+            android:name=".Comments" android:parentActivityName=".HostScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".About" android:parentActivityName=".HomeScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".User_Info" android:parentActivityName=".HostScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Scanned" android:parentActivityName=".HomeScreen"
+
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            />
+        <activity
+
             android:name=".Blacklist"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PublicParties"
+            android:name=".PublicParties" android:parentActivityName=".HomeScreen"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+           />
         <uses-feature
             android:glEsVersion="0x00020000"
             android:required="true"/>
@@ -102,10 +118,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".MapsActivity" android:parentActivityName=".HomeScreen"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".User_Info" />
-        <activity android:name=".About"></activity>
+
     </application>
 
 </manifest>

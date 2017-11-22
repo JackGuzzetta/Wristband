@@ -69,9 +69,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HostScreen extends AppCompatActivity  {
+public class HostScreen extends AppCompatActivity {
     private static final String TAG = "Date";
-    private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
+    private Button btnCohost, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ArrayList<String> usernames = new ArrayList<String>();
     private ProgressDialog pDialog;
@@ -95,13 +95,13 @@ public class HostScreen extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_screen);
         btnLocation = (Button) findViewById(R.id.button7);
-        btnBack = (Button) findViewById(R.id.btnBack);
         btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
         timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
+
         //mScannerView = new ZXingScannerView(this);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -115,14 +115,7 @@ public class HostScreen extends AppCompatActivity  {
 //                QRGenerator(party_id,user_id);
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
 
-        });
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +170,7 @@ public class HostScreen extends AppCompatActivity  {
 
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> a, View v, int i, long l){
+            public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 Intent intent = new Intent(HostScreen.this, User_Info.class);
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_rel", relation);
@@ -192,9 +185,31 @@ public class HostScreen extends AppCompatActivity  {
             }
         });
 
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+
+                String date = year + "-" + month + "-" + day;
+                dat= date;
+            }
+        };
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+
+                Log.d(TAG, "onDateSet: hh:mm: " + hour + ":" + minute);
+
+                String t = hour + ":" + minute + ":00";
+                time = t;
+            }
+        };
+
     }
 
-    public void scanNow(View view){
+    public void scanNow(View view) {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
 
@@ -207,6 +222,7 @@ public class HostScreen extends AppCompatActivity  {
         //integrator.setCameraId(1);  // Use a specific camera of the device
         //integrator.initiateScan(IntentIntegrator.DATA_MATRIX_TYPES);
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
@@ -216,8 +232,7 @@ public class HostScreen extends AppCompatActivity  {
                     usernames.get(0), Toast.LENGTH_SHORT);
             toast.show();
 
-        }
-        else{
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
@@ -233,6 +248,9 @@ public class HostScreen extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.edit:
                 //TODO
                 return true;
@@ -283,6 +301,10 @@ public class HostScreen extends AppCompatActivity  {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void onBackPressed() {
+        Intent intent = new Intent(HostScreen.this, HomeScreen.class);
+        startActivity(intent);
     }
 
     private void deleteUser() {
@@ -382,7 +404,7 @@ public class HostScreen extends AppCompatActivity  {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
-                        headers.put("id",party_id);
+                        headers.put("id", party_id);
                         headers.put("party_name", party_name);
                         headers.put("date", dat);
                         headers.put("time", time);
@@ -418,7 +440,7 @@ public class HostScreen extends AppCompatActivity  {
                                     priv = response.getJSONObject(0).getString("privacy");
                                     loc = location;
                                     maxp = response.getJSONObject(0).getString("max_people");
-                                    alert= response.getJSONObject(0).getString("alerts");
+                                    alert = response.getJSONObject(0).getString("alerts");
                                     hosts = host;
                                     partyText.setText("Party name: " + name);
                                     dateText.setText("Date: " + dat);
@@ -447,9 +469,9 @@ public class HostScreen extends AppCompatActivity  {
         startActivity(intent);
     }
 
-    private String findID(String user_name){
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals(user_name)){
+    private String findID(String user_name) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(user_name)) {
                 return usernames.get(i);
             }
         }
@@ -488,7 +510,8 @@ public class HostScreen extends AppCompatActivity  {
         intent.putExtra("prev", "host");
         startActivity(intent);
     }
-    private void editname(){
+
+    private void editname() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("New Party Name");
@@ -501,7 +524,7 @@ public class HostScreen extends AppCompatActivity  {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                party_name= input.getText().toString();
+                party_name = input.getText().toString();
 
                 editParty(party_id);
             }
@@ -516,60 +539,41 @@ public class HostScreen extends AppCompatActivity  {
         alert.show();
     }
 
-    private void editdate(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    private void editdate() {
 
-        alert.setTitle("New Party Date");
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
 
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                dat= input.getText().toString();
-
-                editParty(party_id);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
+        DatePickerDialog dialog = new DatePickerDialog(
+                HostScreen.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                mDateSetListener,
+                year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
 
 
     }
+
+
+
+
     private void edittime(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR);
+        int minute = cal.get(Calendar.MINUTE);
 
-        alert.setTitle("New Party Time");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                time= input.getText().toString();
-
-                editParty(party_id);
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
-
+        TimePickerDialog dialog = new TimePickerDialog(
+                HostScreen.this,
+                mTimeSetListener,
+                hour, minute, true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        String t = hour + ":" + minute + ":00";
+        time = t;
 
     }
 

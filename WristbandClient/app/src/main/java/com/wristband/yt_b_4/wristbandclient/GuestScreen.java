@@ -56,7 +56,6 @@ public class GuestScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_screen);
         btnLocation = (Button) findViewById(R.id.button7);
-        btnBack = (Button) findViewById(R.id.btnBack);
         btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
@@ -74,14 +73,6 @@ public class GuestScreen extends AppCompatActivity {
 //                QRGenerator(party_id,user_id);
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
-
-        });
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +152,9 @@ public class GuestScreen extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -181,7 +175,11 @@ public class GuestScreen extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
+        startActivity(intent);
+    }
     private void deleteUser() {
         if (relation.equals("1")) {
             deleteParty(party_id);
@@ -299,10 +297,6 @@ public class GuestScreen extends AppCompatActivity {
         }).start();
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
-        startActivity(intent);
-    }
 
     private void goLocation(String party_name) {
         Intent intent = new Intent(GuestScreen.this, MapsActivity.class);

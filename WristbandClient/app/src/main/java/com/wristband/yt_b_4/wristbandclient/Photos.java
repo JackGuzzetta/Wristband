@@ -14,22 +14,13 @@ import android.widget.Button;
 import com.facebook.login.LoginManager;
 
 public class Photos extends AppCompatActivity {
-    private Button btnBack;
     private String party_name, relation, user_id, prev_class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
-        btnBack = (Button) findViewById(R.id.btnBack);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
 
-        });
         Intent intent = getIntent();
         party_name = intent.getStringExtra("party_name");
         relation = intent.getStringExtra("relation");

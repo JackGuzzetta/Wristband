@@ -10,20 +10,17 @@
         android:id="@+id/usertxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/firsttxt"
-        android:layout_alignStart="@+id/firsttxt"
         android:layout_below="@+id/btnBack"
+        android:gravity="center"
         android:layout_marginTop="25dp"
-        android:text="Username: "
         android:textColor="@color/colorGray"
         android:textSize="25dp" />
 
     <TextView
         android:id="@+id/firsttxt"
+        android:gravity= "center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lasttxt"
-        android:layout_alignStart="@+id/lasttxt"
         android:layout_below="@+id/usertxt"
         android:layout_marginTop="25dp"
         android:text="First name: "
@@ -68,8 +65,7 @@
         android:id="@+id/lasttxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/idtxt"
-        android:layout_alignStart="@+id/idtxt"
+
         android:layout_below="@+id/firsttxt"
         android:layout_marginTop="25dp"
         android:text="Last name: "
@@ -80,8 +76,7 @@
         android:id="@+id/idtxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button5"
-        android:layout_alignStart="@+id/button5"
+
         android:layout_below="@+id/lasttxt"
         android:layout_marginTop="25dp"
         android:text="User ID: "

@@ -17,7 +17,6 @@ import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
 
 public class About extends AppCompatActivity {
-    private Button btnBack;
     private TextView txtuser, txtid, txtfirst, txtlast;
     private String user_id, user_name, fname, lname, fullname, prev_class;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -27,7 +26,6 @@ public class About extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        btnBack = (Button) findViewById(R.id.btnBack);
         txtuser = (TextView) findViewById(R.id.usertxt);
         code= (ImageView) findViewById(R.id.qr);
         //txtfirst = (TextView) findViewById(R.id.firsttxt);
@@ -37,14 +35,7 @@ public class About extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
         user_name = settings.getString("username", "default");
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
 
-        });
         prev_class = getIntent().getStringExtra("prev");
         About();
     }
@@ -57,6 +48,9 @@ public class About extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
                 return true;
@@ -71,6 +65,11 @@ public class About extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(About.this, HomeScreen.class);
+        startActivity(intent);
     }
     private void addqr(String name){
         QRGenerator x = new QRGenerator(user_name);
@@ -88,9 +87,5 @@ public class About extends AppCompatActivity {
 
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(About.this, HomeScreen.class);
-        startActivity(intent);
-    }
 
 }

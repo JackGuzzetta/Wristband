@@ -8,24 +8,13 @@
     tools:context="com.wristband.yt_b_4.wristbandclient.Comments">
 
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintRight_creator="1" />
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="wrap_content"
         android:layout_height="425dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/back" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/send"

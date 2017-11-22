@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.support.v7.app.ActionBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,7 +36,6 @@ import org.json.JSONException;
 
 
 public class PublicParties extends AppCompatActivity {
-    Button btnback, publicparty;
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> party_ids = new ArrayList<String>();
@@ -48,21 +48,14 @@ public class PublicParties extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publicparty);
-        btnback = (Button) findViewById(R.id.backbutton);
+
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         initializeControls();
-
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
-
-        });
     }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -73,6 +66,9 @@ public class PublicParties extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -126,7 +122,8 @@ public class PublicParties extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Do Here what ever you want do on back press;
+        Intent intent = new Intent(PublicParties.this, HomeScreen.class);
+        startActivity(intent);
     }
 
     private void showProgressDialog() {
@@ -139,10 +136,7 @@ public class PublicParties extends AppCompatActivity {
             pDialog.hide();
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(PublicParties.this, HomeScreen.class);
-        startActivity(intent);
-    }
+
 
     private void getAllPartiesBypub() {
         new Thread(new Runnable() {

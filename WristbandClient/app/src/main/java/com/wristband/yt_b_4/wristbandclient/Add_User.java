@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class Add_User extends AppCompatActivity {
     final Context context = this;
-    private Button btnBack, btnDone;
+    private Button btnDone;
     private CheckBox checkbox;
     private String prev_class, name1, date1, time1, loc1, relation;
     private AutoCompleteTextView autoView;
@@ -54,14 +54,6 @@ public class Add_User extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__user);
-        btnBack = (Button) findViewById(R.id.next);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goBack(view);
-            }
-
-        });
         btnDone = (Button) findViewById(R.id.btnDone);
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override

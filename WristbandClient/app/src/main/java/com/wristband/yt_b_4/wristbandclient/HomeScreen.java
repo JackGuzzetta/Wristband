@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.app.Dialog;
+import android.app.ActionBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -58,6 +59,9 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen2);
+
+
+
         publicparty = (Button) findViewById(R.id.publicparties);
         NewPartyButton = (Button) findViewById(R.id.button3);
         pDialog = new ProgressDialog(this);
@@ -66,9 +70,11 @@ public class HomeScreen extends AppCompatActivity {
         initializeControls();
     }
 
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
+
         return true;
     }
 
@@ -76,6 +82,9 @@ public class HomeScreen extends AppCompatActivity {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
         switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;

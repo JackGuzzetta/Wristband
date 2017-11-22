@@ -102,14 +102,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.back:
-                Intent intent1 = new Intent(MapsActivity.this, HomeScreen.class);
-                startActivity(intent1);
+            case android.R.id.home:
+                onBackPressed();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MapsActivity.this, HomeScreen.class);
+        startActivity(intent);
     }
 
     private void hideProgressDialog() {
