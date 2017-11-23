@@ -121,7 +121,7 @@ public class HostScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                goLocation(loc);
+                goLocation(view);
             }
 
         });
@@ -137,8 +137,8 @@ public class HostScreen extends AppCompatActivity {
         btnComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //create a new user with values from the EditTexts
                 goComments(view);
+                //create a new user with values from the EditTexts
             }
         });
         Intent intent = getIntent();
@@ -479,12 +479,14 @@ public class HostScreen extends AppCompatActivity {
     }
 
 
-    private void goLocation(String party_name) {
+    private void goLocation(View view) {
         Intent intent = new Intent(HostScreen.this, MapsActivity.class);
-        intent.putExtra("party_location", party_name);
-        intent.putExtra("prev", "guest");
-        intent.putExtra("party_name", party_id);
+        intent.putExtra("party_location", loc);
+        intent.putExtra("party_id", party_id);
+        intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
+        intent.putExtra("party_name", party_name);
+        intent.putExtra("prev", "host");
         finish();
         startActivity(intent);
     }

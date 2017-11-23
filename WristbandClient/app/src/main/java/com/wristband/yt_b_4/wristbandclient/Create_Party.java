@@ -23,11 +23,13 @@ import com.google.android.gms.common.api.Status;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -291,12 +293,6 @@ public class Create_Party extends AppCompatActivity {
     }
 
 
-    private void goBack(View view) {
-        Intent intent = new Intent(Create_Party.this, HomeScreen.class);
-        finish();
-        startActivity(intent);
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
@@ -325,8 +321,30 @@ public class Create_Party extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Create_Party.this, HomeScreen.class);
-        startActivity(intent);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Are you sure you want to exit");
+        alert.setMessage("Changes will not be saved");
+
+        // Set an EditText view to get user input
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Intent intent = new Intent(Create_Party.this, HomeScreen.class);
+                finish();
+                startActivity(intent);
+
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
     }
     //    private void sendSms(String phoneNumber, String message) {
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "sms:" + phoneNumber ) );

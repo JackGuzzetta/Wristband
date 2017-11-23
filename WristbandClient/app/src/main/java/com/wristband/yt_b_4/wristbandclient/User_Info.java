@@ -43,6 +43,7 @@ public class User_Info extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> userIDs;
     private ImageView code;
+    private int screen;
 
     String firstName;
     String lastName;
@@ -63,6 +64,7 @@ public class User_Info extends AppCompatActivity {
         user_name = getIntent().getStringExtra("user_name");
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
+        screen = Integer.parseInt(relation);
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
         if(prev_class.equals("guest"))
@@ -113,6 +115,9 @@ public class User_Info extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -126,6 +131,34 @@ public class User_Info extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        switch (screen) {
+            case 1://host
+                intent = new Intent(this, HostScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 2://guest
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 3://cohost
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            default:
         }
     }
 

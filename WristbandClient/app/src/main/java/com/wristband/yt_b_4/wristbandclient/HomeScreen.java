@@ -137,7 +137,8 @@ public class HomeScreen extends AppCompatActivity {
         }
 
         //listView.setBackgroundColor(Color.CYAN);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView

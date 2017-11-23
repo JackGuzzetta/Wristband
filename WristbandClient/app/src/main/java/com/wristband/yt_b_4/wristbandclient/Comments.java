@@ -53,6 +53,7 @@ public class Comments extends AppCompatActivity {
     ArrayAdapter adapter;
     ProgressDialog pDialog;
     String user_id, party_id, username, relation, party_name;
+    int screen;
     String comment;
     String f_name = "test";
     String l_name = "test";
@@ -76,6 +77,8 @@ public class Comments extends AppCompatActivity {
         party_id = getIntent().getStringExtra("party_id");
         relation = getIntent().getStringExtra("relation");
         party_name = getIntent().getStringExtra("party_name");
+        screen = Integer.parseInt(relation);
+
 
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +100,9 @@ public class Comments extends AppCompatActivity {
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -110,6 +116,34 @@ public class Comments extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        switch (screen) {
+            case 1://host
+                intent = new Intent(this, HostScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 2://guest
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 3://cohost
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            default:
         }
     }
 

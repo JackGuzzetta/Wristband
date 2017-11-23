@@ -54,6 +54,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Party party;
     private String party_name, prev_class;
     private String party_id, relation;
+    private int screen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +63,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
-        party_name = getIntent().getStringExtra("party_name");
         address = getIntent().getStringExtra("party_location");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
-        party_id = intent.getStringExtra("party_name");
-        relation = intent.getStringExtra("relation");
+        party_id = getIntent().getStringExtra("party_id");
+        relation = getIntent().getStringExtra("relation");
+        party_name = getIntent().getStringExtra("party_name");
+        screen = Integer.parseInt(relation);
+
     }
 
     //    private void getLocationPermission() {
@@ -113,10 +116,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MapsActivity.this, HomeScreen.class);
-        startActivity(intent);
+        Intent intent;
+        switch (screen) {
+            case 1://host
+                intent = new Intent(this, HostScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 2://guest
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 3://cohost
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+        }
     }
-
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.hide();

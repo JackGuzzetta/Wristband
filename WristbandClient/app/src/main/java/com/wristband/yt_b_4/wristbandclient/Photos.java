@@ -15,6 +15,7 @@ import com.facebook.login.LoginManager;
 
 public class Photos extends AppCompatActivity {
     private String party_name, relation, user_id, prev_class;
+    private int screen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,8 @@ public class Photos extends AppCompatActivity {
         relation = intent.getStringExtra("relation");
         user_id = intent.getStringExtra("user_id");
         prev_class = getIntent().getStringExtra("prev");
+        screen = Integer.parseInt(relation);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,6 +39,9 @@ public class Photos extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -52,17 +58,34 @@ public class Photos extends AppCompatActivity {
         }
     }
 
-    private void goBack(View view) {
+    @Override
+    public void onBackPressed() {
         Intent intent;
-        if(prev_class.equals("host")) {
-            intent = new Intent(Photos.this, HostScreen.class);
+        switch (screen) {
+            case 1://host
+                intent = new Intent(this, HostScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 2://guest
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 3://cohost
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            default:
         }
-        else{
-            intent = new Intent(Photos.this, GuestScreen.class);
-        }
-        intent.putExtra("party_name", party_name);
-        intent.putExtra("relation", relation);
-        intent.putExtra("prev", "photos");
-        startActivity(intent);
     }
+
+
 }
