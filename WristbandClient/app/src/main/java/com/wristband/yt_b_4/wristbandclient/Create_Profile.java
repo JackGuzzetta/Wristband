@@ -60,6 +60,9 @@ public class Create_Profile extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 //startActivity(new Intent(this, About.class));
                 return true;

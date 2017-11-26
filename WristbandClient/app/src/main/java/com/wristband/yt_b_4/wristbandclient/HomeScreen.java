@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.app.Dialog;
+import java.util.logging.Handler;
 import android.app.ActionBar;
 
 import com.android.volley.AuthFailureError;
@@ -48,7 +51,7 @@ public class HomeScreen extends AppCompatActivity {
     List list = new ArrayList();
     List relationList = new ArrayList();
     Dialog DeleteDialog;
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ArrayList<String> party_ids = new ArrayList();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
@@ -64,10 +67,21 @@ public class HomeScreen extends AppCompatActivity {
 
         publicparty = (Button) findViewById(R.id.publicparties);
         NewPartyButton = (Button) findViewById(R.id.button3);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         initializeControls();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh() {
+                getAllPartiesByUserId();
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
     }
 
 
@@ -254,6 +268,7 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void logout(View view) {
         Intent intent = new Intent(this, Login.class);
         finish();
@@ -308,6 +323,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     private void getAllPartiesByUserId() {
+        list.clear();
         new Thread(new Runnable() {
             public void run() {
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_USER + user_id,

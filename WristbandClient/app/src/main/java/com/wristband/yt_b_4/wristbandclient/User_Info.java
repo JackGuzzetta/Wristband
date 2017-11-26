@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -49,7 +48,7 @@ public class User_Info extends AppCompatActivity {
     String firstName;
     String lastName;
     String userId;
-    String fullName, uname;
+    String fullName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +61,7 @@ public class User_Info extends AppCompatActivity {
         txtid = (TextView) findViewById(R.id.idtxt);
         code= (ImageView) findViewById(R.id.qr);
         user_id = getIntent().getStringExtra("user_id");
-//        user_name = getIntent().getStringExtra("user_name");
-//        uname = getIntent().getStringExtra("username");
-//
+        user_name = getIntent().getStringExtra("user_name");
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
         screen = Integer.parseInt(relation);
@@ -91,20 +88,22 @@ public class User_Info extends AppCompatActivity {
 
         });
 
-        findUserbyId();
+        getDataFromServer();
 
-       // user_id = getUserID(user_name);
-        txtuser.setText(fname+" "+ lname);
-        txtfirst.setText("User name: "+uname);
+        // user_id = getUserID(user_name);
+        txtuser.setText("Full name: "+user_name);
+        fname = user_name.split(" ")[0];
+        txtfirst.setText("First name: "+fname);
+        lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
         txtlast.setText("Last name: "+lname);
         txtid.setText("User ID: " + user_id);
-        addqr(user_id);
+        addqr(user_name);
     }
 
 
 
     private void addqr(String name){
-        QRGenerator x = new QRGenerator(name);
+        QRGenerator x = new QRGenerator(user_name);
         code.setImageBitmap(x.createQR());
     }
 
@@ -203,25 +202,26 @@ public class User_Info extends AppCompatActivity {
         }).start();
     }*/
 
-    private void findUserbyId() {
+    private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS +"/"+ user_id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user_name,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    Toast.makeText(getApplicationContext(), "what", Toast.LENGTH_LONG).show();
+                                    String firstName;
+                                    String lastName;
+                                    String userId;
+                                    String username;
 
-                                        String firstName;
-                                        String lastName;
-                                        String userId;
-                                        String username;
-
-                                        fname = response.getJSONObject(0).getString("f_name");
-                                        lname = response.getJSONObject(0).getString("l_name");
-                                        username = response.getJSONObject(0).getString("username");
-                                        uname = "different";
+                                    firstName = response.getJSONObject(0).getString("f_name");
+                                    lastName = response.getJSONObject(0).getString("l_name");
+                                    userId = response.getJSONObject(0).getString("id");
+                                    username = response.getJSONObject(0).getString("username");
+                                    fullName = user_name;
+                                    user_id = userId;
+                                    user_name = username;
 
 
                                 } catch (JSONException e) {
