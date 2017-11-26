@@ -240,10 +240,11 @@ public class Add_User extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 String username = null;
                                 //TODO INVITE USER
-                                //VolleyHandler.inviteUser(party_id, user_id, 2);
 
                                 try {
-                                    username = response.getString("user");
+                                    String user_id = response.getString("id");
+                                    VolleyHandler.inviteUser(party_id, user_id, "2");
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

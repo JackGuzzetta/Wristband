@@ -53,7 +53,9 @@ module.exports = function(app) {
                         res.json({
                             token: token,
                             id: id,
-                            user: username
+                            user: username,
+                            f_name: rows[0].f_name,
+                            l_name: rows[0].l_name
                         })
                     } else {
                         res.json({
