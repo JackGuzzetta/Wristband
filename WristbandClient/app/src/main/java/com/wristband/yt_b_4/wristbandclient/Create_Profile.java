@@ -235,5 +235,7 @@ public class Create_Profile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Do Here what ever you want do on back press;
+        Intent intent = new Intent(Create_Profile.this, Login.class);
+        startActivity(intent);
     }
 }

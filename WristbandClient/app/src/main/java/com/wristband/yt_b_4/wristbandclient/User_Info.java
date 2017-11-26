@@ -91,7 +91,7 @@ public class User_Info extends AppCompatActivity {
         getDataFromServer();
 
        // user_id = getUserID(user_name);
-        txtuser.setText(user_name);
+        txtuser.setText("Full name: "+user_name);
         fname = user_name.split(" ")[0];
         txtfirst.setText("First name: "+fname);
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());

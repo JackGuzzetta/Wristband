@@ -3,6 +3,10 @@ package com.wristband.yt_b_4.wristbandclient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,17 +14,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 
 public class Photos extends AppCompatActivity {
     private String party_name, relation, user_id, prev_class;
+    public static int RESULT_LOAD_IMAGE = 1;
+    ImageButton pic;
     private int screen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
-
+        this.pic = (ImageButton) findViewById(R.id.pict);
 
         Intent intent = getIntent();
         party_name = intent.getStringExtra("party_name");
@@ -28,7 +36,38 @@ public class Photos extends AppCompatActivity {
         user_id = intent.getStringExtra("user_id");
         prev_class = getIntent().getStringExtra("prev");
         screen = Integer.parseInt(relation);
+        pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent GaleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(GaleryIntent, RESULT_LOAD_IMAGE);
+            }
 
+
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri SelectedImage = data.getData();
+            String[] FilePathColumn = {
+                    MediaStore.Images.Media.DATA
+            };
+
+            Cursor SelectedCursor = getContentResolver().query(SelectedImage, FilePathColumn, null, null, null);
+            SelectedCursor.moveToFirst();
+
+            int columnIndex = SelectedCursor.getColumnIndex(FilePathColumn[0]);
+            String picturePath = SelectedCursor.getString(columnIndex);
+            SelectedCursor.close();
+
+
+            pic.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Toast.makeText(getApplicationContext(), picturePath, Toast.LENGTH_LONG).show();
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -7,9 +7,11 @@
     <Button android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:text="@string/scan"
-        android:onClick="scanNow" />
+        android:onClick="scanNow"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/button5"
+        android:layout_alignEnd="@+id/button5" />
     <TextView
         android:id="@+id/scan_format"
         android:layout_width="wrap_content"
@@ -78,7 +80,9 @@
         android:text="Photos"
         android:layout_below="@+id/partyTxt"
         android:layout_alignLeft="@+id/button6"
-        android:layout_alignStart="@+id/button6" />
+        android:layout_alignStart="@+id/button6"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="1dp"/>
 
     <Button
         android:id="@+id/button6"
@@ -88,7 +92,7 @@
         android:layout_below="@+id/dateTxt"
         android:layout_alignParentEnd="true"
 
-        android:layout_marginEnd="1dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="1dp"
         android:clickable="true"
         android:layout_alignParentRight="true" />

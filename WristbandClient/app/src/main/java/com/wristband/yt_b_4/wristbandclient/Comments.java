@@ -52,7 +52,7 @@ public class Comments extends AppCompatActivity {
     ArrayList<String> comments = new ArrayList<String>();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
-    String user_id, party_id, username, relation, party_name;
+    String user_id, party_id, username, relation, party_name, user_rel;
     int screen;
     String comment;
     String f_name = "test";
@@ -77,6 +77,7 @@ public class Comments extends AppCompatActivity {
         party_id = getIntent().getStringExtra("party_id");
         relation = getIntent().getStringExtra("relation");
         party_name = getIntent().getStringExtra("party_name");
+        user_rel = getIntent().getStringExtra("user_rel");
         screen = Integer.parseInt(relation);
 
 
