@@ -323,8 +323,8 @@ public class Create_Party extends AppCompatActivity {
     public void onBackPressed() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Are you sure you want to exit");
-        alert.setMessage("Changes will not be saved");
+        alert.setTitle("Are you sure you want to leave");
+        alert.setMessage("Changes will be discarded");
 
         // Set an EditText view to get user input
 

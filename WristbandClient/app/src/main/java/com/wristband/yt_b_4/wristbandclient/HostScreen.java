@@ -74,9 +74,11 @@ public class HostScreen extends AppCompatActivity {
     private Button btnCohost, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ArrayList<String> usernames = new ArrayList<String>();
+    private ArrayList<String> unames = new ArrayList<String>();
+
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
-    private String party_id, user_id;
+    private String party_id, user_id, uname;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private static final int REQUEST_CAMERA = 1;
@@ -110,6 +112,8 @@ public class HostScreen extends AppCompatActivity {
         pDialog.setCancelable(false);
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
+        //Toast.makeText(getApplicationContext(), unames.get(0), Toast.LENGTH_LONG).show();
+
 
 
 //                QRGenerator(party_id,user_id);
@@ -175,11 +179,14 @@ public class HostScreen extends AppCompatActivity {
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_rel", relation);
                 relation = relationList.get(i).toString();
-                user_id = findID(user_name);
+                //user_id = findID(user_name);
+                //uname = findunam(user_name);
                 intent.putExtra("prev", "host");
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("user_name", user_name);
+                intent.putExtra("username", uname);
+
                 intent.putExtra("relation", relation);
                 startActivity(intent);
             }
@@ -212,15 +219,6 @@ public class HostScreen extends AppCompatActivity {
     public void scanNow(View view) {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
-
-        // setContentView(mScannerView);
-        //IntentIntegrator integrator = new IntentIntegrator(this);
-        //integrator.setDesiredBarcodeFormats(IntentIntegrator.DATA_MATRIX_TYPES);
-        //integrator.setPrompt("Scan a barcode");
-        //integrator.set;
-        //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
-        //integrator.setCameraId(1);  // Use a specific camera of the device
-        //integrator.initiateScan(IntentIntegrator.DATA_MATRIX_TYPES);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -477,7 +475,14 @@ public class HostScreen extends AppCompatActivity {
         }
         return "ID not found";
     }
-
+    private String findunam(String user_name) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(user_name)) {
+                return unames.get(i);
+            }
+        }
+        return "ID not found";
+    }
 
     private void goLocation(View view) {
         Intent intent = new Intent(HostScreen.this, MapsActivity.class);
@@ -626,6 +631,8 @@ public class HostScreen extends AppCompatActivity {
                                 list.add(name);
                                 adapter.notifyDataSetChanged();
                                 usernames.add(response.getJSONObject(i).getString("user_id"));
+                                //unames.add(response.getJSONObject(i).getString("username"));
+
                             }
                         } catch (JSONException e) {
                         }
