@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
+import com.wristband.yt_b_4.wristbandclient.models.User;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import com.wristband.yt_b_4.wristbandclient.utils.VolleyHandler;
 
@@ -44,7 +45,7 @@ public class Add_User extends AppCompatActivity {
     private CheckBox checkbox;
     private String prev_class, name1, date1, time1, loc1, relation;
     private AutoCompleteTextView autoView;
-    private EditText phoneNumber;
+    private EditText phoneNumber, firstName, lastName;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -64,6 +65,9 @@ public class Add_User extends AppCompatActivity {
         });
         checkbox = (CheckBox) findViewById(R.id.checkBox);
         phoneNumber = (EditText) findViewById(R.id.phoneNumber);
+        firstName = (EditText) findViewById(R.id.editText2);
+        lastName = (EditText) findViewById(R.id.editText3);
+
         Intent intent = getIntent();
         loc1 = intent.getStringExtra("loc");
         name1 = intent.getStringExtra("party_name");
@@ -177,6 +181,8 @@ public class Add_User extends AppCompatActivity {
         boolean isChecked;
         String coHost;
         String text = textView.getText().toString();
+        Intent intent = getIntent();
+        String party_id = intent.getStringExtra("party_id");
         if (text.isEmpty() == false) {
             user_id = getUserID(text);
             isChecked = checkbox.isChecked();
@@ -186,22 +192,23 @@ public class Add_User extends AppCompatActivity {
             } else {
                 coHost = "2";
             }
-            Intent intent = getIntent();
-            String party_id = intent.getStringExtra("party_id");
             VolleyHandler.inviteUser(party_id, user_id, coHost);
             Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
             textView.setText("");
         } else {
-            Toast fail = Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG);
-            fail.show();
+            String number = phoneNumber.getText().toString();
+            if (!number.isEmpty()) {
+                String f_name = firstName.getText().toString();
+                String l_name = lastName.getText().toString();
+                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                String id = settings.getString("id", "default");
+                Toast pass = Toast.makeText(getApplicationContext(), number + " added to party", Toast.LENGTH_LONG);
+                pass.show();
+                VolleyHandler.invitebyNumber(number, f_name + "-" + l_name, id);
+                createAccount(number, f_name, l_name, party_id);
+            }
         }
-        String number = phoneNumber.getText().toString();
-        if (!number.isEmpty()) {
-            VolleyHandler.invitebyNumber(number);
-        }
-        //PhoneController p = new PhoneController();
-        //p.sendSMS(getApplicationContext(), phoneNumber.getText().toString(), "123");
     }
 
     private void back_Homescreen(View view) {
@@ -224,7 +231,52 @@ public class Add_User extends AppCompatActivity {
             startActivity(intent);
         }
     }
+    private void createAccount(final String phoneNumber, final String f_name, final String l_name, final String party_id) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_USERS, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                String username = null;
+                                //TODO INVITE USER
 
+                                try {
+                                    String user_id = response.getString("id");
+                                    VolleyHandler.inviteUser(party_id, user_id, "2");
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //msgStatus.setText("Error creating account: " + error);
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("f_name", f_name);
+                        headers.put("l_name", l_name);
+                        headers.put("username", phoneNumber);
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
+            }
+        }).start();
+    }
 
 
 }

@@ -84,10 +84,10 @@ module.exports = function(app) {
         User.login(req.headers.username, req.headers.password, res);
     }); 
     app.post('/email', function(req, res) {
-        User.email(req.headers.email, req.headers.username, res);
+        User.email(req.headers.email, req.headers.username, req.headers.id, res);
     }); 
     app.post('/text', function(req, res) {
-        User.text(req.headers.number, res);
+        User.text(req.headers.number, req.headers.username, req.headers.id, res);
     });
 
 

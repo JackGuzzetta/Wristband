@@ -18,7 +18,7 @@ import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
 
 public class About extends AppCompatActivity {
     private TextView txtuser, txtid, txtfirst, txtlast;
-    private String user_id, user_name, fname, lname, fullname, prev_class;
+    private String user_id, user_name, fname, lname, prev_class;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ImageView code;
 
@@ -27,17 +27,21 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         txtuser = (TextView) findViewById(R.id.usertxt);
-        code= (ImageView) findViewById(R.id.qr);
-        //txtfirst = (TextView) findViewById(R.id.firsttxt);
-        //txtlast = (TextView) findViewById(R.id.lasttxt);
+        code = (ImageView) findViewById(R.id.qr);
+        txtfirst = (TextView) findViewById(R.id.firsttxt);
+        txtlast = (TextView) findViewById(R.id.lasttxt);
         txtid = (TextView) findViewById(R.id.idtxt);
-        //fullname = getIntent().getStringExtra("user_name");
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
         user_name = settings.getString("username", "default");
-
+        fname = settings.getString("f_name", "default");
+        lname = settings.getString("l_name", "default");
         prev_class = getIntent().getStringExtra("prev");
-        About();
+        txtuser.setText("Username: " + user_name);
+        txtfirst.setText("First name: "+fname);
+        txtlast.setText("Last name: "+lname);
+        txtid.setText("User ID: " + user_id);
+        addqr(fname,lname, user_id);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,21 +75,8 @@ public class About extends AppCompatActivity {
         Intent intent = new Intent(About.this, HomeScreen.class);
         startActivity(intent);
     }
-    private void addqr(String name){
-        QRGenerator x = new QRGenerator(user_name);
+    private void addqr(String f_name, String l_name, String user_id){
+        QRGenerator x = new QRGenerator(f_name + "-" + l_name + "_" + user_id);
         code.setImageBitmap(x.createQR());
     }
-
-    private void About(){
-        txtuser.setText("Username: " + user_name);
-        //fname = fullname.split(" ")[0];
-        //txtfirst.setText("First name: "+fname);
-        //lname = fullname.substring(fullname.split(" ")[0].length()+1, fullname.length());
-        //txtlast.setText("Last name: "+lname);
-        txtid.setText("User ID: " + user_id);
-        addqr(user_name);
-
-    }
-
-
 }
