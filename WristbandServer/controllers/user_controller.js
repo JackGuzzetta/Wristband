@@ -123,24 +123,14 @@ module.exports = function(app) {
                         }
                     });
                 } else {
-                    res.contentType('application/json');
+                    console.log("Already exist", rows[0].id);
                     res.json([{
-                        users: "Already exists"
+                        users: "Already exists",
+                        id: rows[0].id
                     }])
                 }
             }
-        });
-
-
-
-
-
-
-
-
-
-
-        
+        });   
     }
     module.exports.findAllUsers = function(res) {
         var user = new User();
