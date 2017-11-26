@@ -261,7 +261,7 @@ module.exports = function(app) {
             }
         });
     }
-    module.exports.email = function(email, username, res) {
+    module.exports.email = function(email, username, id, res) {
         var send = require('gmail-send')({
           user: 'wristbandparties@gmail.com',
           pass: 'wristband1',
@@ -272,7 +272,7 @@ module.exports = function(app) {
         var retVal = "success";
 
         var QRCode = require('qrcode')
-        QRCode.toFile("images/" + username + ".png", username, {type:'png'}, function (err, string) {
+        QRCode.toFile("images/" + username + ".png", username + "_" + id, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
             }
@@ -296,12 +296,12 @@ module.exports = function(app) {
             email: retVal
         })
     }
-        module.exports.text = function(number, res) {
+        module.exports.text = function(number, username, id, res) {
         var retVal = "success";
         var QRCode = require('qrcode')
         var file_path = "images/" + number + ".png";
         var img_path = "http://proj-309-yt-b-4.cs.iastate.edu:3000/images/" + number + ".png";
-        QRCode.toFile("images/" + number + ".png", number, {type:'png'}, function (err, string) {
+        QRCode.toFile("images/" + number + ".png", username + "_" + id, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
             }

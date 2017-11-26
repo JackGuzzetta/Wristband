@@ -254,6 +254,9 @@ public class Login extends AppCompatActivity {
                                     String responseToken = response.getString("token");
                                     String username = response.getString("user");
                                     String id = response.getString("id");
+                                    String f_name = response.getString("f_name");
+                                    String l_name = response.getString("l_name");
+
                                     toast = Toast.makeText(getApplicationContext(), "Welcome: " + username, Toast.LENGTH_LONG);
                                     toast.show();
                                     //stores user and token into encrypted storage accessible across activities
@@ -262,6 +265,9 @@ public class Login extends AppCompatActivity {
                                     editor.putString("token", responseToken);
                                     editor.putString("username", username);
                                     editor.putString("id", id);
+                                    editor.putString("f_name", f_name);
+                                    editor.putString("l_name", l_name);
+
                                     editor.commit();
 
                                     //to get the stored token and username

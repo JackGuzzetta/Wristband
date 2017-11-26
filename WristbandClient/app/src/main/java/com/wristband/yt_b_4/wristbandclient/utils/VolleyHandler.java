@@ -61,7 +61,7 @@ public class VolleyHandler extends Application {
     }
 
     //Used by Add_User
-    public static void invitebyNumber(final String number) {
+    public static void invitebyNumber(final String number, final String username, final String id) {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_TEXT, null,
                         new Response.Listener<JSONObject>() {
@@ -82,6 +82,8 @@ public class VolleyHandler extends Application {
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("number", number);
+                        headers.put("username", username);
+                        headers.put("id", id);
                         return headers;
                     }
                 };
