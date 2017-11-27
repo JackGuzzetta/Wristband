@@ -2,6 +2,7 @@ package com.wristband.yt_b_4.wristbandclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,23 +66,26 @@ public class User_Info extends AppCompatActivity {
         screen = Integer.parseInt(relation);
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
-        if(prev_class.equals("guest"))
+        Toast.makeText(getApplicationContext(), relation, Toast.LENGTH_LONG).show();
+        if(prev_class.equals("guest")||relation.equals("1") )
             btnRemove.setVisibility(View.INVISIBLE);
-        if(relation.equals("1"))
-            btnRemove.setVisibility(View.INVISIBLE);
+        else {
+            btnRemove.setVisibility(View.VISIBLE);
+        }
+
 
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                goRemove(view);
+                goRemove();
             }
 
         });
 
         getDataFromServer();
 
-        // user_id = getUserID(user_name);
+        //user_id = getUserID(user_name);
         txtuser.setText(user_name);
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
         usern.setText("placeholder");
@@ -125,30 +129,17 @@ public class User_Info extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent;
-        switch (screen) {
-            case 1://host
-                intent = new Intent(this, HostScreen.class);
-                intent.putExtra("party_name", party_name);
-                intent.putExtra("relation", relation);
-                startActivity(intent);
-                finish();
-                break;
-            case 2://guest
-                intent = new Intent(this, GuestScreen.class);
-                intent.putExtra("party_name", party_name);
-                intent.putExtra("relation", relation);
-                startActivity(intent);
-                finish();
-                break;
-            case 3://cohost
-                intent = new Intent(this, GuestScreen.class);
-                intent.putExtra("party_name", party_name);
-                intent.putExtra("relation", relation);
-                startActivity(intent);
-                finish();
-                break;
-            default:
+        if(prev_class.equals("host")) {
+            intent = new Intent(User_Info.this, HostScreen.class);
         }
+        else{
+            intent = new Intent(User_Info.this, GuestScreen.class);
+        }
+        prev_class = "user_info";
+        intent.putExtra("party_name", party_name);
+        intent.putExtra("prev", prev_class);
+        intent.putExtra("relation", user_rel);
+        startActivity(intent);
     }
 
     /*private void getDataFromServer() {
@@ -227,6 +218,7 @@ public class User_Info extends AppCompatActivity {
         }).start();
     }
 
+
     private void goBack(View view) {
         Intent intent;
         if(prev_class.equals("host")) {
@@ -242,7 +234,7 @@ public class User_Info extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void goRemove(View view){
+    private void goRemove(){
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
@@ -250,10 +242,13 @@ public class User_Info extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
+
                             }
                         }, new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         //msgStatus.setText("Error creating account: " + error);
                     }
                 }) {
@@ -262,6 +257,8 @@ public class User_Info extends AppCompatActivity {
                      * */
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
+
+
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
@@ -276,6 +273,7 @@ public class User_Info extends AppCompatActivity {
                 // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
-        goBack(view);
+        onBackPressed();
     }
+
 }

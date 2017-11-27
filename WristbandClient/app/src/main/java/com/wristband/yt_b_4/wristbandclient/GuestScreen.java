@@ -125,7 +125,7 @@ public class GuestScreen extends AppCompatActivity {
         listView.setAdapter(adapter);
         ;
         getDataFromServer();
-        /*listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l){
                 Intent intent = new Intent(GuestScreen.this, User_Info.class);
@@ -140,7 +140,7 @@ public class GuestScreen extends AppCompatActivity {
                 intent.putExtra("relation", relation);
                 startActivity(intent);
             }
-        });*/
+        });
 
     }
 

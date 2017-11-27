@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.app.ActionBar;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -86,9 +87,18 @@ public class PublicParties extends AppCompatActivity {
     }
 
     private void initializeControls() {
+        getAllPartiesBypub();
+//        for (int i=0; i< list.size();i++){
+//            for (int j =i+1; j<list.size();j++){
+//                if(list.get(j).equals(list.get(i))){
+//                    list.remove(j);
+//                }
+//            }
+//        }
         listView = (ListView) findViewById(R.id.list_view2);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
+
         adapter = new ArrayAdapter(PublicParties.this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,7 +115,7 @@ public class PublicParties extends AppCompatActivity {
 
 
 
-        getAllPartiesBypub();
+
     }
 
     public void guestScreen(String party_name) {
@@ -189,6 +199,7 @@ public class PublicParties extends AppCompatActivity {
                                     }
 
                                 } catch (JSONException e) {
+
                                 }
                             }
                         }, new Response.ErrorListener() {
