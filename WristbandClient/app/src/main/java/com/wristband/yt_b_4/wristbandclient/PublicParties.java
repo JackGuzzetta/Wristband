@@ -104,6 +104,7 @@ public class PublicParties extends AppCompatActivity {
         });
 
 
+
         getAllPartiesBypub();
     }
 
