@@ -17,7 +17,7 @@ import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
 
 public class About extends AppCompatActivity {
-    private TextView txtuser, txtid, txtfirst, txtlast;
+    private TextView txtuser, txtid, txtfull;
     private String user_id, user_name, fname, lname, prev_class;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ImageView code;
@@ -28,8 +28,7 @@ public class About extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         txtuser = (TextView) findViewById(R.id.usertxt);
         code = (ImageView) findViewById(R.id.qr);
-        txtfirst = (TextView) findViewById(R.id.firsttxt);
-        txtlast = (TextView) findViewById(R.id.lasttxt);
+        txtfull = (TextView) findViewById(R.id.fullname);
         txtid = (TextView) findViewById(R.id.idtxt);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -38,8 +37,7 @@ public class About extends AppCompatActivity {
         lname = settings.getString("l_name", "default");
         prev_class = getIntent().getStringExtra("prev");
         txtuser.setText("Username: " + user_name);
-        txtfirst.setText("First name: "+fname);
-        txtlast.setText("Last name: "+lname);
+        txtfull.setText(fname+" "+ lname);
         txtid.setText("User ID: " + user_id);
         addqr(fname,lname, user_id);
     }
