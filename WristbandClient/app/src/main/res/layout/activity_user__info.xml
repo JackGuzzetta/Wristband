@@ -3,31 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
-    android:background="@color/cardview_shadow_start_color">
+    android:background="@color/Orange">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="280dp"
+        android:background ="@color/colorPrimary"
+
+        android:id="@+id/linearLayoutCompat"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
     <TextView
         android:id="@+id/usertxt"
+        android:gravity="center"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnBack"
-        android:gravity="left"
-        android:text="Full name: "
+        android:layout_below="@+id/btnRemove"
+        android:text=""
         android:layout_marginTop="25dp"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/Ivory"
+        android:textSize="55dp" />
+
+    <TextView
+        android:id="@+id/usern"
+        android:layout_gravity="center"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firsttxt"
+        android:layout_marginTop="25dp"
+        android:text="User name: "
+        android:textColor="@color/Ivory"
         android:textSize="25dp" />
 
     <TextView
-        android:id="@+id/firsttxt"
-        android:gravity= "center"
+        android:id="@+id/idtxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/usertxt"
+        android:layout_gravity="center"
+        android:layout_below="@+id/lasttxt"
         android:layout_marginTop="25dp"
-        android:text="First name: "
-        android:textColor="@color/colorGray"
+        android:text="User ID: "
+        android:textColor="@color/Ivory"
         android:textSize="25dp" />
 
+        <Button
+            android:id="@+id/btnRemove"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:text="Remove from Party" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/qr"
@@ -36,53 +72,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="11dp" />
-
-
-    <Button
-        android:id="@+id/btnRemove"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:clickable="true"
-        android:text="Remove from Party" />
-
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:clickable="true"
-        android:text="Back" />
-
-    <TextView
-        android:id="@+id/lasttxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@+id/firsttxt"
-        android:layout_marginTop="25dp"
-        android:text="Last name: "
-        android:textColor="@color/colorGray"
-        android:textSize="25dp" />
-
-    <TextView
-        android:id="@+id/idtxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@+id/lasttxt"
-        android:layout_marginTop="25dp"
-        android:text="User ID: "
-        android:textColor="@color/colorGray"
-        android:textSize="25dp" />
-
 
 </RelativeLayout>

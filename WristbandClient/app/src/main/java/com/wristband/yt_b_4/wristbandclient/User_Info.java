@@ -35,9 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User_Info extends AppCompatActivity {
-    private Button btnBack, btnRemove;
-    private TextView txtuser, txtfirst, txtlast, txtid;
-    private String user_id, user_name, fname, lname, party_name, prev_class, relation, user_rel;
+    private Button btnRemove;
+    private TextView txtuser, txtfirst, usern, txtid;
+    private String user_id, user_name, flname, lname, party_name, prev_class, relation, user_rel;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -53,11 +53,9 @@ public class User_Info extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user__info);
-        btnBack = (Button) findViewById(R.id.btnBack);
         btnRemove = (Button) findViewById(R.id.btnRemove);
         txtuser = (TextView) findViewById(R.id.usertxt);
-        txtfirst = (TextView) findViewById(R.id.firsttxt);
-        txtlast = (TextView) findViewById(R.id.lasttxt);
+        usern = (TextView) findViewById(R.id.usern);
         txtid = (TextView) findViewById(R.id.idtxt);
         code= (ImageView) findViewById(R.id.qr);
         user_id = getIntent().getStringExtra("user_id");
@@ -71,14 +69,7 @@ public class User_Info extends AppCompatActivity {
             btnRemove.setVisibility(View.INVISIBLE);
         if(relation.equals("1"))
             btnRemove.setVisibility(View.INVISIBLE);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goBack(view);
-            }
 
-        });
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,11 +82,9 @@ public class User_Info extends AppCompatActivity {
         getDataFromServer();
 
         // user_id = getUserID(user_name);
-        txtuser.setText("Full name: "+user_name);
-        fname = user_name.split(" ")[0];
-        txtfirst.setText("First name: "+fname);
+        txtuser.setText(user_name);
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
-        txtlast.setText("Last name: "+lname);
+        usern.setText("placeholder");
         txtid.setText("User ID: " + user_id);
         addqr(user_name);
     }

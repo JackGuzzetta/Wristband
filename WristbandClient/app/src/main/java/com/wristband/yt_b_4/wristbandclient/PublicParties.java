@@ -108,7 +108,7 @@ public class PublicParties extends AppCompatActivity {
     }
 
     public void guestScreen(String party_name) {
-        Intent intent = new Intent(this, HostScreen.class);
+        Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
         finish();
         startActivity(intent);
