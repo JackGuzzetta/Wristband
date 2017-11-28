@@ -77,7 +77,7 @@ module.exports = function(app) {
         Relation.createRelation(req.headers.user_id, req.headers.party_id, req.headers.relation, res);
     });
     app.delete('/relation', function(req, res) {
-        Relation.deleteRelation(req.headers.user_id, req.headers.relation_id, res);
+        Relation.deleteRelation(req.headers.user_id, req.headers.party_id, res);
     });
 
     app.post('/users/login', function(req, res) {

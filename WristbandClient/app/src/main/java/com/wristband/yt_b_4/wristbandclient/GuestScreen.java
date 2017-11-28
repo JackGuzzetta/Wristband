@@ -190,7 +190,7 @@ public class GuestScreen extends AppCompatActivity {
         }
     }
 
-    private void deleteRelation(final String user_id, final String relation) {
+    private void deleteRelation(final String user_id, final String party_id) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
@@ -213,7 +213,7 @@ public class GuestScreen extends AppCompatActivity {
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
-                        headers.put("relation_id", relation);
+                        headers.put("party_id", party_id);
                         return headers;
                     }
                 };
