@@ -206,7 +206,7 @@ public class Add_User extends AppCompatActivity {
                 Toast pass = Toast.makeText(getApplicationContext(), number + " added to party", Toast.LENGTH_LONG);
                 pass.show();
                 VolleyHandler.invitebyNumber(number, f_name + "-" + l_name, id);
-                createAccount(number, f_name, l_name, party_id);
+                checkIfPhoneExists(number,  f_name, l_name, party_id);
             }
         }
     }
@@ -231,6 +231,36 @@ public class Add_User extends AppCompatActivity {
             startActivity(intent);
         }
     }
+        private void checkIfPhoneExists(final String phoneNumber, final String f_name, final String l_name, final String party_id) {
+            new Thread(new Runnable() {
+                public void run() {
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + phoneNumber,
+                            new Response.Listener<JSONArray>() {
+                                @Override
+                                public void onResponse(JSONArray response) {
+                                    try {
+                                        String db_username = response.getJSONObject(0).getString("users");
+                                        if ("exists".equals(db_username)) {
+                                            String user_id = response.getJSONObject(0).getString("id");
+                                            VolleyHandler.inviteUser(party_id, user_id, "2");
+                                        } else {
+                                            createAccount(phoneNumber, f_name, l_name, party_id);
+                                            //sendDataToServer(user);
+                                        }
+                                    } catch (JSONException e) {
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+                    AppController.getInstance().addToRequestQueue(req,
+                            tag_json_arry);
+                }
+            }).start();
+        }
+
     private void createAccount(final String phoneNumber, final String f_name, final String l_name, final String party_id) {
         new Thread(new Runnable() {
             public void run() {
