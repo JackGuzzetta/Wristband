@@ -89,6 +89,8 @@ public class HostScreen extends AppCompatActivity {
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
+    List idList = new ArrayList();
+
     ArrayAdapter adapter;
     List relationList = new ArrayList();
 
@@ -182,7 +184,7 @@ public class HostScreen extends AppCompatActivity {
                 //user_id = findID(user_name);
                 //uname = findunam(user_name);
                 intent.putExtra("prev", "host");
-                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_id", idList.get(i).toString());
                 intent.putExtra("party_id", party_id);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("user_name", user_name);
@@ -632,6 +634,7 @@ public class HostScreen extends AppCompatActivity {
                                 list.add(name);
                                 adapter.notifyDataSetChanged();
                                 usernames.add(response.getJSONObject(i).getString("user_id"));
+                                idList.add(response.getJSONObject(i).getString("id"));
                                 //unames.add(response.getJSONObject(i).getString("username"));
 
                             }

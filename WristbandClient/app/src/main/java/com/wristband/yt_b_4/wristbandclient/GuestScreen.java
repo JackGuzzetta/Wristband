@@ -49,6 +49,7 @@ public class GuestScreen extends AppCompatActivity {
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
+    List idList = new ArrayList();
     ArrayAdapter adapter;
     List relationList = new ArrayList();
 
@@ -131,7 +132,7 @@ public class GuestScreen extends AppCompatActivity {
                 intent.putExtra("user_rel", relation);
                 relation = relationList.get(i).toString();
                 intent.putExtra("prev", "guest");
-                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_id", idList.get(i).toString());
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("party_id", party_id);
@@ -338,6 +339,7 @@ public class GuestScreen extends AppCompatActivity {
                                 name += " ";
                                 name += response.getJSONObject(i).getString("l_name");
                                 list.add(name);
+                                idList.add(response.getJSONObject(i).getString("id"));
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
