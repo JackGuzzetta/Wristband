@@ -183,6 +183,7 @@ public class HostScreen extends AppCompatActivity {
                 //uname = findunam(user_name);
                 intent.putExtra("prev", "host");
                 intent.putExtra("user_id", user_id);
+                intent.putExtra("party_id", party_id);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("username", uname);
@@ -227,7 +228,7 @@ public class HostScreen extends AppCompatActivity {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
             Toast toast = Toast.makeText(getApplicationContext(),
-                    usernames.get(0), Toast.LENGTH_SHORT);
+            usernames.get(0), Toast.LENGTH_SHORT);
             toast.show();
 
         } else {

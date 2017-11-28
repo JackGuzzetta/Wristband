@@ -2,7 +2,6 @@ package com.wristband.yt_b_4.wristbandclient;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,13 +22,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
-
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +33,7 @@ import java.util.Map;
 public class User_Info extends AppCompatActivity {
     private Button btnRemove;
     private TextView txtuser, txtfirst, usern, txtid;
-    private String user_id, user_name, flname, lname, party_name, prev_class, relation, user_rel;
+    private String user_id, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -46,9 +41,6 @@ public class User_Info extends AppCompatActivity {
     private ImageView code;
     private int screen;
 
-    String firstName;
-    String lastName;
-    String userId;
     String fullName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +55,15 @@ public class User_Info extends AppCompatActivity {
         user_name = getIntent().getStringExtra("user_name");
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
+        party_id = getIntent().getStringExtra("party_id");
         screen = Integer.parseInt(relation);
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
-        Toast.makeText(getApplicationContext(), relation, Toast.LENGTH_LONG).show();
         if(prev_class.equals("guest")||relation.equals("1") )
             btnRemove.setVisibility(View.INVISIBLE);
         else {
             btnRemove.setVisibility(View.VISIBLE);
         }
-
 
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,12 +248,10 @@ public class User_Info extends AppCompatActivity {
                      * */
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-
-
                         HashMap<String, String> headers = new HashMap<String, String>();
                         headers.put("Content-Type", "application/json");
                         headers.put("user_id", user_id);
-                        headers.put("relation_id", relation);
+                        headers.put("party_id", party_id);
                         return headers;
                     }
                 };

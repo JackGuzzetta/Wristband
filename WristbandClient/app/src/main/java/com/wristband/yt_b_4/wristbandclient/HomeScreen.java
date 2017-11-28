@@ -20,9 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.app.Dialog;
-import java.util.logging.Handler;
-import android.app.ActionBar;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,15 +27,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,16 +152,17 @@ public class HomeScreen extends AppCompatActivity {
                 // Get the selected item text from ListView
                 String party_name = (String) parent.getItemAtPosition(position);
                 String relation = relationList.get(position).toString();
+                String party_id = party_ids.get(position).toString();
                 if (relation.equals("1")) {
                     //Host
-                    hostScreen(1,party_name, relation);
+                    hostScreen(1,party_name, relation, party_id);
                 }
                 else if (relation.equals("2")) {
-                    hostScreen(2,party_name, relation);
+                    hostScreen(2,party_name, relation, party_id);
                     //Guest
                 }
                 else if (relation.equals("3")) {
-                    hostScreen(3,party_name, relation);
+                    hostScreen(3,party_name, relation, party_id);
                     //CoHost
                 }
                 else {
@@ -194,12 +189,13 @@ public class HomeScreen extends AppCompatActivity {
         getAllPartiesByUserId();
     }
 
-    public void hostScreen(int screen, String party_name, String relation) {
+    public void hostScreen(int screen, String party_name, String relation, String party_id) {
         Intent intent;
         switch (screen) {
             case 1://host
                 intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
+                intent.putExtra("party_id", party_id);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
                 finish();
@@ -207,6 +203,7 @@ public class HomeScreen extends AppCompatActivity {
             case 2://guest
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
+                intent.putExtra("party_id", party_id);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
                 finish();
@@ -214,6 +211,7 @@ public class HomeScreen extends AppCompatActivity {
             case 3://cohost
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
+                intent.putExtra("party_id", party_id);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
                 finish();

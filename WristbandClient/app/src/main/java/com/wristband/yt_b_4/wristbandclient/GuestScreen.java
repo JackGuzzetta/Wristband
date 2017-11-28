@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -69,10 +70,7 @@ public class GuestScreen extends AppCompatActivity {
         pDialog.setCancelable(false);
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
-
-//                QRGenerator(party_id,user_id);
-
-
+        party_id = getIntent().getStringExtra("party_id");
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +134,7 @@ public class GuestScreen extends AppCompatActivity {
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("party_name", party_name);
-                intent.putExtra("party_name", party_name);
+                intent.putExtra("party_id", party_id);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
             }
@@ -273,7 +271,7 @@ public class GuestScreen extends AppCompatActivity {
                                     String host = response.getJSONObject(0).getString("host");
                                     String time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
-                                    party_id = response.getJSONObject(0).getString("id");
+                                    //party_id = response.getJSONObject(0).getString("id");
                                     loc = location;
                                     partyText.setText("Party name: " + name);
                                     dateText.setText("Date: " + date);
