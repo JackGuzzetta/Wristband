@@ -88,6 +88,7 @@ public class PublicParties extends AppCompatActivity {
     }
 
     private void initializeControls() {
+        getAllPartiesBypub();
         listView = (ListView) findViewById(R.id.list_view2);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -105,8 +106,6 @@ public class PublicParties extends AppCompatActivity {
         });
 
 
-
-        getAllPartiesBypub();
 
     }
 
@@ -158,13 +157,13 @@ public class PublicParties extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY,
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
                             new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
-                                            String id = response.getJSONObject(i).getString("id");
+                                            String id = response.getJSONObject(i).getString("party_id");
                                             party_ids.add(id);
                                             getDataFromServer(id);
                                         }
@@ -189,16 +188,14 @@ public class PublicParties extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY+id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String privacy;
-                                    int priv;
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    privacy = response.getJSONObject(0).getString("privacy");
-                                    priv = Integer.parseInt(privacy);
+                                    String privacy = response.getJSONObject(0).getString("privacy");
+                                    int priv = Integer.parseInt(privacy);
                                     if (priv == 1 && (list.contains(name) == false)) {
                                         list.add(name);
                                         adapter.notifyDataSetChanged();
