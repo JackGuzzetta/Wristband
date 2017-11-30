@@ -40,6 +40,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -71,8 +72,8 @@ import java.util.Map;
 
 public class HostScreen extends AppCompatActivity {
     private static final String TAG = "Date";
-    private Button btnCohost, btnLocation, btnPhotos, btnComments;
-    private TextView dateText, partyText, locationTxt, timeTxt;
+    private Button btnCohost, btnPhotos, btnComments;
+    private TextView dateText, partyText, locationTxt, timeTxt, btnLocation;
     private ArrayList<String> usernames = new ArrayList<String>();
     private ArrayList<String> unames = new ArrayList<String>();
 
@@ -98,7 +99,8 @@ public class HostScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_screen);
-        btnLocation = (Button) findViewById(R.id.button7);
+        btnLocation = (TextView) findViewById(R.id.button7);
+        btnLocation.setPaintFlags(btnLocation.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
@@ -443,10 +445,49 @@ public class HostScreen extends AppCompatActivity {
                                     maxp = response.getJSONObject(0).getString("max_people");
                                     alert = response.getJSONObject(0).getString("alerts");
                                     hosts = host;
-                                    partyText.setText("Party name: " + name);
-                                    dateText.setText("Date: " + dat);
+                                    String[] dates = dat.split("-");
+                                    String month = "";
+                                    if (dates[1].equals("1")){
+                                        month = "January";
+                                    }
+                                    else if (dates[1].equals("2")){
+                                        month = "Febuary";
+                                    }
+                                    else if (dates[1].equals("3")){
+                                        month = "March";
+                                    }
+                                    else if (dates[1].equals("4")){
+                                        month = "April";
+                                    }
+                                    else if (dates[1].equals("5")){
+                                        month = "May";
+                                    }
+                                    else if (dates[1].equals("6")){
+                                        month = "June";
+                                    }
+                                    else if (dates[1].equals("7")){
+                                        month = "July";
+                                    }
+                                    else if (dates[1].equals("8")){
+                                        month = "August";
+                                    }
+                                    else if (dates[1].equals("9")){
+                                        month = "September";
+                                    }
+                                    else if (dates[1].equals("10")){
+                                        month = "October";
+                                    }
+                                    else if (dates[1].equals("11")){
+                                        month = "November";
+                                    }
+                                    else if (dates[1].equals("12")){
+                                        month = "December";
+                                    }
+
+
+                                    partyText.setText(name);
+                                    dateText.setText(month + " " + dates[2] + ", " + dates[0] + " at " + time);
                                     locationTxt.setText("Location: " + location);
-                                    timeTxt.setText("Time: " + time);
                                     getAllUsers();
                                 } catch (JSONException e) {
                                 }
