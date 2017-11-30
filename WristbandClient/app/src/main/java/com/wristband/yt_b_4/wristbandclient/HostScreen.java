@@ -436,6 +436,7 @@ public class HostScreen extends AppCompatActivity {
                                     maxp = response.getJSONObject(0).getString("max_people");
                                     alert = response.getJSONObject(0).getString("alerts");
                                     hosts = host;
+
                                     String[] dates = dat.split("-");
                                     String month = "";
                                     if (dates[1].equals("1")){
@@ -474,10 +475,63 @@ public class HostScreen extends AppCompatActivity {
                                     else if (dates[1].equals("12")){
                                         month = "December";
                                     }
-
+                                    String day = "am";
+                                    String[] times = time.split(":");
+                                    String newTime = times[0];
+                                    if (times[0].equals("0")) {
+                                        newTime = "12";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("12")){
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("13")){
+                                        newTime = "1";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("14")){
+                                        newTime = "2";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("15")){
+                                        newTime = "3";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("16")){
+                                        newTime = "4";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("17")){
+                                        newTime = "5";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("18")){
+                                        newTime = "6";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("19")){
+                                        newTime = "7";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("20")){
+                                        newTime = "8";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("21")){
+                                        newTime = "9";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("22")){
+                                        newTime = "10";
+                                        day = "pm";
+                                    }
+                                    else if (times[0].equals("23")){
+                                        newTime = "11";
+                                        day = "pm";
+                                    }
 
                                     partyText.setText(name);
-                                    dateText.setText(month + " " + dates[2] + ", " + dates[0] + " at " + time);
+                                    dateText.setText(month + " " + dates[2] + ", " + dates[0] + " at " + newTime + ":" + times[1] + " " + day);
                                     locationTxt.setText("Location: " + location);
                                     getAllUsers();
                                 } catch (JSONException e) {
