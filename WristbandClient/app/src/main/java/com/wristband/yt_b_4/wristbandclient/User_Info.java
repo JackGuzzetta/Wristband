@@ -79,7 +79,7 @@ public class User_Info extends AppCompatActivity {
         //user_id = getUserID(user_name);
         txtuser.setText(user_name);
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
-        usern.setText("placeholder");
+        usern.setText("");
         txtid.setText("User ID: " + user_id);
         addqr(user_name);
     }

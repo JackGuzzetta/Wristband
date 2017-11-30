@@ -40,6 +40,7 @@ public class PublicParties extends AppCompatActivity {
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> party_ids = new ArrayList<String>();
+
     ArrayAdapter adapter;
     ProgressDialog pDialog;
     String user_id, user_name;
@@ -87,14 +88,6 @@ public class PublicParties extends AppCompatActivity {
     }
 
     private void initializeControls() {
-        getAllPartiesBypub();
-//        for (int i=0; i< list.size();i++){
-//            for (int j =i+1; j<list.size();j++){
-//                if(list.get(j).equals(list.get(i))){
-//                    list.remove(j);
-//                }
-//            }
-//        }
         listView = (ListView) findViewById(R.id.list_view2);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
@@ -105,16 +98,15 @@ public class PublicParties extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the selected item text from ListView
                 String party_name = (String) parent.getItemAtPosition(position);
                 guestScreen(party_name);
-                // Display the selected item text on TextView
 
             }
         });
 
 
 
+        getAllPartiesBypub();
 
     }
 
@@ -130,6 +122,9 @@ public class PublicParties extends AppCompatActivity {
             intent.putExtra("relation", 2);
         }
         intent.putExtra("party_name", party_name);
+        intent.putExtra("username", user_name);
+        intent.putExtra("relation", 2);
+        startActivity(intent);
         finish();
         startActivity(intent);
     }
@@ -163,13 +158,13 @@ public class PublicParties extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY,
                             new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
-                                            String id = response.getJSONObject(i).getString("party_id");
+                                            String id = response.getJSONObject(i).getString("id");
                                             party_ids.add(id);
                                             getDataFromServer(id);
                                         }
@@ -194,14 +189,16 @@ public class PublicParties extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY+id,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
+                                    String privacy;
+                                    int priv;
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    String privacy = response.getJSONObject(0).getString("privacy");
-                                    int priv = Integer.parseInt(privacy);
+                                    privacy = response.getJSONObject(0).getString("privacy");
+                                    priv = Integer.parseInt(privacy);
                                     if (priv == 1 && (list.contains(name) == false)) {
                                         list.add(name);
                                         adapter.notifyDataSetChanged();
