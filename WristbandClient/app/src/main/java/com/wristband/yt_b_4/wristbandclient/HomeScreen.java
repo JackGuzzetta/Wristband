@@ -223,6 +223,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private void publicparty() {
         Intent intent = new Intent(HomeScreen.this, PublicParties.class);
+
         startActivity(intent);
     }
 

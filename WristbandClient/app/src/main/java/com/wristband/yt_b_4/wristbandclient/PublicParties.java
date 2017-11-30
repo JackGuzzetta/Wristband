@@ -42,14 +42,14 @@ public class PublicParties extends AppCompatActivity {
     ArrayList<String> party_ids = new ArrayList<String>();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
-    String user_id;
+    String user_id, user_name;
+    boolean isHost;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publicparty);
-
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
@@ -98,7 +98,7 @@ public class PublicParties extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view2);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
-
+        user_name = settings.getString("username", "default");
         adapter = new ArrayAdapter(PublicParties.this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,7 +119,16 @@ public class PublicParties extends AppCompatActivity {
     }
 
     public void guestScreen(String party_name) {
-        Intent intent = new Intent(this, GuestScreen.class);
+        Intent intent;
+        getHost(party_name);
+        if(isHost) {
+            intent = new Intent(this, HostScreen.class);
+            intent.putExtra("relation", 1);
+        }
+        else {
+            intent = new Intent(this, GuestScreen.class);
+            intent.putExtra("relation", 2);
+        }
         intent.putExtra("party_name", party_name);
         finish();
         startActivity(intent);
@@ -193,7 +202,7 @@ public class PublicParties extends AppCompatActivity {
                                     String name = response.getJSONObject(0).getString("party_name");
                                     String privacy = response.getJSONObject(0).getString("privacy");
                                     int priv = Integer.parseInt(privacy);
-                                    if (priv == 1) {
+                                    if (priv == 1 && (list.contains(name) == false)) {
                                         list.add(name);
                                         adapter.notifyDataSetChanged();
                                     }
@@ -209,6 +218,36 @@ public class PublicParties extends AppCompatActivity {
                 });
                 AppController.getInstance().addToRequestQueue(req,
                         tag_json_arry);
+            }
+        }).start();
+    }
+
+    //look at user_name to see if its getting the right username!!!
+    //might have to come up with a way to get all people in the party
+    //and check to see if current user is in the party
+    //if not, intent to new screen with option to add self as guest to party!
+    private void getHost(final String pty_name){
+        new Thread(new Runnable() {
+            public void run() {
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + pty_name,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    String host = response.getJSONObject(0).getString("host");
+                                    if (host == user_name)
+                                        isHost = true;
+                                    else
+                                        isHost = false;
+                                } catch (JSONException e) {
+                            }
+                        }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
+                AppController.getInstance().addToRequestQueue(req, tag_json_arry);
             }
         }).start();
     }

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="First Name:"
             android:textColor="@color/colorGray"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="55px" />
 
         <EditText
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="Last Name:"
             android:textColor="@color/colorGray"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="55px" />
 
         <EditText
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="Email:"
             android:textColor="@color/colorGray"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="55px" />
 
         <EditText
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Username:"
             android:textColor="@color/colorGray"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="55px" />
 
         <EditText
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:text="Password:"
             android:textColor="@color/colorGray"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="55px" />
 
         <EditText
@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:text="Confirm password:"
             android:textColor="@color/colorGray"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="55px" />
 
         <EditText
@@ -157,7 +157,7 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="131dp"
+        android:layout_marginLeft="120dp"
         android:text="Create Profile"
         android:textColor="@color/colorGray"
         android:clickable="true"

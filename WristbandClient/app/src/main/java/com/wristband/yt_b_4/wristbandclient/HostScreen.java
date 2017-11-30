@@ -100,11 +100,9 @@ public class HostScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_screen);
         btnLocation = (TextView) findViewById(R.id.button7);
-        btnLocation.setPaintFlags(btnLocation.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
-        timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
 
@@ -280,13 +278,6 @@ public class HostScreen extends AppCompatActivity {
             case R.id.newlocation:
                 editlocation();
                 getDataFromServer();
-                return true;
-
-            case R.id.blacklist:
-                intent = new Intent(HostScreen.this, Blacklist.class);
-                intent.putExtra("party_name", party_id);
-                intent.putExtra("relation", relation);
-                startActivity(intent);
                 return true;
             case R.id.delete:
                 deleteUser();
@@ -547,12 +538,10 @@ public class HostScreen extends AppCompatActivity {
         intent.putExtra("user_id", user_id);
         intent.putExtra("party_name", party_name);
         intent.putExtra("prev", "host");
-
         startActivity(intent);
     }
 
     private void goComments(View view) {
-
         Intent intent = new Intent(HostScreen.this, Comments.class);
         intent.putExtra("party_id", party_id);
         intent.putExtra("username", user_name);
@@ -643,7 +632,7 @@ public class HostScreen extends AppCompatActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                loc= input.getText().toString();
+                loc = input.getText().toString();
 
                 editParty(party_id);
             }

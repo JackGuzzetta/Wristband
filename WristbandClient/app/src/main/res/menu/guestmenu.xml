@@ -19,9 +19,6 @@
         android:id="@+id/delete"
         android:title="Delete Party" />
     <item
-        android:id="@+id/blacklist"
-        android:title="Blacklist" />
-    <item
         android:id="@+id/invite"
         android:title="Invite Guest" />
     <item

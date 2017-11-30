@@ -43,9 +43,10 @@ public class GuestScreen extends AppCompatActivity {
     private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ProgressDialog pDialog;
+    private ArrayList<String> usernames = new ArrayList<String>();
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private String party_id, user_id;
-    private String party_name, user_name, relation, prev_class, loc;
+    private String party_name, user_name, relation, prev_class, loc, priv, dat, time, maxp, alert, hosts;
     final Context context = this;
     ListView listView;
     List list = new ArrayList();
@@ -61,7 +62,6 @@ public class GuestScreen extends AppCompatActivity {
         btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
-        timeTxt = (TextView) findViewById(R.id.time);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
@@ -77,7 +77,7 @@ public class GuestScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                goLocation(loc);
+                goLocation(view);
             }
 
         });
@@ -99,7 +99,6 @@ public class GuestScreen extends AppCompatActivity {
         });
         Intent intent = getIntent();
         prev_class = intent.getStringExtra("prev");
-
 
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new ArrayAdapter(GuestScreen.this, android.R.layout.simple_list_item_1, list) {
@@ -267,17 +266,61 @@ public class GuestScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
+
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    String date = response.getJSONObject(0).getString("date");
+                                    dat = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
-                                    String time = response.getJSONObject(0).getString("time");
+                                    time = response.getJSONObject(0).getString("time");
                                     String location = response.getJSONObject(0).getString("location");
-                                    //party_id = response.getJSONObject(0).getString("id");
+                                    party_id = response.getJSONObject(0).getString("id");
+                                    priv = response.getJSONObject(0).getString("privacy");
                                     loc = location;
-                                    partyText.setText("Party name: " + name);
-                                    dateText.setText("Date: " + date);
+                                    maxp = response.getJSONObject(0).getString("max_people");
+                                    alert = response.getJSONObject(0).getString("alerts");
+                                    hosts = host;
+                                    String[] dates = dat.split("-");
+                                    String month = "";
+                                    if (dates[1].equals("1")){
+                                        month = "January";
+                                    }
+                                    else if (dates[1].equals("2")){
+                                        month = "Febuary";
+                                    }
+                                    else if (dates[1].equals("3")){
+                                        month = "March";
+                                    }
+                                    else if (dates[1].equals("4")){
+                                        month = "April";
+                                    }
+                                    else if (dates[1].equals("5")){
+                                        month = "May";
+                                    }
+                                    else if (dates[1].equals("6")){
+                                        month = "June";
+                                    }
+                                    else if (dates[1].equals("7")){
+                                        month = "July";
+                                    }
+                                    else if (dates[1].equals("8")){
+                                        month = "August";
+                                    }
+                                    else if (dates[1].equals("9")){
+                                        month = "September";
+                                    }
+                                    else if (dates[1].equals("10")){
+                                        month = "October";
+                                    }
+                                    else if (dates[1].equals("11")){
+                                        month = "November";
+                                    }
+                                    else if (dates[1].equals("12")){
+                                        month = "December";
+                                    }
+
+
+                                    partyText.setText(name);
+                                    dateText.setText(month + " " + dates[2] + ", " + dates[0] + " at " + time);
                                     locationTxt.setText("Location: " + location);
-                                    timeTxt.setText("Time: " + time);
                                     getAllUsers();
                                 } catch (JSONException e) {
                                 }
@@ -297,12 +340,14 @@ public class GuestScreen extends AppCompatActivity {
     }
 
 
-    private void goLocation(String party_name) {
+    private void goLocation(View view) {
         Intent intent = new Intent(GuestScreen.this, MapsActivity.class);
-        intent.putExtra("party_location", party_name);
-        intent.putExtra("prev", "guest");
-        intent.putExtra("party_name", party_id);
+        intent.putExtra("party_location", loc);
+        intent.putExtra("party_id", party_id);
+        intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
+        intent.putExtra("party_name", party_name);
+        intent.putExtra("prev", "guest");
         finish();
         startActivity(intent);
     }
@@ -311,15 +356,18 @@ public class GuestScreen extends AppCompatActivity {
         Intent intent = new Intent(GuestScreen.this, Photos.class);
         intent.putExtra("party_name", party_id);
         intent.putExtra("relation", relation);
+        intent.putExtra("user_id", user_id);
+        intent.putExtra("party_name", party_name);
         intent.putExtra("prev", "guest");
         startActivity(intent);
     }
 
     private void goComments(View view) {
-
         Intent intent = new Intent(GuestScreen.this, Comments.class);
-        intent.putExtra("party_name", party_id);
+        intent.putExtra("party_id", party_id);
+        intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
+        intent.putExtra("party_name", party_name);
         intent.putExtra("prev", "guest");
         startActivity(intent);
     }
@@ -339,8 +387,10 @@ public class GuestScreen extends AppCompatActivity {
                                 name += " ";
                                 name += response.getJSONObject(i).getString("l_name");
                                 list.add(name);
-                                idList.add(response.getJSONObject(i).getString("id"));
                                 adapter.notifyDataSetChanged();
+                                usernames.add(response.getJSONObject(i).getString("user_id"));
+                                idList.add(response.getJSONObject(i).getString("id"));
+
                             }
                         } catch (JSONException e) {
                         }
