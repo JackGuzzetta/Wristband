@@ -28,29 +28,6 @@
         android:textColor="@color/Ivory"
         android:textSize="55dp" />
 
-    <TextView
-        android:id="@+id/usern"
-        android:layout_gravity="center"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/firsttxt"
-        android:layout_marginTop="25dp"
-        android:text="User name: "
-        android:textColor="@color/Ivory"
-        android:textSize="25dp" />
-
-        <TextView
-        android:id="@+id/idtxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_below="@+id/lasttxt"
-        android:layout_marginTop="25dp"
-        android:text="User ID: "
-        android:textColor="@color/Ivory"
-        android:textSize="25dp" />
-
         <Button
             android:id="@+id/btnRemove"
             android:layout_width="200dp"
@@ -62,6 +39,29 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:text="Remove from Party" />
+
+        <TextView
+            android:id="@+id/idtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lasttxt"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:text="User ID: "
+            android:textColor="@color/Ivory"
+            android:textSize="25dp" />
+
+        <TextView
+        android:id="@+id/usern"
+        android:layout_gravity="center"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firsttxt"
+        android:layout_marginTop="25dp"
+        android:text="User name: "
+        android:textColor="@color/Ivory"
+        android:textSize="25dp" />
 
     </LinearLayout>
 

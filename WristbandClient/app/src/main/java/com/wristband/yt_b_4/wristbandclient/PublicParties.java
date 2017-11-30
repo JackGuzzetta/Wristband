@@ -40,9 +40,11 @@ public class PublicParties extends AppCompatActivity {
     ListView listView;
     List list = new ArrayList();
     ArrayList<String> party_ids = new ArrayList<String>();
+    ArrayList<String> pubparty_id = new ArrayList();
+
     ArrayAdapter adapter;
     ProgressDialog pDialog;
-    String user_id;
+    String user_id, pid, user_name;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
 
     @Override
@@ -87,7 +89,6 @@ public class PublicParties extends AppCompatActivity {
     }
 
     private void initializeControls() {
-        getAllPartiesBypub();
 //        for (int i=0; i< list.size();i++){
 //            for (int j =i+1; j<list.size();j++){
 //                if(list.get(j).equals(list.get(i))){
@@ -106,6 +107,8 @@ public class PublicParties extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
+                pid= pubparty_id.get(position);
+                //Toast.makeText(getApplicationContext(), pid , Toast.LENGTH_LONG).show();
                 String party_name = (String) parent.getItemAtPosition(position);
                 guestScreen(party_name);
                 // Display the selected item text on TextView
@@ -115,12 +118,17 @@ public class PublicParties extends AppCompatActivity {
 
 
 
+        getAllPartiesBypub();
 
     }
 
     public void guestScreen(String party_name) {
         Intent intent = new Intent(this, GuestScreen.class);
         intent.putExtra("party_name", party_name);
+        intent.putExtra("username", user_name);
+        intent.putExtra("party_id", pid);
+        intent.putExtra("relation", 2);
+        startActivity(intent);
         finish();
         startActivity(intent);
     }
@@ -154,13 +162,13 @@ public class PublicParties extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(500L); //wait for party to be created first
-                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_RELATION,
+                    JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY,
                             new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
-                                            String id = response.getJSONObject(i).getString("party_id");
+                                            String id = response.getJSONObject(i).getString("id");
                                             party_ids.add(id);
                                             getDataFromServer(id);
                                         }
@@ -185,16 +193,25 @@ public class PublicParties extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 //showProgressDialog();
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY + id,
+                JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY+id,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
+                                    String privacy;
+                                    int priv;
                                     String name = response.getJSONObject(0).getString("party_name");
-                                    String privacy = response.getJSONObject(0).getString("privacy");
-                                    int priv = Integer.parseInt(privacy);
+                                    String x = response.getJSONObject(0).getString("id");
+                                    privacy = response.getJSONObject(0).getString("privacy");
+                                    if(privacy.equals("1")) {
+                                          priv = Integer.parseInt(privacy);
+                                         }
+                                         else{priv=0;}
+
+
                                     if (priv == 1) {
                                         list.add(name);
+                                        pubparty_id.add(x);
                                         adapter.notifyDataSetChanged();
                                     }
 
