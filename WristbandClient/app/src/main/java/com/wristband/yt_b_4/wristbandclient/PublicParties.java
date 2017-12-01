@@ -58,6 +58,7 @@ public class PublicParties extends AppCompatActivity {
     }
 
 
+
     /**
      * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
      * @param menu
