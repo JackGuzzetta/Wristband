@@ -1,3 +1,4 @@
+/** @module  user_controller */
 module.exports = function(app) {
     var jwt = require('jwt-simple');
     var moment = require('moment');

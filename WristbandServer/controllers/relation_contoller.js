@@ -1,4 +1,4 @@
-/** @module  Relation */
+/** @module  relation_controller */
 Relation = require('../models/relations');
 /**
  * @function createRelation

@@ -1,3 +1,4 @@
+/** @module  Routes */
 module.exports = function(app) {
     var User = require('./controllers/user_controller');
     var Party = require('./controllers/party_controller');

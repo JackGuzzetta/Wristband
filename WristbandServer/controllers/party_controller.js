@@ -1,4 +1,4 @@
-/** @module  Party */
+/** @module  party_controller */
 Party = require('../models/parties');
 /**
  * Creates a party

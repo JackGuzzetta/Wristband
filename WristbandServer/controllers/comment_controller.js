@@ -1,4 +1,4 @@
-/** @module  Comment */
+/** @module  comment_controller */
 Comment = require('../models/comments');
 
 /**
