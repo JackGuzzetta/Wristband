@@ -76,32 +76,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    //    private void getLocationPermission() {
-//    /*
-//     * Request location permission, so that we can get the location of the
-//     * device. The result of the permission request is handled by a callback,
-//     * onRequestPermissionsResult.
-//     */
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            mLocationPermissionGranted = true;
-//        } else {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-//                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-//        }
-//    }
-    private void showProgressDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
 
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mapsmenu, menu);
         return true;
     }
+
+    /**
+     * opens a dropdown menu that is filled with buttons a user can click.
+     * case1 will call onBackPressed and switch the activity to the home screen.
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -114,6 +106,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+    /**
+     * Depending on your status in the party, this will act as a back button.  If host, you will be taken to the host screen,
+     * but if you are a guest or cohost you will be taken to the guest screen.  This is done through intent with the
+     * party name and user relation passed through the screens.
+     */
+
     @Override
     public void onBackPressed() {
         Intent intent;
@@ -142,10 +140,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             default:
         }
     }
-    private void hideProgressDialog() {
-        if (pDialog.isShowing())
-            pDialog.hide();
-    }
+
 
 
     /**
@@ -154,6 +149,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
+     * @param googleMap
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {

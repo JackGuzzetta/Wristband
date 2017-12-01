@@ -70,12 +70,26 @@ public class Photos extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
+    /**
+     * opens a dropdown menu that is filled with buttons a user can click.
+     * case1 will call onBackPressed and switch the activity to the home screen. Case2 creates
+     * a new intent that switches the activity to the About class. On case3 the user will be logged out
+     * and returned to the login screen.
+
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -96,6 +110,12 @@ public class Photos extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * Depending on your status in the party, this will act as a back button.  If host, you will be taken to the host screen,
+     * but if you are a guest or cohost you will be taken to the guest screen.  This is done through intent with the
+     * party name and user relation passed through the screens.
+     */
 
     @Override
     public void onBackPressed() {

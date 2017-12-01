@@ -48,13 +48,18 @@ public class About extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Method initiates a drop down menu that contains different items.
+     * The first case is a home button that calls the onBackPressed() that
+     * sends a user to the home screen.
+     * The second case is a logout button that is designed to log a user out.
+     * @param item
+     * @return returns true if the user gets no errors
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                return true;
-            case R.id.about:
-                //startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
@@ -68,11 +73,24 @@ public class About extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     *Starts a new intent that sends a user to the home screen
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(About.this, HomeScreen.class);
         startActivity(intent);
     }
+
+    /**
+     * Uses the QRGenerator app to create a qr code based off of a users
+     * first name, last name, and user id. The code is generated as a bitmap
+     * that can then be used in an image view.
+     * @param f_name
+     * @param l_name
+     * @param user_id
+     */
     private void addqr(String f_name, String l_name, String user_id){
         QRGenerator x = new QRGenerator(f_name + "-" + l_name + "_" + user_id);
         code.setImageBitmap(x.createQR());

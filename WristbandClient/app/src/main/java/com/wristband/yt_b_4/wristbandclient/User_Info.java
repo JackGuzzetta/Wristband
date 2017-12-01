@@ -41,7 +41,6 @@ public class User_Info extends AppCompatActivity {
     private ImageView code;
     private int screen;
 
-    String fullName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +73,7 @@ public class User_Info extends AppCompatActivity {
 
         });
 
-        getDataFromServer();
+        //getDataFromServer();
 
         //user_id = getUserID(user_name);
         txtuser.setText(user_name);
@@ -84,19 +83,37 @@ public class User_Info extends AppCompatActivity {
         addqr(user_name);
     }
 
-
+    /**
+     * Uses the QRGenerator app to create a qr code based off of a users
+     * user name. The code is generated as a bitmap
+     * that can then be used in an image view.
+     */
 
     private void addqr(String name){
         QRGenerator x = new QRGenerator(user_name);
         code.setImageBitmap(x.createQR());
     }
 
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
+    /**
+     * opens a dropdown menu that is filled with buttons a user can click.
+     * case1 will call onBackPressed and switch the activity to the home screen. Case2 creates
+     * a new intent that switches the activity to the About class. On case3 the user will be logged out
+     * and returned to the login screen.
+
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -117,6 +134,12 @@ public class User_Info extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * Depending on your status in the party, this will act as a back button.  If host, you will be taken to the host screen,
+     * but if you are a guest or cohost you will be taken to the guest screen.  This is done through intent with the
+     * party name and user relation passed through the screens.
+     */
     @Override
     public void onBackPressed() {
         Intent intent;
@@ -133,98 +156,50 @@ public class User_Info extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*private void getDataFromServer() {
-        new Thread(new Runnable() {
-            public void run() {
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USERS,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                try {
-                                    for (int i = 0; i < response.length(); i++) {
-                                        String firstName;
-                                        String lastName;
-                                        String userId;
-                                        String fullName;
-                                        String username;
-
-                                        firstName = response.getJSONObject(i).getString("f_name");
-                                        lastName = response.getJSONObject(i).getString("l_name");
-                                        userId = response.getJSONObject(i).getString("id");
-                                        username = response.getJSONObject(i).getString("username");
-                                        fullName = firstName + " " + lastName;
-                                        if(fullName.equals(user_name)) {
-                                            user_id = userId;
-                                            user_name = username;
-                                            break;
-                                        }
-                                    }
-                                } catch (JSONException e) {
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
-                AppController.getInstance().addToRequestQueue(req,
-                        tag_json_arry);
-            }
-        }).start();
-    }*/
-
-    private void getDataFromServer() {
-        new Thread(new Runnable() {
-            public void run() {
-                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user_name,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                try {
-                                    String firstName;
-                                    String lastName;
-                                    String userId;
-                                    String username;
-
-                                    firstName = response.getJSONObject(0).getString("f_name");
-                                    lastName = response.getJSONObject(0).getString("l_name");
-                                    userId = response.getJSONObject(0).getString("id");
-                                    username = response.getJSONObject(0).getString("username");
-                                    fullName = user_name;
-                                    user_id = userId;
-                                    user_name = username;
+//    /**
+//     * Method searches
+//     */
+//    private void getDataFromServer() {
+//        new Thread(new Runnable() {
+//            public void run() {
+//                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user_name,
+//                        new Response.Listener<JSONArray>() {
+//                            @Override
+//                            public void onResponse(JSONArray response) {
+//                                try {
+//                                    String firstName;
+//                                    String lastName;
+//                                    String userId;
+//                                    String username;
+//
+//                                    firstName = response.getJSONObject(0).getString("f_name");
+//                                    lastName = response.getJSONObject(0).getString("l_name");
+//                                    userId = response.getJSONObject(0).getString("id");
+//                                    username = response.getJSONObject(0).getString("username");
+//                                    fullName = user_name;
+//                                    user_id = userId;
+//                                    user_name = username;
+//
+//
+//                                } catch (JSONException e) {
+//                                }
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                    }
+//                });
+//                AppController.getInstance().addToRequestQueue(req,
+//                        tag_json_arry);
+//            }
+//        }).start();
+//    }
 
 
-                                } catch (JSONException e) {
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
-                AppController.getInstance().addToRequestQueue(req,
-                        tag_json_arry);
-            }
-        }).start();
-    }
-
-
-    private void goBack(View view) {
-        Intent intent;
-        if(prev_class.equals("host")) {
-            intent = new Intent(User_Info.this, HostScreen.class);
-        }
-        else{
-            intent = new Intent(User_Info.this, GuestScreen.class);
-        }
-        prev_class = "user_info";
-        intent.putExtra("party_name", party_name);
-        intent.putExtra("prev", prev_class);
-        intent.putExtra("relation", user_rel);
-        startActivity(intent);
-    }
-
+    /**
+     * When method is called the user currently selected will be removed from the party
+     * relation table in the database using the current user_id, and party_id
+     */
     private void goRemove(){
         new Thread(new Runnable() {
             public void run() {

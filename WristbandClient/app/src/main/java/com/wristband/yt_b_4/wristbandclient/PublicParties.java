@@ -59,13 +59,27 @@ public class PublicParties extends AppCompatActivity {
 
 
 
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     * @param menu
+     * @return
+     */
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
+    /**
+     * opens a dropdown menu that is filled with buttons a user can click.
+     * case1 will call onBackPressed and switch the activity to the home screen. Case2 creates
+     * a new intent that switches the activity to the About class. On case3 the user will be logged out
+     * and returned to the login screen.
 
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -87,6 +101,10 @@ public class PublicParties extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method is called once the screen is opened. Method makes a call to getAllParties and
+     * fills the list view with the values in list.
+     */
     private void initializeControls() {
         getAllPartiesBypub();
         listView = (ListView) findViewById(R.id.list_view2);
@@ -109,6 +127,12 @@ public class PublicParties extends AppCompatActivity {
 
     }
 
+    /**
+     * Method sends the current user to either the Host screen or the guest screen.
+     * The method checks the host for the given party. If the user is the host then
+     * they will be given relation 1, otherwise they will be given relation 2.
+     * @param party_name
+     */
     public void guestScreen(String party_name) {
         Intent intent;
         getHost(party_name);
@@ -128,30 +152,36 @@ public class PublicParties extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * If the method is executed the current user will be logged out
+     * and returned to the login screen.
+     * @param view
+     */
     public void logout(View view) {
         Intent intent = new Intent(this, Login.class);
         finish();
         startActivity(intent);
     }
 
+    /**
+     * creates a new intent that switches the activity to HomeScreen
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(PublicParties.this, HomeScreen.class);
         startActivity(intent);
     }
 
-    private void showProgressDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (pDialog.isShowing())
-            pDialog.hide();
-    }
 
 
 
+    /**
+     * Checks the data base for a list of party ids in the Relation table and adds them
+     * to the party_ids array list.
+     *
+     * Method then calls the getDataFromServer(final String id)
+     * method using ID as a parameter
+     */
     private void getAllPartiesBypub() {
         new Thread(new Runnable() {
             public void run() {
@@ -184,6 +214,12 @@ public class PublicParties extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * Method checks the data base Party table for parties matching the id given in the
+     * parameters. If the privacy of the party is marked with a 1 it will get added to
+     * List provided it has not already been added.
+     * @param id
+     */
     private void getDataFromServer(final String id) {
         new Thread(new Runnable() {
             public void run() {
@@ -216,10 +252,13 @@ public class PublicParties extends AppCompatActivity {
         }).start();
     }
 
-    //look at user_name to see if its getting the right username!!!
-    //might have to come up with a way to get all people in the party
-    //and check to see if current user is in the party
-    //if not, intent to new screen with option to add self as guest to party!
+    /**
+     * look at user_name to see if its getting the right username!!!
+     * might have to come up with a way to get all people in the party
+     * and check to see if current user is in the party
+     * if not, intent to new screen with option to add self as guest to party!
+     * @param pty_name
+     */
     private void getHost(final String pty_name){
         new Thread(new Runnable() {
             public void run() {
