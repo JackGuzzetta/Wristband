@@ -54,6 +54,12 @@ public class GuestScreen extends AppCompatActivity {
     ArrayAdapter adapter;
     List relationList = new ArrayList();
 
+    /**
+     * sets onClickListeners for all buttons.  Changes list view items' colors depending on their relation to the
+     * party.  If a user is clicked in the list view, you will be taken to the user info screen of that user that displays
+     * their information.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,13 +147,25 @@ public class GuestScreen extends AppCompatActivity {
         });
 
     }
-
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete the party or remove yourself
+     * from party, and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
+    /**
+     * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
+     * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
+     * and returned to the login screen.  If delete is selected you remove yourself from that party.
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -173,11 +191,19 @@ public class GuestScreen extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * The user will be brought back to the Home Screen
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(GuestScreen.this, HomeScreen.class);
         startActivity(intent);
     }
+
+    /**
+     * User will leave the current party and will have to be invited (if private) to get back in.
+     */
     private void deleteUser() {
         if (relation.equals("1")) {
             deleteParty(party_id);
@@ -188,6 +214,12 @@ public class GuestScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * A JsonObjectRequest is sent to the server and will delete the relation between a user and
+     * party.  This simply removes a user from a party.
+     * @param user_id
+     * @param party_id
+     */
     private void deleteRelation(final String user_id, final String party_id) {
         new Thread(new Runnable() {
             public void run() {
@@ -224,6 +256,11 @@ public class GuestScreen extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * A JsonObjectRequest with the party id is sent to the server and deletes the current party.  This can only be done if
+     * the host decides to delete party.
+     * @param party_id
+     */
     private void deleteParty(final String party_id) {
         new Thread(new Runnable() {
             public void run() {
@@ -258,6 +295,11 @@ public class GuestScreen extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * A JsonArrayRequest with the party name is sent to the server and grabs all of the party information
+     * and is displayed on the guest screen.  The date and time will be parsed into standard for, e.g. "November 29, 2017
+     * at 5:00 pm".
+     */
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
@@ -392,7 +434,11 @@ public class GuestScreen extends AppCompatActivity {
         }).start();
     }
 
-
+    /**
+     * When "View in maps" button is clicked, this will take you to the MapsActivity screen which
+     * shows the party location in Google Maps.
+     * @param view
+     */
     private void goLocation(View view) {
         Intent intent = new Intent(GuestScreen.this, MapsActivity.class);
         intent.putExtra("party_location", loc);
@@ -405,6 +451,10 @@ public class GuestScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * User will be taken to the photos screen when the photos button is pressed.
+     * @param view
+     */
     private void goPhotos(View view) {
         Intent intent = new Intent(GuestScreen.this, Photos.class);
         intent.putExtra("party_name", party_id);
@@ -415,6 +465,10 @@ public class GuestScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * User will be taken to the Comments screen when the comments button is pressed.
+     * @param view
+     */
     private void goComments(View view) {
         Intent intent = new Intent(GuestScreen.this, Comments.class);
         intent.putExtra("party_id", party_id);
@@ -426,7 +480,10 @@ public class GuestScreen extends AppCompatActivity {
     }
 
 
-
+    /**
+     * A JsonArrayRequest with the party id is sent to the server that grabs all of the users invited to the party and
+     * displayed in the list view.
+     */
     private void getAllUsers() {
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
                 new Response.Listener<JSONArray>() {

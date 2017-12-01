@@ -96,7 +96,14 @@ public class Create_Party extends AppCompatActivity {
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ProgressDialog pDialog;
 
-
+    /**
+     * The screen is set with different information to fill out.  You'll have to fill out party name and location.
+     * When you click on the date, a calender will be brought up for you to select the date.  When time is pressed,
+     * a clock will be shown for you to simply select the time.  The time will be in military time.  A switch
+     * will be available for the user to decide if it's a public party or a private party (invite only).  You are unable
+     * to create a party before todays date and all fields must be filled out.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -292,13 +299,24 @@ public class Create_Party extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Creates a menu in the action bar that gives you options to logout, and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return true;
     }
 
+    /**
+     * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
+     * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
+     * and returned to the login screen.
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -319,6 +337,12 @@ public class Create_Party extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * When the back button is pressed, an alert is brought up on the screen that says "Are you sure you want
+     * to leave?", "Changes will be discarded".  If yes is pressed, you will intent back to the homescreen.
+     * If no the alert will closed.
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -355,6 +379,10 @@ public class Create_Party extends AppCompatActivity {
 //        SmsManager sms = SmsManager.getDefault();
 //        sms.sendTextMessage(phoneNumber, null, message, null, null);
 //    }
+
+    /**
+     *
+     */
     private void showProgressDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
@@ -367,6 +395,12 @@ public class Create_Party extends AppCompatActivity {
 
     //We need to get the party id from party name
     //we need the user id
+
+    /**
+     * A JsonArrayRequest with the party name is sent to the database to get the party id.  The party id is then sent back to the server
+     * to set the host relation to the party when it is created.  This creates the user/party relation.
+     * @param party_name
+     */
     private void getDataFromServer(final String party_name) {
         new Thread(new Runnable() {
             public void run() {
@@ -391,6 +425,10 @@ public class Create_Party extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * The party information that is filled out is sent to the database using a JsonObjectRequest.
+     * @param party
+     */
     private void sendDataToServer(final Party party) {
         new Thread(new Runnable() {
             public void run() {
@@ -430,6 +468,14 @@ public class Create_Party extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * The parameters of the user id, party id, and the number relation is sent to the database.  It will send a
+     * 1 since the user who creates the party is the host. A 2 would be sent if they are a cohost or a 3 if guest, but
+     * those will not be used in this screen.
+     * @param user
+     * @param party_id
+     * @param relation
+     */
     private void sendRelationToServer(final String user, final String party_id, final String relation) {
         new Thread(new Runnable() {
             public void run() {

@@ -95,6 +95,12 @@ public class HostScreen extends AppCompatActivity {
     ArrayAdapter adapter;
     List relationList = new ArrayList();
 
+    /**
+     * sets onClickListeners for all buttons.  Changes list view items' colors depending on their relation to the
+     * party.  If a user is clicked in the list view, you will be taken to the user info screen of that user that displays
+     * their information.  Time and date selectors are also introduced if the host decides to edit the party.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,11 +225,22 @@ public class HostScreen extends AppCompatActivity {
 
     }
 
+    /**
+     * If scan is pressed, the scanner screen will be brought up to scan the guests' QR code.
+     * @param view
+     */
     public void scanNow(View view) {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
     }
 
+    /**
+     * After QR code is scanned, a toast will be printed that displays whether the user is in the party
+     * or not, or if there was an error in the scan, in which "No scan data received!" will display.
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
@@ -239,13 +256,26 @@ public class HostScreen extends AppCompatActivity {
             toast.show();
         }
     }
-
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete the party or remove yourself
+     * from party, and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.guestmenu, menu);
         return true;
     }
 
+    /**
+     * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
+     * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
+     * and returned to the login screen.  If delete is selected, depending on your relation to the party, either the party itself
+     * will be deleted.  There are options to edit the name, date or time of the party also.
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -296,11 +326,18 @@ public class HostScreen extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * The user will be brought back to the Home Screen
+     */
     public void onBackPressed() {
         Intent intent = new Intent(HostScreen.this, HomeScreen.class);
         startActivity(intent);
     }
 
+    /**
+     * The current party will be deleted.
+     */
     private void deleteUser() {
         if (relation.equals("1")) {
             deleteParty(party_id);
@@ -311,6 +348,12 @@ public class HostScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * A JsonObjectRequest is sent to the server and will delete the relation between a user and
+     * party.  This simply removes a user from a party.
+     * @param user_id
+     * @param relation
+     */
     private void deleteRelation(final String user_id, final String relation) {
         new Thread(new Runnable() {
             public void run() {
@@ -344,6 +387,11 @@ public class HostScreen extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * A JsonObjectRequest with the party id is sent to the server and deletes the current party.  This can only be done if
+     * the host decides to delete party.
+     * @param party_id
+     */
     private void deleteParty(final String party_id) {
         new Thread(new Runnable() {
             public void run() {
@@ -375,6 +423,11 @@ public class HostScreen extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * The edited party information will be sent to the server using a JsonObjectRequest.  The changed information
+     * will then be displayed on the screen.
+     * @param party_id
+     */
     private void editParty(final String party_id) {
 
         new Thread(new Runnable() {
@@ -416,6 +469,11 @@ public class HostScreen extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * A JsonArrayRequest with the party name is sent to the server and grabs all of the party information
+     * and is displayed on the guest screen.  The date and time will be parsed into standard for, e.g. "November 29, 2017
+     * at 5:00 pm".
+     */
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
@@ -551,12 +609,7 @@ public class HostScreen extends AppCompatActivity {
         }).start();
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(HostScreen.this, HomeScreen.class);
-        startActivity(intent);
-    }
-
-    private String findID(String user_name) {
+    /*private String findID(String user_name) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals(user_name)) {
                 return usernames.get(i);
@@ -571,8 +624,13 @@ public class HostScreen extends AppCompatActivity {
             }
         }
         return "ID not found";
-    }
+    }*/
 
+    /**
+     * When "View in maps" button is clicked, this will take you to the MapsActivity screen which
+     * shows the party location in Google Maps.
+     * @param view
+     */
     private void goLocation(View view) {
         Intent intent = new Intent(HostScreen.this, MapsActivity.class);
         intent.putExtra("party_location", loc);
@@ -585,6 +643,10 @@ public class HostScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * User will be taken to the photos screen when the photos button is pressed.
+     * @param view
+     */
     private void goPhotos(View view) {
         Intent intent = new Intent(HostScreen.this, Photos.class);
         intent.putExtra("party_name", party_id);
@@ -595,6 +657,10 @@ public class HostScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * User will be taken to the Comments screen when the comments button is pressed.
+     * @param view
+     */
     private void goComments(View view) {
         Intent intent = new Intent(HostScreen.this, Comments.class);
         intent.putExtra("party_id", party_id);
@@ -605,6 +671,10 @@ public class HostScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * An alert dialog is displayed with and EditText box for the user to change the party name.  If "Ok" is pressed,
+     * the new name will be sent to the server, if "cancel" is pressed, the dialog box is closed.
+     */
     private void editname() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -633,6 +703,9 @@ public class HostScreen extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * A date selector (calender) is displayed.  When a new date is selected it will be sent to the server.
+     */
     private void editdate() {
 
         Calendar cal = Calendar.getInstance();
@@ -654,7 +727,9 @@ public class HostScreen extends AppCompatActivity {
 
 
 
-
+    /**
+     * A time selector (clock) is displayed.  When a new time is selected it will be sent to the server.
+     */
     private void edittime(){
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR);
@@ -672,7 +747,10 @@ public class HostScreen extends AppCompatActivity {
     }
 
 
-
+    /**
+     * An alert dialog is displayed with and EditText box for the user to change the location.  If "Ok" is pressed,
+     * the new location will be sent to the server, if "cancel" is pressed, the dialog box is closed.
+     */
     private void editlocation(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -702,6 +780,10 @@ public class HostScreen extends AppCompatActivity {
     }
 
 
+    /**
+     * A JsonArrayRequest with the party id is sent to the server that grabs all of the users invited to the party and
+     * displayed in the list view.
+     */
     private void getAllUsers() {
         list.clear();
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,

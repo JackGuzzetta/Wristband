@@ -94,11 +94,24 @@ public class Comments extends AppCompatActivity {
         initializeControls();
     }
 
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.regular, menu);
         return true;
     }
+
+    /**
+     * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
+     * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
+     * and returned to the login screen.
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -119,6 +132,12 @@ public class Comments extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /**
+     * Depending on your status in the party, this will act as a back button.  If host, you will be taken to the host screen,
+     * but if you are a guest or cohost you will be taken to the guest screen.  This is done through intent with the
+     * party name and user relation passed through the screens.
+     */
     @Override
     public void onBackPressed() {
         Intent intent;
@@ -148,6 +167,11 @@ public class Comments extends AppCompatActivity {
         }
     }
 
+    /**
+     * This is called once the screen is opened. The listview will be filled by grabbing all of the comments
+     * in this party from the database.  When a list view item is clicked however, the comment dialog will pop
+     * up on the screen with different action options.
+     */
     private void initializeControls() {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         username = settings.getString("username", "default");
@@ -183,7 +207,12 @@ public class Comments extends AppCompatActivity {
     }
 
 
-
+    /**
+     * When the send button is pressed, the typed comment will be sent to the database and displayed
+     * in the list view.
+     * @param view
+     * @param comment
+     */
     private void sendComment(View view, String comment) {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         username = settings.getString("username", "default");
@@ -194,7 +223,11 @@ public class Comments extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Sends a Json request using volley to the database and returns all of the comments in this specific party
+     * and only this party.  The comments are added to the listview on the screen.
+     * @param party_id
+     */
     private void getAllCommentsByPartyId(String party_id) {
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_GET_COMMENTS + party_id,
                 new Response.Listener<JSONArray>() {
@@ -222,6 +255,11 @@ public class Comments extends AppCompatActivity {
                 tag_json_arry);
     }
 
+    /**
+     * The comment created by a user is sent to the database using a JsonObject Request with volley.
+     * The comment will already be displayed from the sendComment() method.
+     * @param comment
+     */
     private void sendDataToServer(final Comment comment) {
         new Thread(new Runnable() {
             public void run() {
@@ -265,11 +303,15 @@ public class Comments extends AppCompatActivity {
         }).start();
     }
 
-    private void goBack(View view) {
-        Intent intent = new Intent(Comments.this, GuestScreen.class);
-        startActivity(intent);
-    }
-
+    /**
+     * A commenting dialog is brought up on the screen with the text "What would you like to do?"
+     * and 2 or 3 buttons depending on your relation to the party.  If cancel is pressed, the dialog is
+     * closed.  If view is pressed, you are brought to the User Info screen of the user whose comment
+     * you pressed.  If you are a host, there will be an option to delete comment, which, if pressed,
+     * will bring up another dialog that asks you yes or no.
+     * @param view
+     * @param i
+     */
     public void commentingDialog(View view, int i) {
         final int selection = i;
         final SharedPreferences[] settings = new SharedPreferences[1];
@@ -336,6 +378,11 @@ public class Comments extends AppCompatActivity {
         CommentDialog.show();
     }
 
+    /**
+     * A JsonObjectRequest is sent to the database and the selected comment will be deleted from the DB.
+     * The comment will also be removed form the list view.
+     * @param username
+     */
     private void deleteComment(final String username) {
         new Thread(new Runnable() {
             public void run() {
@@ -370,6 +417,11 @@ public class Comments extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * A dialog that is brought up when trying to delete a comment.  If yes is pressed, deleteComment() will
+     * be called and the window will close.  If no is pressed, the dialog will just close and nothing will happen.
+     * @param i
+     */
     public void deletionDialog(final int i) {
         final SharedPreferences[] settings = new SharedPreferences[1];
         final SharedPreferences.Editor[] editor = new SharedPreferences.Editor[1];
