@@ -101,6 +101,11 @@ public class Add_User extends AppCompatActivity {
 
     }
 
+    /**
+     * Fetches a users ID from the database using their full name
+     * @param fullName user to adds full name
+     * @return user ID or null if it doesn't exist
+     */
     private String getUserID(String fullName) {
         String cur;
         String ID;
@@ -114,7 +119,9 @@ public class Add_User extends AppCompatActivity {
         return null;
     }
 
-
+    /**
+     * Searches database for all users and adds users names to names and Ids to userIDs.
+     */
     private void getDataFromServer() {
         new Thread(new Runnable() {
             public void run() {
@@ -151,13 +158,24 @@ public class Add_User extends AppCompatActivity {
             }
         }).start();
     }
-
+    /**
+     * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return true;
     }
+    /**
+     * opens a dropdown menu that is filled with buttons a user can click.
+     *  Case1 createsa new intent that switches the activity to the
+     *  About class. On case2 the user will be logged out and returned to the login screen.
 
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
@@ -176,6 +194,12 @@ public class Add_User extends AppCompatActivity {
         }
     }
 
+    /**
+     * When method is executed, the user that had been typed in will be added to the party.
+     * If the "Is cohost" box has ben selected they will be given a relation of 3, otherwise
+     * they will be given a relation of 2. A volly request will then be sent to invite the user.
+     * @param view
+     */
     public void buttonClickParty(View view) {
         String user_id;
         boolean isChecked;
@@ -211,26 +235,39 @@ public class Add_User extends AppCompatActivity {
         }
     }
 
+    /**
+     * Starts a new intent that switches the activity to the HomeScreen
+     * @param view
+     */
     private void back_Homescreen(View view) {
         Intent intent = new Intent(Add_User.this, HomeScreen.class);
         startActivity(intent);
     }
 
-    private void goBack(View view) {
-        if (prev_class.equals("party")) {
-            Intent intent = new Intent(this, HostScreen.class);
-            intent.putExtra("party_name", name1);
-            intent.putExtra("relation", relation);
-            finish();
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(Add_User.this, HostScreen.class);
-            prev_class = "add_user";
-            intent.putExtra("party_name", name1);
-            intent.putExtra("prev", prev_class);
-            startActivity(intent);
-        }
-    }
+//    private void goBack(View view) {
+//        if (prev_class.equals("party")) {
+//            Intent intent = new Intent(this, HostScreen.class);
+//            intent.putExtra("party_name", name1);
+//            intent.putExtra("relation", relation);
+//            finish();
+//            startActivity(intent);
+//        } else {
+//            Intent intent = new Intent(Add_User.this, HostScreen.class);
+//            prev_class = "add_user";
+//            intent.putExtra("party_name", name1);
+//            intent.putExtra("prev", prev_class);
+//            startActivity(intent);
+//        }
+//    }
+
+    /**
+     * Method checks the database to see if a user is already in the data base before creating a
+     * dummy account when they are added by phone number.
+     * @param phoneNumber
+     * @param f_name
+     * @param l_name
+     * @param party_id
+     */
         private void checkIfPhoneExists(final String phoneNumber, final String f_name, final String l_name, final String party_id) {
             new Thread(new Runnable() {
                 public void run() {
@@ -261,6 +298,14 @@ public class Add_User extends AppCompatActivity {
             }).start();
         }
 
+    /**
+     * createAccount creates a dummy account for users who are added by phone number.
+     * A new user will be created in the data base using the given first name, last name, and party_id
+     * @param phoneNumber users phone number
+     * @param f_name users first name
+     * @param l_name users last name
+     * @param party_id party id
+     */
     private void createAccount(final String phoneNumber, final String f_name, final String l_name, final String party_id) {
         new Thread(new Runnable() {
             public void run() {

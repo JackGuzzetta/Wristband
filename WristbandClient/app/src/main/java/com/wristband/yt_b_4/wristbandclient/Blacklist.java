@@ -41,6 +41,14 @@ public class Blacklist extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Method initiates a drop down menu that contains different items.
+     * The first case is a button that creates an intent that sends a
+     * user to the About screen.
+     * The second case is a logout button that is designed to log a user out.
+     * @param item
+     * @return returns true if the user gets no errors
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
@@ -59,6 +67,10 @@ public class Blacklist extends AppCompatActivity {
         }
     }
 
+    /**
+     * creates an intent that sends a user back to the host screen
+     * @param view
+     */
     private void goBack(View view) {
         Intent intent = new Intent(Blacklist.this, HostScreen.class);
         intent.putExtra("party_name", party_id);
