@@ -91,6 +91,7 @@ public class Login extends AppCompatActivity {
         loginWithFB();
     }
 
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.loginmenu, menu);
@@ -143,6 +144,10 @@ public class Login extends AppCompatActivity {
             pDialog.hide();
     }
 
+    /**
+     * Using Facebook api, user can login with facebook.  If successful, the client will save the first, last name, user id,
+     * and email of the user for further use.
+     */
     private void loginWithFB() {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -190,6 +195,11 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /**
+     * Shared Preferences will save user data for further use.  Method will return that username and
+     * Access Token from logging in are not null.
+     * @return
+     */
     public boolean isLoggedIn() {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         String username = settings.getString("username", null);
@@ -197,6 +207,9 @@ public class Login extends AppCompatActivity {
         return ((accessToken != null) || (username != null));
     }
 
+    /**
+     * User will be taken to create profile screen.
+     */
     private void createProfile() {
         Intent intent = new Intent(Login.this, Create_Profile.class);
         startActivity(intent);
@@ -209,7 +222,9 @@ public class Login extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    //Used to get hash key for facebook API (only needed if creating a new application or releasing publicly)
+    /**
+     * Used to get hash key for facebook API (only needed if creating a new application or releasing publicly)
+     */
     private void PrintFBHashKey() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.wristband.yt_b_4.wristbandclient", PackageManager.GET_SIGNATURES);
@@ -225,6 +240,10 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    /**
+     * If all fields are filled out and successful, the data will be sent to server, if false, a toast will come up
+     * displaying an error.
+     */
     private void loginProfile() {
         Toast fail;
         //text in username box
@@ -241,6 +260,12 @@ public class Login extends AppCompatActivity {
 
     }
 
+    /**
+     * If user creates a new profile, that data will be sent to the server using a JsonObjectRequest.
+     * The user will then be taken to the HomeScreen.
+     * @param username
+     * @param password
+     */
     private void sendDataToServer(final String username, final String password) {
         new Thread(new Runnable() {
             public void run() {
@@ -309,6 +334,11 @@ public class Login extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * Username is sent to server to check if it already exists.  If username is not found, it will be create a new profile.
+     * If username is exists, user will be logged in and sent to home screen.
+     * @param user
+     */
     private void checkIfUserExists(final User user) {
         new Thread(new Runnable() {
             public void run() {
@@ -350,6 +380,11 @@ public class Login extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * After all fields are filled out and user creates profile, that information will be sent to server
+     * to be stored in the database.
+     * @param user
+     */
     private void makeProfile(final User user) {
         new Thread(new Runnable() {
             public void run() {

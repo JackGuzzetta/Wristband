@@ -78,7 +78,11 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Creates a menu in the action bar that gives you options to logout, or delete your own profile.
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
@@ -86,6 +90,12 @@ public class HomeScreen extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * If logout is pressed, user will be logged out and taken to the login screen.  If delete is pressed, deletion dialog
+     * will be displayed in order to delete your own profile.
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -112,6 +122,12 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * The parties in the list view will be colored depending on your relation to the party.  An onClickListener
+     * will also be set to send you to guest screen or host screen depending on your relation to that specific
+     * party.  OnClick Listeners are set to New Party button to intent you to to Create Party Screen and also public parties button
+     * to intent you to Public Parties screen.
+     */
     private void initializeControls() {
         listView = (ListView) findViewById(R.id.list_view);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
@@ -189,6 +205,14 @@ public class HomeScreen extends AppCompatActivity {
         getAllPartiesByUserId();
     }
 
+    /**
+     * Depending on your relation to the party (which is given in relation param), user will intent to Host Screen
+     * if host of party, or guest screen if guest or cohost of that party.
+     * @param screen
+     * @param party_name
+     * @param relation
+     * @param party_id
+     */
     public void hostScreen(int screen, String party_name, String relation, String party_id) {
         Intent intent;
         switch (screen) {
@@ -221,12 +245,20 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    /**
+     * User will intent to public party screen.
+     */
     private void publicparty() {
         Intent intent = new Intent(HomeScreen.this, PublicParties.class);
 
         startActivity(intent);
     }
 
+    /**
+     * If user decides to delete their account, a JsonObjectRequest containing user id will be sent to
+     * server to perform that.
+     * @param user_id
+     */
     private void deleteAccount(final String user_id) {
         new Thread(new Runnable() {
             public void run() {
@@ -261,13 +293,19 @@ public class HomeScreen extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * User will intent to Create Party screen.
+     */
     public void newParty() {
         Intent intent = new Intent(this, Create_Party.class);
         finish();
         startActivity(intent);
     }
 
-
+    /**
+     * User will be logged out of application and taken to login screen.
+     * @param view
+     */
     public void logout(View view) {
         Intent intent = new Intent(this, Login.class);
         finish();
@@ -278,6 +316,11 @@ public class HomeScreen extends AppCompatActivity {
     public void onBackPressed() {
         // Do Here what ever you want do on back press;
     }
+
+    /**
+     * User will go to User Info screen which displays user information.
+     * @param User_Id
+     */
     public void User_Info(String User_Id){
         Intent intent = new Intent(HomeScreen.this, User_Info.class);
         intent.putExtra("user_id", User_Id);
@@ -285,6 +328,10 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * A dialog that is brought up when trying to delete their account.  If yes is pressed, deleteAccount() will
+     * be called and the window will close.  If no is pressed, the dialog will just close and nothing will happen.
+     */
     public void deletionDialog() {
         final SharedPreferences[] settings = new SharedPreferences[1];
         final SharedPreferences.Editor[] editor = new SharedPreferences.Editor[1];
@@ -321,6 +368,10 @@ public class HomeScreen extends AppCompatActivity {
         DeleteDialog.show();
     }
 
+    /**
+     * A JsonRequestArray containing user id will be sent to server, and grab all parties that this user is
+     * associated with no matter the relation.  These parties will be displayed on the list view.
+     */
     private void getAllPartiesByUserId() {
         list.clear();
         new Thread(new Runnable() {
