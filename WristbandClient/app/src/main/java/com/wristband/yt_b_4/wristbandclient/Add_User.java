@@ -43,10 +43,11 @@ public class Add_User extends AppCompatActivity {
     final Context context = this;
     private Button btnDone;
     private CheckBox checkbox;
-    private String prev_class, name1, date1, time1, loc1, relation;
+    private String prev_class, party_name, date1, time1, loc1, relation;
     private AutoCompleteTextView autoView;
     private EditText phoneNumber, firstName, lastName;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    private int screen;
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> userIDs;
@@ -70,8 +71,9 @@ public class Add_User extends AppCompatActivity {
 
         Intent intent = getIntent();
         loc1 = intent.getStringExtra("loc");
-        name1 = intent.getStringExtra("party_name");
+        party_name = intent.getStringExtra("party_name");
         relation = intent.getStringExtra("relation");
+        screen = Integer.parseInt(relation);
 
         intent.putExtra("relation", relation);
         prev_class = intent.getStringExtra("prev");
@@ -178,6 +180,9 @@ public class Add_User extends AppCompatActivity {
      */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.about:
                 startActivity(new Intent(this, About.class));
                 return true;
@@ -194,6 +199,34 @@ public class Add_User extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        switch (screen) {
+            case 1://host
+                intent = new Intent(this, HostScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 2://guest
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            case 3://cohost
+                intent = new Intent(this, GuestScreen.class);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("relation", relation);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+        }
+    }
     /**
      * When method is executed, the user that had been typed in will be added to the party.
      * If the "Is cohost" box has ben selected they will be given a relation of 3, otherwise
