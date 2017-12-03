@@ -37,12 +37,12 @@ module.exports.newComment = function(party_id, username, text, res) {
                         })
                     } else {
                         console.log("Comment :" + text);
-                        res.json([{
+                        res.json({
                             id: rows[0].id,
                             comment: rows[0].comment,
                             party_id: rows[0].party_id,
                             username: rows[0].username,
-                        }])
+                        })
                     }
                 }
             });
