@@ -24,7 +24,7 @@ module.exports.newComment = function(party_id, username, text, res) {
             })
         } else {
             comment.find('all', {
-                where: 'comment=' + text
+                where: 'comment=' + "\"" + text + "\""
             }, function(err, rows, fields) {
                 if (err) {
                     console.log("error");
