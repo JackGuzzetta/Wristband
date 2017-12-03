@@ -49,6 +49,7 @@ public class Comments extends AppCompatActivity {
     Button btnComment, viewBtn, deleteBtn, cancelBtn, yes, no;
     ListView listView;
     List list = new ArrayList();
+    List comment_id_list = new ArrayList();
     ArrayList<String> comments = new ArrayList<String>();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
@@ -236,8 +237,10 @@ public class Comments extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
                             for (int i = 0; i < response.length(); i++) {
+                                String id = response.getJSONObject(i).getString("id");
                                 String text = response.getJSONObject(i).getString("comment");
                                 list.add(text);
+                                comment_id_list.add(id);
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -378,13 +381,13 @@ public class Comments extends AppCompatActivity {
     /**
      * A JsonObjectRequest is sent to the database and the selected comment will be deleted from the DB.
      * The comment will also be removed form the list view.
-     * @param username
+     * @param id
      */
-    private void deleteComment(final String username) {
+    private void deleteComment(final String id) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
-                        Const.URL_COMMENTS + "/" + username, null,
+                        Const.URL_COMMENTS + "/" + id, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -438,7 +441,8 @@ public class Comments extends AppCompatActivity {
             public void onClick(View v) {
                 list.remove(i);
                 adapter.notifyDataSetChanged();
-                deleteComment(username);
+                deleteComment(comment_id_list.get(i).toString());
+                comment_id_list.remove(i);
                 CommentDialog.cancel();
                 DeleteDialog.cancel();
             }

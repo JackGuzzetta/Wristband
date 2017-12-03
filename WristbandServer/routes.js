@@ -273,8 +273,8 @@ module.exports = function(app) {
      * @param {String} id
      * @return {json} a comment
      */
-    app.delete('/comments/:username', function(req, res) {
-        Comment.deleteComment(req.params.username, res);
+    app.delete('/comments/:id', function(req, res) {
+        Comment.deleteComment(req.params.id, res);
     });
     /**
      * @function post: /email

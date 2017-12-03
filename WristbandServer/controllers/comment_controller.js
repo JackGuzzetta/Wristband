@@ -23,10 +23,26 @@ module.exports.newComment = function(party_id, username, comment, res) {
                 comment: "Error"
             })
         } else {
-            console.log("Created new comment: ", comment);
-            res.json({
-                comment: comment
-            })
+            comment.find('all', {
+                where: 'comment=' + comment
+            }, function(err, rows, fields) {
+                if (err) {
+                    console.log("error");
+                    res.json({
+                        comments: "Error"
+                    })
+                } else {
+                    if (rows.length == 0) {
+                        console.log("Comment not found.");
+                        res.json({
+                            comments: "Error"
+                        })
+                    } else {
+                        res.contentType('application/json');
+                        res.send(JSON.stringify(rows));
+                    }
+                }
+            });
         }
     });
 }
@@ -92,17 +108,17 @@ module.exports.findCommentByID = function(id, res) {
  * @param {String} id
  * @return {json} a comment
  */
-module.exports.deleteComment = function(username, res) {
+module.exports.deleteComment = function(id, res) {
     comment = new Comment();
-    comment.set('username', username);
+    comment.set('id', id);
     comment.remove(function(err) {
         if (err) {
-            console.log("Tried to delete a null comment: ", username);
+            console.log("Tried to delete a null comment: ", id);
             res.json({
                 comments: "Error"
             })
         } else {
-            console.log('Deleted comment: ', username);
+            console.log('Deleted comment: ', id);
             res.json({
                 comments: "Success"
             })
