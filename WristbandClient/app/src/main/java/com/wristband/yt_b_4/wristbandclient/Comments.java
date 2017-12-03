@@ -57,8 +57,6 @@ public class Comments extends AppCompatActivity {
     String user_id, party_id, username, relation, party_name, user_rel;
     int screen;
     String comment;
-    String f_name = "test";
-    String l_name = "test";
     Dialog CommentDialog;
     Dialog DeleteDialog;
     String name = "test test: ";
@@ -215,7 +213,7 @@ public class Comments extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         username = settings.getString("username", "default");
         Comment c = new Comment(party_id, username, comment);
-        sendDataToServer(f_name, l_name, c);
+        sendDataToServer(username, c);
     }
 
 
@@ -233,7 +231,7 @@ public class Comments extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 String id = response.getJSONObject(i).getString("id");
                                 String text = response.getJSONObject(i).getString("comment");
-                                list.add(f_name + " " + l_name + ": " + text);
+                                list.add(username + ": " + text);
                                 comment_id_list.add(id);
                                 adapter.notifyDataSetChanged();
                             }
@@ -254,7 +252,7 @@ public class Comments extends AppCompatActivity {
      * The comment will already be displayed from the sendComment() method.
      * @param comment
      */
-    private void sendDataToServer(final String f_name, final String l_name, final Comment comment) {
+    private void sendDataToServer(final String username, final Comment comment) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -271,7 +269,7 @@ public class Comments extends AppCompatActivity {
                                     e.printStackTrace();
                                     Log.d("test", e.toString());
                                 }
-                                list.add(f_name + " " + l_name + ": " + com);
+                                list.add(username + ": " + com);
                                 comment_id_list.add(id);
                                 adapter.notifyDataSetChanged();
                                 cmt.setText("");
