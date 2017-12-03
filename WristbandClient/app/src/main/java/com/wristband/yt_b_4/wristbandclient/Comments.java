@@ -229,7 +229,7 @@ public class Comments extends AppCompatActivity {
      * @param party_id
      */
     private void getAllCommentsByPartyId(String party_id) {
-        JsonArrayRequest req = new JsonArrayRequest(Const.URL_GET_COMMENTS + party_id,
+        JsonArrayRequest req = new JsonArrayRequest(Const.URL_GET_COMMENTS + "/" + party_id,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -237,7 +237,7 @@ public class Comments extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 //String id = response.getJSONObject(i).getString("party_id");
                                 //String relation = response.getJSONObject(i).getString("party_user_relation");
-                                String text = response.getJSONObject(i).getString("cmt");
+                                String text = response.getJSONObject(i).getString("comment");
                                 list.add(text);
                                 //party_ids.add(id);
                                 //relationList.add(relation);
@@ -289,7 +289,7 @@ public class Comments extends AppCompatActivity {
                         headers.put("Content-Type", "application/json");
                         headers.put("party_id", comment.getPartyId());
                         headers.put("username", comment.getUsername());
-                        headers.put("cmt", comment.getText());
+                        headers.put("comment", comment.getText());
 
                         return headers;
                     }
