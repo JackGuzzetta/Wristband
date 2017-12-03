@@ -229,6 +229,7 @@ public class Comments extends AppCompatActivity {
      * @param party_id
      */
     private void getAllCommentsByPartyId(String party_id) {
+        final Context context = getApplicationContext();
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_GET_COMMENTS + "/" + party_id,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -239,6 +240,8 @@ public class Comments extends AppCompatActivity {
                                 //String relation = response.getJSONObject(i).getString("party_user_relation");
                                 String text = response.getJSONObject(i).getString("comment");
                                 list.add(text);
+                                Toast pass = Toast.makeText(context, "ss" + text, Toast.LENGTH_LONG);
+                                pass.show();
                                 //party_ids.add(id);
                                 //relationList.add(relation);
                                 adapter.notifyDataSetChanged();

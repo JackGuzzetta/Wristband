@@ -75,7 +75,7 @@ module.exports.findCommentByID = function(id, res) {
             })
         } else {
             if (rows.length == 0) {
-                console.log("User not found.");
+                console.log("Comment not found.");
                 res.json({
                     comments: "Error"
                 })
@@ -115,25 +115,27 @@ module.exports.deleteComment = function(id, res) {
  * @param {String} id
  * @return {json} a list of comments
  */
+
 module.exports.getAllCommentsByPartyId = function(id, res) {
     var comment = new Comment();
-    comment.query('all', {
+    comment.find('all', {
         where: 'party_id=' + id
     }, function(err, rows, fields) {
         if (err) {
             console.log("error");
             res.json({
-                comment: "Error"
+                Comments: "Error"
             })
         } else {
             if (rows.length == 0) {
-                console.log("User not found.");
+                console.log("Comments not found.");
                 res.json({
-                    comment: "Error"
+                    Comments: "Error"
                 })
             } else {
                 res.contentType('application/json');
                 res.send(JSON.stringify(rows));
+                console.log(party);
             }
         }
     });
