@@ -115,7 +115,7 @@
         <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDuS6lDQGDcwgew2QXEtkN9TRg_r42KlIY" />
 
         <activity
             android:name=".MapsActivity" android:parentActivityName=".HomeScreen"
