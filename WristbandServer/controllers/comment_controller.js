@@ -92,17 +92,17 @@ module.exports.findCommentByID = function(id, res) {
  * @param {String} id
  * @return {json} a comment
  */
-module.exports.deleteComment = function(id, res) {
+module.exports.deleteComment = function(username, res) {
     comment = new Comment();
-    comment.set('id', id);
+    comment.set('username', username);
     comment.remove(function(err) {
         if (err) {
-            console.log("Tried to delete a null comment: ", id);
+            console.log("Tried to delete a null comment: ", username);
             res.json({
                 comments: "Error"
             })
         } else {
-            console.log('Deleted comment: ', id);
+            console.log('Deleted comment: ', username);
             res.json({
                 comments: "Success"
             })

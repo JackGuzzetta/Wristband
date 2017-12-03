@@ -236,14 +236,8 @@ public class Comments extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
                             for (int i = 0; i < response.length(); i++) {
-                                //String id = response.getJSONObject(i).getString("party_id");
-                                //String relation = response.getJSONObject(i).getString("party_user_relation");
                                 String text = response.getJSONObject(i).getString("comment");
                                 list.add(text);
-                                Toast pass = Toast.makeText(context, "ss" + text, Toast.LENGTH_LONG);
-                                pass.show();
-                                //party_ids.add(id);
-                                //relationList.add(relation);
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
