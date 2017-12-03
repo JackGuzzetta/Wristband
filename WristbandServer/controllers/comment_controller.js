@@ -135,7 +135,7 @@ module.exports.getAllCommentsByPartyId = function(id, res) {
             } else {
                 res.contentType('application/json');
                 res.send(JSON.stringify(rows));
-                console.log(party);
+                console.log(id);
             }
         }
     });
