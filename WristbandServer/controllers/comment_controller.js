@@ -9,12 +9,12 @@ Comment = require('../models/comments');
  * @param {String} cmt
  * @return {json} a comment
  */
-module.exports.newComment = function(party_id, username, comment, res) {
+module.exports.newComment = function(party_id, username, text, res) {
     var comment1 = new Comment();
     comment = new Comment({
         party_id: party_id,
         username: username,
-        comment: comment
+        comment: text
     });
     comment.save(function(err) {
         if (err) {
@@ -24,7 +24,7 @@ module.exports.newComment = function(party_id, username, comment, res) {
             })
         } else {
             comment.find('all', {
-                where: 'comment=' + comment
+                where: 'comment=' + text
             }, function(err, rows, fields) {
                 if (err) {
                     console.log("error");

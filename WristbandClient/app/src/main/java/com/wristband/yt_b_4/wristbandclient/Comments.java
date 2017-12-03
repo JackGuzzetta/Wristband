@@ -289,7 +289,7 @@ public class Comments extends AppCompatActivity {
                         headers.put("Content-Type", "application/json");
                         headers.put("party_id", comment.getPartyId());
                         headers.put("username", comment.getUsername());
-                        headers.put("comment", comment.getText());
+                        headers.put("text", comment.getText());
 
                         return headers;
                     }

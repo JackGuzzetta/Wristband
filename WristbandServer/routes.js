@@ -265,7 +265,7 @@ module.exports = function(app) {
      * @return {json} a comment
      */
     app.post('/comments', function(req, res) {
-        Comment.newComment(req.headers.party_id, req.headers.username, req.headers.comment, res)
+        Comment.newComment(req.headers.party_id, req.headers.username, req.headers.text, res)
     });
     /**
      * @function delete: /comments/:id
