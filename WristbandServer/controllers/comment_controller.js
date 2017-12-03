@@ -36,8 +36,13 @@ module.exports.newComment = function(party_id, username, text, res) {
                             comments: "Error"
                         })
                     } else {
-                        res.contentType('application/json');
-                        res.send(JSON.stringify(rows));
+                        console.log("Comment :" + text);
+                        res.json([{
+                            id: rows[0].id,
+                            comment: rows[0].comment,
+                            party_id: rows[0].party_id,
+                            username: rows[0].username,
+                        }])
                     }
                 }
             });
