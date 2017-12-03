@@ -9,23 +9,23 @@ Comment = require('../models/comments');
  * @param {String} cmt
  * @return {json} a comment
  */
-module.exports.newComment = function(party_id, username, cmt, res) {
+module.exports.newComment = function(party_id, username, comment, res) {
     var comment1 = new Comment();
     comment = new Comment({
         party_id: party_id,
         username: username,
-        cmt: cmt
+        comment: comment
     });
     comment.save(function(err) {
         if (err) {
-            console.log("Unable to create comment");
+            console.log("Unable to create comment" + err);
             res.json({
                 comment: "Error"
             })
         } else {
-            console.log("Created new party: ", cmt);
+            console.log("Created new comment: ", comment);
             res.json({
-                cmt: cmt
+                comment: comment
             })
         }
     });
