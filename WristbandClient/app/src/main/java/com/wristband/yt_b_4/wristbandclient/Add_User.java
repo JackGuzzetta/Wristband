@@ -44,6 +44,7 @@ public class Add_User extends AppCompatActivity {
     private Button btnDone;
     private CheckBox checkbox;
     private String prev_class, party_name, date1, time1, loc1, relation;
+    private boolean inParty = false;
     private AutoCompleteTextView autoView;
     private EditText phoneNumber, firstName, lastName;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -249,6 +250,13 @@ public class Add_User extends AppCompatActivity {
             } else {
                 coHost = "2";
             }
+            checkAllUsers(user_id);
+            if(inParty) {
+                inParty = false;
+                Toast pass = Toast.makeText(getApplicationContext(), "User is already in party", Toast.LENGTH_LONG);
+                pass.show();
+                return;
+            }
             VolleyHandler.inviteUser(party_id, user_id, coHost);
             Toast pass = Toast.makeText(getApplicationContext(), text + " added to party", Toast.LENGTH_LONG);
             pass.show();
@@ -385,6 +393,30 @@ public class Add_User extends AppCompatActivity {
             }
         }).start();
     }
+
+    private void checkAllUsers(final String id) {
+        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                String user_id = response.getJSONObject(i).getString("user_id");
+                                if(user_id == id)
+                                    inParty = true;
+                            }
+                        } catch (JSONException e) {
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        AppController.getInstance().addToRequestQueue(req,
+                tag_json_arry);
+    }
+
 
 
 }
