@@ -23,7 +23,7 @@ module.exports.newComment = function(party_id, username, text, res) {
                 comment: "Error"
             })
         } else {
-            user.query("SELECT * FROM db309ytb4.comments WHERE comment=\"" + text + "\" AND username=\"" + username + "\";", function(err, rows, fields) {
+            comment.query("SELECT * FROM db309ytb4.comments WHERE comment=\"" + text + "\" AND username=\"" + username + "\";", function(err, rows, fields) {
                 if (err) {
                     console.log("error");
                     res.json({
