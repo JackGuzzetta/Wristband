@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,7 +62,7 @@ public class Comments extends AppCompatActivity {
     Dialog CommentDialog;
     Dialog DeleteDialog;
     String name = "test test: ";
-
+    EditText cmt;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class Comments extends AppCompatActivity {
         btnComment = (Button) findViewById(R.id.send);
 
         cancelBtn = (Button) findViewById(R.id.cancel);
-        EditText cmt = (EditText) findViewById(R.id.editText);
+        cmt = (EditText) findViewById(R.id.editText);
         party_id = getIntent().getStringExtra("party_id");
         relation = getIntent().getStringExtra("relation");
         party_name = getIntent().getStringExtra("party_name");
@@ -86,7 +87,6 @@ public class Comments extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-                EditText cmt = (EditText) findViewById(R.id.editText);
                 comment = cmt.getText().toString();
                 sendComment(view, comment);
             }
@@ -191,9 +191,6 @@ public class Comments extends AppCompatActivity {
         };
 
         listView.setAdapter(adapter);
-        list.add("Afro man: " + party_id);
-        list.add("austin austin: Hello");
-        adapter.notifyDataSetChanged();
 
 
         //listView.setBackgroundColor(Color.CYAN);
@@ -217,10 +214,8 @@ public class Comments extends AppCompatActivity {
     private void sendComment(View view, String comment) {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         username = settings.getString("username", "default");
-        list.add(f_name + " " + l_name + ": " + comment);
-        adapter.notifyDataSetChanged();
         Comment c = new Comment(party_id, username, comment);
-        sendDataToServer(c);
+        sendDataToServer(f_name, l_name, c);
     }
 
 
@@ -230,7 +225,6 @@ public class Comments extends AppCompatActivity {
      * @param party_id
      */
     private void getAllCommentsByPartyId(String party_id) {
-        final Context context = getApplicationContext();
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_GET_COMMENTS + "/" + party_id,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -239,7 +233,7 @@ public class Comments extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 String id = response.getJSONObject(i).getString("id");
                                 String text = response.getJSONObject(i).getString("comment");
-                                list.add(text);
+                                list.add(f_name + " " + l_name + ": " + text);
                                 comment_id_list.add(id);
                                 adapter.notifyDataSetChanged();
                             }
@@ -260,7 +254,7 @@ public class Comments extends AppCompatActivity {
      * The comment will already be displayed from the sendComment() method.
      * @param comment
      */
-    private void sendDataToServer(final Comment comment) {
+    private void sendDataToServer(final String f_name, final String l_name, final Comment comment) {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -268,15 +262,27 @@ public class Comments extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-
-                                Toast pass = Toast.makeText(getApplicationContext(), "Commented", Toast.LENGTH_LONG);
-                                pass.show();
+                                String id = null;
+                                String com = null;
+                                try {
+                                    id = response.getString("id");
+                                    com = response.getString("comment");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d("test", e.toString());
+                                }
+                                list.add(f_name + " " + l_name + ": " + com);
+                                comment_id_list.add(id);
+                                adapter.notifyDataSetChanged();
+                                cmt.setText("");
 
 
                             }
                         }, new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.d("test", error.toString());
 
                     }
                 }) {
@@ -294,11 +300,8 @@ public class Comments extends AppCompatActivity {
                         return headers;
                     }
                 };
-                // Adding request to request queue
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
-                // Cancelling request
-                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
     }
@@ -439,12 +442,12 @@ public class Comments extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.remove(i);
-                adapter.notifyDataSetChanged();
                 deleteComment(comment_id_list.get(i).toString());
                 comment_id_list.remove(i);
+                list.remove(i);
                 CommentDialog.cancel();
                 DeleteDialog.cancel();
+                adapter.notifyDataSetChanged();
             }
         });
         no.setOnClickListener(new View.OnClickListener() {
