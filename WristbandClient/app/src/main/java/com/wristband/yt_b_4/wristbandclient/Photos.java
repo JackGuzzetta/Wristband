@@ -14,13 +14,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Photos extends AppCompatActivity {
+    ListView listView;
+    List list = new ArrayList();
     private String party_name, relation, user_id, prev_class;
+    private EditText caption;
+    private List<String> captions = new ArrayList<String>();
+    private List<Integer> ids = new ArrayList<Integer>();
+    private Button btnPhoto;
     public static int RESULT_LOAD_IMAGE = 1;
     ImageButton pic;
     private int screen;
@@ -35,7 +46,10 @@ public class Photos extends AppCompatActivity {
         relation = intent.getStringExtra("relation");
         user_id = intent.getStringExtra("user_id");
         prev_class = getIntent().getStringExtra("prev");
+        caption = (EditText) findViewById(R.id.caption);
         screen = Integer.parseInt(relation);
+        listView = (ListView) findViewById(R.id.list_view);
+        btnPhoto = (Button) findViewById(R.id.btnPhotos);
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +58,13 @@ public class Photos extends AppCompatActivity {
             }
 
 
+        });
+        btnPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+                addPhoto(view);
+            }
         });
     }
 
@@ -144,6 +165,15 @@ public class Photos extends AppCompatActivity {
                 break;
             default:
         }
+    }
+
+    /*
+        takes the caption and picture path and adds them to the listview and adds the picture path
+        to the database
+     */
+    public void addPhoto(View v){
+        String pic_text = caption.getText().toString();
+        captions.add(pic_text);
     }
 
 
