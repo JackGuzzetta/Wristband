@@ -595,7 +595,7 @@ public class HostScreen extends AppCompatActivity {
                                         day = "pm";
                                     }
 
-
+                                    address="";
                                     for(char c : location.toCharArray()){
                                         int i=1;
                                         if (c !=  '*'){
@@ -604,8 +604,6 @@ public class HostScreen extends AppCompatActivity {
                                         }
                                         else{
                                             location = location.substring(i);
-                                            Toast blank = Toast.makeText(getApplicationContext(), location , Toast.LENGTH_LONG);
-                                            blank.show();
                                             break;
                                         }
 
