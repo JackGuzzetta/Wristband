@@ -320,7 +320,7 @@ public class GuestScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-
+                                    String address="";
                                     String name = response.getJSONObject(0).getString("party_name");
                                     dat = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
@@ -424,10 +424,18 @@ public class GuestScreen extends AppCompatActivity {
                                         newTime = "11";
                                         day = "pm";
                                     }
+                                    for(char c : location.toCharArray()){
+                                        if (c !=  '*'){
+                                            address+= c;
+                                        }
+                                        else{
+                                            break;
+                                        }
 
+                                    }
                                     partyText.setText(name);
                                     dateText.setText(month + " " + dates[2] + ", " + dates[0] + " at " + newTime + ":" + times[1] + " " + day);
-                                    locationTxt.setText("Location: " + location);
+                                    locationTxt.setText("Location: " + address);
                                     getAllUsers();
                                 } catch (JSONException e) {
                                 }

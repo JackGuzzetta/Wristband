@@ -76,7 +76,7 @@ public class HostScreen extends AppCompatActivity {
     private TextView dateText, partyText, locationTxt, timeTxt, btnLocation;
     private ArrayList<String> usernames = new ArrayList<String>();
     private ArrayList<String> unames = new ArrayList<String>();
-    private String address;
+
     int lad;
     int lng;
 
@@ -162,7 +162,6 @@ public class HostScreen extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.list_view);
         getDataFromServer();
-        address = "";
 
 //        //String
 
@@ -489,7 +488,7 @@ public class HostScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-
+                                    String address="";
                                     String name = response.getJSONObject(0).getString("party_name");
                                     dat = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
@@ -595,15 +594,11 @@ public class HostScreen extends AppCompatActivity {
                                         day = "pm";
                                     }
 
-                                    address="";
                                     for(char c : location.toCharArray()){
-                                        int i=1;
                                         if (c !=  '*'){
                                             address+= c;
-                                            i++;
                                         }
                                         else{
-                                            location = location.substring(i);
                                             break;
                                         }
 
