@@ -229,6 +229,7 @@ public class HomeScreen extends AppCompatActivity {
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("party_id", party_id);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", "user_info");
                 startActivity(intent);
                 finish();
                 break;
@@ -236,6 +237,7 @@ public class HomeScreen extends AppCompatActivity {
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("party_id", party_id);
+                intent.putExtra("menu", "user_info");
                 intent.putExtra("relation", relation);
                 startActivity(intent);
                 finish();

@@ -350,7 +350,7 @@ public class Comments extends AppCompatActivity {
                         }
                         Intent intent = new Intent(Comments.this, User_Info.class);
 
-
+                        intent.putExtra("backscreen", comments);
                         intent.putExtra("user_rel", relation);
                         intent.putExtra("prev", "host");
                         intent.putExtra("user_id", user_id);

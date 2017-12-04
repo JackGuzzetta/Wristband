@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.wristband.yt_b_4.wristbandclient.utils.VolleyHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class GuestScreen extends AppCompatActivity {
     private ArrayList<String> usernames = new ArrayList<String>();
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private String party_id, user_id;
+    private String prevScreen, mnus;
     private String party_name, user_name, relation, prev_class, loc, priv, dat, time, maxp, alert, hosts;
     final Context context = this;
     ListView listView;
@@ -78,6 +80,8 @@ public class GuestScreen extends AppCompatActivity {
         party_name = getIntent().getStringExtra("party_name");
         relation = getIntent().getStringExtra("relation");
         party_id = getIntent().getStringExtra("party_id");
+        prevScreen = getIntent().getStringExtra("previous");
+        mnus = getIntent().getStringExtra("menu");
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +159,12 @@ public class GuestScreen extends AppCompatActivity {
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_info, menu);
+        if (mnus.equals("user_info")) {
+            inflater.inflate(R.menu.user_info, menu);
+        }
+        else {
+            inflater.inflate(R.menu.publicmenu, menu);
+        }
         return true;
     }
 
@@ -181,6 +190,9 @@ public class GuestScreen extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 startActivity(new Intent(this, Login.class));
+                return true;
+            case R.id.join:
+                VolleyHandler.inviteUser(party_id, user_id, "3");
                 return true;
             case R.id.delete:
                 deleteUser();
