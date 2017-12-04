@@ -76,6 +76,9 @@ public class HostScreen extends AppCompatActivity {
     private TextView dateText, partyText, locationTxt, timeTxt, btnLocation;
     private ArrayList<String> usernames = new ArrayList<String>();
     private ArrayList<String> unames = new ArrayList<String>();
+    private String address;
+    int lad;
+    int lng;
 
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
@@ -159,6 +162,10 @@ public class HostScreen extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.list_view);
         getDataFromServer();
+        address = "";
+
+//        //String
+
         adapter = new ArrayAdapter(HostScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -588,9 +595,24 @@ public class HostScreen extends AppCompatActivity {
                                         day = "pm";
                                     }
 
+
+                                    for(char c : location.toCharArray()){
+                                        int i=1;
+                                        if (c !=  '*'){
+                                            address+= c;
+                                            i++;
+                                        }
+                                        else{
+                                            location = location.substring(i);
+                                            Toast blank = Toast.makeText(getApplicationContext(), location , Toast.LENGTH_LONG);
+                                            blank.show();
+                                            break;
+                                        }
+
+                                    }
                                     partyText.setText(name);
                                     dateText.setText(month + " " + dates[2] + ", " + dates[0] + " at " + newTime + ":" + times[1] + " " + day);
-                                    locationTxt.setText("Location: " + location);
+                                    locationTxt.setText("Location: " + address);
                                     getAllUsers();
                                 } catch (JSONException e) {
                                 }

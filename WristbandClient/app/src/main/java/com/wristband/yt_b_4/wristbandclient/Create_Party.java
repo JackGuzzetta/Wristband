@@ -89,7 +89,10 @@ public class Create_Party extends AppCompatActivity {
     String user_id;
     String party_id;
     String created;
+    String loc;
     LatLng fromadd;
+    double lat;
+    double lng;
     Intent finalIntent;
     boolean s;
     public static int RESULT_LOAD_IMAGE = 1;
@@ -120,8 +123,9 @@ public class Create_Party extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 fromadd = place.getLatLng();
-                double lat = fromadd.latitude;
-                double lng = fromadd.longitude;
+                loc = (String) place.getAddress();
+                lat = fromadd.latitude;
+                lng = fromadd.longitude;
             }
 
             @Override
@@ -130,7 +134,6 @@ public class Create_Party extends AppCompatActivity {
 
             }
         });
-        EditText loc = (EditText) findViewById(R.id.locat);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
@@ -152,7 +155,6 @@ public class Create_Party extends AppCompatActivity {
         time = intent.getStringExtra("Time");
         locate = intent.getStringExtra("loc");
         eventname.setText(name);
-        loc.setText(locate);
         mDisplayDate = (TextView) findViewById(R.id.date);
         mDisplayTime = (TextView) findViewById(R.id.time);
 
@@ -219,11 +221,10 @@ public class Create_Party extends AppCompatActivity {
                 EditText eventname = (EditText) findViewById(R.id.eventName);
                 TextView Date = (TextView) findViewById(R.id.date);
                 TextView Time = (TextView) findViewById(R.id.time);
-                EditText loc = (EditText) findViewById(R.id.locat);
                 name = eventname.getText().toString();
                 date = Date.getText().toString();
                 time = Time.getText().toString();
-                location = loc.getText().toString();
+                location =loc+ "*"+lat +"/"+lng;;
 
                 if (name.length() == 0 || name == null || date.length() == 0 ||
                         date == null || time.length() == 0 || time == null || location.length() == 0 || location == null) {
@@ -239,7 +240,7 @@ public class Create_Party extends AppCompatActivity {
                     finalIntent.putExtra("eventname", eventname.getText().toString());
                     finalIntent.putExtra("Date", Date.getText().toString());
                     finalIntent.putExtra("Time", Time.getText().toString());
-                    finalIntent.putExtra("loc", loc.getText().toString());
+                    finalIntent.putExtra("loc", location);
                     finalIntent.putExtra("activity", created);
                     finalIntent.putExtra("prev", "party");
                     //  sendSms("5554", "Hi You got a message!");
@@ -370,31 +371,8 @@ public class Create_Party extends AppCompatActivity {
         alert.show();
 
     }
-    //    private void sendSms(String phoneNumber, String message) {
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse( "sms:" + phoneNumber ) );
-//        intent.putExtra( "sms_body", message );
-//        startActivity(intent);
-//    }
-//    private void sendsms(String phoneNumber, String message) {
-//        SmsManager sms = SmsManager.getDefault();
-//        sms.sendTextMessage(phoneNumber, null, message, null, null);
-//    }
 
-    /**
-     *
-     */
-    private void showProgressDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
 
-    private void hideProgressDialog() {
-        if (pDialog.isShowing())
-            pDialog.hide();
-    }
-
-    //We need to get the party id from party name
-    //we need the user id
 
     /**
      * A JsonArrayRequest with the party name is sent to the database to get the party id.  The party id is then sent back to the server
