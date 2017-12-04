@@ -14,7 +14,7 @@ module.exports.createRelation = function(user_id, party_id, relation, res) {
         party_id: party_id,
         party_user_relation: relation
     });
-    relation.query("SELECT * FROM db309ytb4.relations WHERE user_id=\"" + user_id + "\" AND party_id=\"" + party_id + "\";", function(err, rows, fields) {
+    relation.query("SELECT * FROM db309ytb4.party_relation WHERE user_id=\"" + user_id + "\" AND party_id=\"" + party_id + "\";", function(err, rows, fields) {
             if (err) {
                 console.log("error db");
                 res.json({
