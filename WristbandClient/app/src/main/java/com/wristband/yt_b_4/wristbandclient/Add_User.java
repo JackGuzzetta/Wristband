@@ -395,7 +395,7 @@ public class Add_User extends AppCompatActivity {
     }
 
     private void checkAllUsers(final String id) {
-        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + party_id,
+        JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + id,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

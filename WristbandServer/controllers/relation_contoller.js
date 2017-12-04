@@ -14,20 +14,37 @@ module.exports.createRelation = function(user_id, party_id, relation, res) {
         party_id: party_id,
         party_user_relation: relation
     });
-    relation.save(function(err) {
-        if (err) {
-            console.log("Unable to create relation");
-            res.json({
-                relations: "Error"
-            })
-        } else {
-            console.log("Created new relation: ", user_id);
-            res.json({
-                user_id: user_id,
-                party_id: party_id
-            })
-        }
-    });
+    comment.query("SELECT * FROM db309ytb4.relations WHERE user_id=\"" + user_id + "\" AND party_id=\"" + party_id + "\";", function(err, rows, fields) {
+            if (err) {
+                console.log("error");
+                res.json({
+                    relation: "Error"
+                })
+            } else {
+                if (rows.length == 0) {
+                    console.log("relations not found.");
+                    res.json({
+                        relations: "Error"
+                    })
+                } else {
+                    relation.save(function(err) {
+                        if (err) {
+                            console.log("Unable to create relation");
+                            res.json({
+                                relations: "Error"
+                            })
+                        } else {
+                            console.log("Created new relation: ", user_id);
+                            res.json({
+                                user_id: user_id,
+                                party_id: party_id
+                            })
+                        }
+                    });
+                }
+            }
+        });
+    
 }
 /**
  * @function findAllRelations
