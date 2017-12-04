@@ -43,7 +43,7 @@ public class Add_User extends AppCompatActivity {
     final Context context = this;
     private Button btnDone;
     private CheckBox checkbox;
-    private String prev_class, party_name, date1, time1, loc1, relation;
+    private String prev_class, party_name, party_id, date1, time1, loc1, relation;
     private boolean inParty = false;
     private AutoCompleteTextView autoView;
     private EditText phoneNumber, firstName, lastName;
@@ -73,6 +73,7 @@ public class Add_User extends AppCompatActivity {
         Intent intent = getIntent();
         loc1 = intent.getStringExtra("loc");
         party_name = intent.getStringExtra("party_name");
+        party_id = intent.getStringExtra("party_id");
         relation = intent.getStringExtra("relation");
         screen = Integer.parseInt(relation);
 
