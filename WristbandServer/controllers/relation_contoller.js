@@ -22,11 +22,7 @@ module.exports.createRelation = function(user_id, party_id, relation, res) {
                 })
             } else {
                 if (rows.length == 0) {
-                    console.log("relations not found.");
-                    res.json({
-                        relations: "Error"
-                    })
-                } else {
+                    
                     relation.save(function(err) {
                         if (err) {
                             console.log("Unable to create relation");
@@ -41,6 +37,11 @@ module.exports.createRelation = function(user_id, party_id, relation, res) {
                             })
                         }
                     });
+                } else {
+                    console.log("relations already exist.");
+                    res.json({
+                        relations: "Error"
+                    })
                 }
             }
         });
