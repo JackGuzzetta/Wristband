@@ -138,17 +138,16 @@ public class PublicParties extends AppCompatActivity {
         getHost(party_name);
         if(isHost) {
             intent = new Intent(this, HostScreen.class);
-            intent.putExtra("relation", 1);
+            intent.putExtra("relation", "1");
         }
         else {
             intent = new Intent(this, GuestScreen.class);
-            intent.putExtra("relation", 2);
+            intent.putExtra("relation", "2");
         }
         intent.putExtra("menu", "publicmenu");
         intent.putExtra("previous", "public");
         intent.putExtra("party_name", party_name);
         intent.putExtra("username", user_name);
-        intent.putExtra("relation", 2);
         startActivity(intent);
         finish();
         startActivity(intent);
