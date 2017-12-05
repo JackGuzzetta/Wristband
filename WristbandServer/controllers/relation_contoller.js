@@ -126,9 +126,9 @@ module.exports.deleteRelation = function(user_id, party_id, res) {
         }
     });
 }
-module.exports.scanUser = function(user_id, party_id, res) {
+module.exports.scanUser = function(user_id, party_id, scanned_in, res) {
     relation = new Relation();
-    relation.query("UPDATE party_relation SET scanned_in=1 WHERE user_id=" + user_id + " AND party_id=" + party_id + ";", function(err, rows, fields) {
+    relation.query("UPDATE party_relation SET scanned_in=" + scanned_in + " WHERE user_id=" + user_id + " AND party_id=" + party_id + ";", function(err, rows, fields) {
         if (err) {
             console.log("Failed to scan: ", user_id, err);
             res.json({

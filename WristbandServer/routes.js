@@ -220,7 +220,7 @@ module.exports = function(app) {
      * @return {json} success/fail
      */
     app.post('/scan', function(req, res) {
-        Relation.scanUser(req.headers.user_id, req.headers.party_id, res);
+        Relation.scanUser(req.headers.user_id, req.headers.party_id, req.headers.scan_val res);
     });
     /**
      * @function get: /join_user/:id
