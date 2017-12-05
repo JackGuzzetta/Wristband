@@ -234,7 +234,7 @@ public class HomeScreen extends AppCompatActivity {
                 finish();
                 break;
             case 3://cohost
-                intent = new Intent(this, GuestScreen.class);
+                intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("party_id", party_id);
                 intent.putExtra("menu", "user_info");

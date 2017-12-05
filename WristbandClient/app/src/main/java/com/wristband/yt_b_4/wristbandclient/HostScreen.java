@@ -173,7 +173,6 @@ public class HostScreen extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         getDataFromServer();
 
-//        //String
 
         adapter = new ArrayAdapter(HostScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
@@ -203,8 +202,6 @@ public class HostScreen extends AppCompatActivity {
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_rel", relation);
                 relation = relationList.get(i).toString();
-                //user_id = findID(user_name);
-                //uname = findunam(user_name);
                 intent.putExtra("prev", "host");
                 intent.putExtra("user_id", idList.get(i).toString());
                 intent.putExtra("party_id", party_id);
@@ -280,7 +277,10 @@ public class HostScreen extends AppCompatActivity {
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.guestmenu, menu);
+        if(relation.toString().equals("3"))
+            inflater.inflate(R.menu.cohost, menu);
+        else
+            inflater.inflate(R.menu.guestmenu, menu);
         return true;
     }
 
@@ -294,52 +294,87 @@ public class HostScreen extends AppCompatActivity {
      */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.edit:
-                //TODO
-                return true;
-            case R.id.newname:
-                editname();
-                getDataFromServer();
-                return true;
-            case R.id.invite:
-                intent = new Intent(HostScreen.this, Add_User.class);
-                intent.putExtra("prev", "guest");
-                intent.putExtra("party_id", party_id);
-                intent.putExtra("party_name", party_name);
-                intent.putExtra("relation", relation);
-                startActivity(intent);
-                return true;
-            case R.id.newdate:
-                editdate();
-                getDataFromServer();
-                return true;
-            case R.id.newtime:
-                edittime();
-                getDataFromServer();
-                return true;
-            case R.id.newlocation:
-                editlocation();
-                getDataFromServer();
-                return true;
-            case R.id.delete:
-                deleteUser();
-                intent = new Intent(HostScreen.this, HomeScreen.class);
-                startActivity(intent);
-                return true;
-            case R.id.logout:
-                LoginManager.getInstance().logOut();
-                SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.clear();
-                editor.commit();
-                startActivity(new Intent(this, Login.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if(relation.toString().equals("3")) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    onBackPressed();
+                    return true;
+                case R.id.about:
+                    startActivity(new Intent(this, About.class));
+                    return true;
+                case R.id.logout:
+                    LoginManager.getInstance().logOut();
+                    SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.clear();
+                    editor.commit();
+                    startActivity(new Intent(this, Login.class));
+                    return true;
+                case R.id.delete:
+                    deleteUser();
+                    startActivity(new Intent(HostScreen.this, HomeScreen.class));
+                    return true;
+                case R.id.invite:
+                    intent = new Intent(HostScreen.this, Add_User.class);
+                    intent.putExtra("prev", "guest");
+                    intent.putExtra("party_id", party_id);
+                    intent.putExtra("party_name", party_name);
+                    intent.putExtra("relation", relation);
+                    startActivity(intent);
+                    return true;
+
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
+        else{
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    onBackPressed();
+                    return true;
+                case R.id.edit:
+                    //TODO
+                    return true;
+                case R.id.newname:
+                    editname();
+                    getDataFromServer();
+                    return true;
+                case R.id.invite:
+                    intent = new Intent(HostScreen.this, Add_User.class);
+                    intent.putExtra("prev", "guest");
+                    intent.putExtra("party_id", party_id);
+                    intent.putExtra("party_name", party_name);
+                    intent.putExtra("relation", relation);
+                    startActivity(intent);
+                    return true;
+                case R.id.newdate:
+                    editdate();
+                    getDataFromServer();
+                    return true;
+                case R.id.newtime:
+                    edittime();
+                    getDataFromServer();
+                    return true;
+                case R.id.newlocation:
+                    editlocation();
+                    getDataFromServer();
+                    return true;
+                case R.id.delete:
+                    deleteUser();
+                    intent = new Intent(HostScreen.this, HomeScreen.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.logout:
+                    LoginManager.getInstance().logOut();
+                    SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.clear();
+                    editor.commit();
+                    startActivity(new Intent(this, Login.class));
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
     }
 
