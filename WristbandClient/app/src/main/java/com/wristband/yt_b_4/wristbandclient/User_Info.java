@@ -33,7 +33,7 @@ import java.util.Map;
 public class User_Info extends AppCompatActivity {
     private Button btnRemove;
     private TextView txtuser, txtfirst, usern, txtid;
-    private String user_id, mnus, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
+    private String user_id, current_id, mnus, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -83,10 +83,10 @@ public class User_Info extends AppCompatActivity {
         usern.setText("");
         txtid.setText("User ID: " + user_id);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-        user_id = settings.getString("id", "default");
+        current_id = settings.getString("id", "default");
         String f_name = settings.getString("f_name", "default");
         String l_name = settings.getString("l_name", "default");
-        addqr(f_name, l_name, user_id);
+        addqr(f_name, l_name, current_id);
     }
 
     /**
