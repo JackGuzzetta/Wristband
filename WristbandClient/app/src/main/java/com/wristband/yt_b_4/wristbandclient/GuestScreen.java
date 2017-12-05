@@ -130,8 +130,8 @@ public class GuestScreen extends AppCompatActivity {
                 return view;
             }
         };
+
         listView.setAdapter(adapter);
-        ;
         getDataFromServer();
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override

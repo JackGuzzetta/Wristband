@@ -50,6 +50,8 @@ public class Photos extends AppCompatActivity {
         screen = Integer.parseInt(relation);
         listView = (ListView) findViewById(R.id.list_view);
         btnPhoto = (Button) findViewById(R.id.btnPhotos);
+        Toast blank = Toast.makeText(getApplicationContext(), relation, Toast.LENGTH_LONG);
+        blank.show();
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

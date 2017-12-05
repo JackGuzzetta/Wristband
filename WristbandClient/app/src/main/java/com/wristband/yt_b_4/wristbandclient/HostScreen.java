@@ -72,7 +72,7 @@ import java.util.Map;
 
 public class HostScreen extends AppCompatActivity {
     private static final String TAG = "Date";
-    private Button btnCohost, btnPhotos, btnComments;
+    private Button scanbtn, btnCohost, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt, btnLocation;
     private ArrayList<String> usernames = new ArrayList<String>();
     private ArrayList<String> unames = new ArrayList<String>();
@@ -111,6 +111,7 @@ public class HostScreen extends AppCompatActivity {
         btnLocation = (TextView) findViewById(R.id.button7);
         btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
+        scanbtn = (Button) findViewById(R.id.scan_button);
         partyText = (TextView) findViewById(R.id.partyTxt);
         locationTxt = (TextView) findViewById(R.id.location);
         dateText = (TextView) findViewById(R.id.dateTxt);
@@ -130,6 +131,14 @@ public class HostScreen extends AppCompatActivity {
 //                QRGenerator(party_id,user_id);
 
 
+        scanbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create a new user with values from the EditTexts
+               scanNow(view);
+            }
+
+        });
 
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +262,7 @@ public class HostScreen extends AppCompatActivity {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
             Toast toast = Toast.makeText(getApplicationContext(),
-            usernames.get(0), Toast.LENGTH_SHORT);
+            scanContent, Toast.LENGTH_SHORT);
             toast.show();
 
         } else {
