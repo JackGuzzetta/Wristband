@@ -181,6 +181,27 @@ module.exports = function(app) {
             }
         });
     }
+    module.exports.findUserByFullName = function(f_name, l_name, res) {
+        var user = new User();
+        user.query("SELECT * FROM db309ytb4.users WHERE f_name=\"" + f_name + "\" AND l_name=\"" + l_name + "\";", function(err, rows, fields) {
+            if (err) {
+                console.log("error");
+                res.json({
+                    users: "Error"
+                })
+            } else {
+                if (rows.length == 0) {
+                    console.log("User not found.");
+                    res.json({
+                        users: "Error"
+                    })
+                } else {
+                    res.contentType('application/json');
+                    res.send(JSON.stringify(rows));
+                }
+            }
+        });
+    }
     module.exports.findUserByUsername = function(username, res) {
         var expires = moment().add(7, 'days').valueOf();
         var user = new User();

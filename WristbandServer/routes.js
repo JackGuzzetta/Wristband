@@ -54,6 +54,14 @@ module.exports = function(app) {
         User.findUserByID(req.params.id, res);
     });
     /**
+     * @function post: /users_by_full_name
+     * Finds a user by their id in the database
+     * @return {json} a list of users
+     */
+    app.post('/users_by_full_name', function(req, res) {
+        User.findUserByID(req.params.f_name, req.params.l_name, res);
+    });
+    /**
      * @function get: /user_name/:username
      * Finds a user by their username in the db
      * @return {json} a user
