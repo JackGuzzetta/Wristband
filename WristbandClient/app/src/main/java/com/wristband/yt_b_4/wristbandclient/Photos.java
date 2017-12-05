@@ -27,7 +27,7 @@ import java.util.List;
 public class Photos extends AppCompatActivity {
     ListView listView;
     List list = new ArrayList();
-    private String party_name, relation, user_id, prev_class;
+    private String party_name, mnus, relation, user_id, prev_class;
     private EditText caption;
     private List<String> captions = new ArrayList<String>();
     private List<Integer> ids = new ArrayList<Integer>();
@@ -45,13 +45,12 @@ public class Photos extends AppCompatActivity {
         party_name = intent.getStringExtra("party_name");
         relation = intent.getStringExtra("relation");
         user_id = intent.getStringExtra("user_id");
+        mnus = getIntent().getStringExtra("menu");
         prev_class = getIntent().getStringExtra("prev");
         caption = (EditText) findViewById(R.id.caption);
         screen = Integer.parseInt(relation);
         listView = (ListView) findViewById(R.id.list_view);
         btnPhoto = (Button) findViewById(R.id.btnPhotos);
-        Toast blank = Toast.makeText(getApplicationContext(), relation, Toast.LENGTH_LONG);
-        blank.show();
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +147,8 @@ public class Photos extends AppCompatActivity {
                 intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
+
                 startActivity(intent);
                 finish();
                 break;
@@ -155,6 +156,7 @@ public class Photos extends AppCompatActivity {
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;
@@ -162,6 +164,7 @@ public class Photos extends AppCompatActivity {
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;

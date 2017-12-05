@@ -33,7 +33,7 @@ import java.util.Map;
 public class User_Info extends AppCompatActivity {
     private Button btnRemove;
     private TextView txtuser, txtfirst, usern, txtid;
-    private String user_id, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
+    private String user_id, mnus, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -50,6 +50,7 @@ public class User_Info extends AppCompatActivity {
         usern = (TextView) findViewById(R.id.usern);
         txtid = (TextView) findViewById(R.id.idtxt);
         code= (ImageView) findViewById(R.id.qr);
+        mnus = getIntent().getStringExtra("menu");
         user_id = getIntent().getStringExtra("user_id");
         user_name = getIntent().getStringExtra("user_name");
         party_name = getIntent().getStringExtra("party_name");
@@ -157,6 +158,7 @@ public class User_Info extends AppCompatActivity {
         intent.putExtra("party_name", party_name);
         intent.putExtra("prev", prev_class);
         intent.putExtra("relation", user_rel);
+        intent.putExtra("menu", mnus);
         startActivity(intent);
     }
 

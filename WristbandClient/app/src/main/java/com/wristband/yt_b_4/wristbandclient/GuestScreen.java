@@ -141,6 +141,7 @@ public class GuestScreen extends AppCompatActivity {
                 intent.putExtra("user_rel", relation);
                 relation = relationList.get(i).toString();
                 intent.putExtra("prev", "guest");
+                intent.putExtra("menu", mnus);
                 intent.putExtra("user_id", idList.get(i).toString());
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("party_name", party_name);
@@ -466,6 +467,7 @@ public class GuestScreen extends AppCompatActivity {
         intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
         intent.putExtra("party_name", party_name);
+        intent.putExtra("menu", mnus);
         intent.putExtra("prev", "guest");
         finish();
         startActivity(intent);
@@ -481,6 +483,7 @@ public class GuestScreen extends AppCompatActivity {
         intent.putExtra("relation", relation);
         intent.putExtra("user_id", user_id);
         intent.putExtra("party_name", party_name);
+        intent.putExtra("menu", mnus);
         intent.putExtra("prev", "guest");
         startActivity(intent);
     }
@@ -495,6 +498,7 @@ public class GuestScreen extends AppCompatActivity {
         intent.putExtra("username", user_name);
         intent.putExtra("relation", relation);
         intent.putExtra("party_name", party_name);
+        intent.putExtra("menu", mnus);
         intent.putExtra("prev", "guest");
         startActivity(intent);
     }

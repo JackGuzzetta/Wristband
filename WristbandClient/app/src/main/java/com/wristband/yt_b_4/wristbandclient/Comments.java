@@ -54,7 +54,7 @@ public class Comments extends AppCompatActivity {
     ArrayList<String> comments = new ArrayList<String>();
     ArrayAdapter adapter;
     ProgressDialog pDialog;
-    String user_id, party_id, username, relation, party_name, user_rel;
+    String user_id, party_id, username, relation, party_name, mnus, user_rel;
     int screen;
     String comment;
     Dialog CommentDialog;
@@ -71,7 +71,7 @@ public class Comments extends AppCompatActivity {
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         btnComment = (Button) findViewById(R.id.send);
-
+        mnus = getIntent().getStringExtra("menu");
         cancelBtn = (Button) findViewById(R.id.cancel);
         cmt = (EditText) findViewById(R.id.editText);
         party_id = getIntent().getStringExtra("party_id");
@@ -145,6 +145,7 @@ public class Comments extends AppCompatActivity {
                 intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;
@@ -152,6 +153,7 @@ public class Comments extends AppCompatActivity {
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;
@@ -159,6 +161,8 @@ public class Comments extends AppCompatActivity {
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
+
                 startActivity(intent);
                 finish();
                 break;
@@ -357,7 +361,8 @@ public class Comments extends AppCompatActivity {
                         intent.putExtra("party_name", party_name);
                         intent.putExtra("user_name", username);
                         intent.putExtra("relation", relation);
-                        startActivity(intent);
+                        intent.putExtra("menu", mnus);
+                startActivity(intent);
                     }
                 });
 

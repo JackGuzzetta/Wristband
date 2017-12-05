@@ -51,8 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String address;
     private ProgressDialog pDialog;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
-    private Party party;
-    private String party_name, prev_class;
+    private String party_name, mnus, prev_class;
     private String party_id, relation;
     private int screen;
 
@@ -63,6 +62,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
+        mnus = getIntent().getStringExtra("menu");
+
         address = getIntent().getStringExtra("party_location");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -120,6 +121,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;
@@ -127,6 +129,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;
@@ -134,6 +137,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent = new Intent(this, GuestScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
                 finish();
                 break;
