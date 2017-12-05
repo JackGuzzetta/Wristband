@@ -103,7 +103,7 @@ public class HomeScreen extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.about:
+            case R.id.account:
                 startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
