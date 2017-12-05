@@ -219,7 +219,9 @@ public class Comments extends AppCompatActivity {
      */
     private void sendComment(View view, String comment) {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-        username = settings.getString("username", "default");
+        String f_name = settings.getString("f_name", "default");
+        String l_name = settings.getString("l_name", "default");
+        username = f_name + " " + l_name;
         Comment c = new Comment(party_id, username, comment);
         sendDataToServer(username, c);
     }
@@ -239,8 +241,9 @@ public class Comments extends AppCompatActivity {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 String id = response.getJSONObject(i).getString("id");
+                                String uname = response.getJSONObject(i).getString("username");
                                 String text = response.getJSONObject(i).getString("comment");
-                                list.add(username + ": " + text);
+                                list.add(uname + ": " + text);
                                 comment_id_list.add(id);
                                 adapter.notifyDataSetChanged();
                             }
@@ -350,15 +353,6 @@ public class Comments extends AppCompatActivity {
                 String[] seperated = checker.split(":");
                 username = seperated[0];
                 System.out.println(username);
-                if (username.equals("Afro man")) {
-                    user_id = "97";
-                }
-                if (username.equals("austin austin")) {
-                    user_id = "96";
-                }
-                if (username.equals("test test")) {
-                    user_id = "94";
-                }
                 Intent intent = new Intent(Comments.this, User_Info.class);
 
                 intent.putExtra("backscreen", comments);

@@ -68,7 +68,6 @@ public class GuestScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_screen);
         btnLocation = (Button) findViewById(R.id.button7);
-        btnPhotos = (Button) findViewById(R.id.button5);
         btnComments = (Button) findViewById(R.id.button6);
         partyText = (TextView) findViewById(R.id.partyTxt);
         locationTxt = (TextView) findViewById(R.id.location);
