@@ -95,6 +95,7 @@ public class HostScreen extends AppCompatActivity {
     ListView listView;
     List list = new ArrayList();
     List idList = new ArrayList();
+    List scannedList = new ArrayList();
 
     ArrayAdapter adapter;
     List relationList = new ArrayList();
@@ -179,16 +180,22 @@ public class HostScreen extends AppCompatActivity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the current item from ListView
                 View view = super.getView(position, convertView, parent);
-                if (relationList.get(position).equals("1")) {
-                    // Set a background color for ListView regular row/item
-                    view.setBackgroundColor(Color.parseColor("#19c482"));
-                } else if (relationList.get(position).equals("2")) {
-                    // Set the background color for alternate row/item
-                    view.setBackgroundColor(Color.parseColor("#a6abae"));
-                } else if (relationList.get(position).equals("3")) {
-                    view.setBackgroundColor(Color.parseColor("#326f93"));
-                } else {
+                if (scannedList.get(position).equals("1")) {
                     view.setBackgroundColor(Color.RED);
+                }
+                else {
+                    if (relationList.get(position).equals("1")) {
+                        // Set a background color for ListView regular row/item
+                        view.setBackgroundColor(Color.parseColor("#19c482"));
+                    } else if (relationList.get(position).equals("2")) {
+                        // Set the background color for alternate row/item
+                        view.setBackgroundColor(Color.parseColor("#a6abae"));
+                    } else if (relationList.get(position).equals("3")) {
+                        view.setBackgroundColor(Color.parseColor("#326f93"));
+                    }
+                    else {
+                        view.setBackgroundColor(Color.RED);
+                    }
                 }
                 return view;
             }
@@ -873,10 +880,11 @@ public class HostScreen extends AppCompatActivity {
                                 name += " ";
                                 name += response.getJSONObject(i).getString("l_name");
                                 list.add(name);
-                                adapter.notifyDataSetChanged();
                                 usernames.add(response.getJSONObject(i).getString("user_id"));
                                 idList.add(response.getJSONObject(i).getString("id"));
+                                scannedList.add(response.getJSONObject(i).getString("scanned_in"));
                                 //unames.add(response.getJSONObject(i).getString("username"));
+                                adapter.notifyDataSetChanged();
 
                             }
                         } catch (JSONException e) {

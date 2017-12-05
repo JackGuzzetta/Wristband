@@ -216,7 +216,7 @@ module.exports.updateParty = function(id, party_name, date, time, privacy, max_p
  */
 module.exports.joinByPartyId = function(id, res) {
     var user = new User();
-    user.query("SELECT users.id, users.f_name, users.l_name, party_relation.party_id, party_relation.user_id, party_relation.party_user_relation FROM users join party_relation ON users.id=party_relation.user_id join parties ON parties.id=party_relation.party_id WHERE parties.id=\"" + id + "\";", function(err, rows, fields) {
+    user.query("SELECT users.id, users.f_name, users.l_name, party_relation.party_id, party_relation.scanned_in, party_relation.user_id, party_relation.party_user_relation FROM users join party_relation ON users.id=party_relation.user_id join parties ON parties.id=party_relation.party_id WHERE parties.id=\"" + id + "\";", function(err, rows, fields) {
         if (err) {
             console.log("error");
             res.json({
