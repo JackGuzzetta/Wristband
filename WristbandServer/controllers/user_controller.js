@@ -183,7 +183,7 @@ module.exports = function(app) {
     }
     module.exports.findUserByFullName = function(f_name, l_name, res) {
         var user = new User();
-        user.query("SELECT * FROM db309ytb4.users WHERE f_name=\"" + f_name + "\" AND l_name=\"" + l_name + "\";", function(err, rows, fields) {
+        user.query("SELECT * FROM users WHERE f_name=\"" + f_name + "\" AND l_name=\"" + l_name + "\";", function(err, rows, fields) {
             if (err) {
                 console.log("error");
                 res.json({
