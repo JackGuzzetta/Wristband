@@ -11,4 +11,7 @@
         <item
             android:id="@+id/invite"
             android:title="Invite Guest" />
+        <item
+            android:id="@+id/leave"
+            android:title="Leave Party" />
 </menu>
