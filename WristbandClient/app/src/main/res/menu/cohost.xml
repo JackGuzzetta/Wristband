@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/about"
+            android:title="My Account" />
+        <item
+            android:id="@+id/logout"
+            android:title="Logout" />
+        <item
+            android:id="@+id/delete"
+            android:title="Delete Profile" />
+        <item
+            android:id="@+id/invite"
+            android:title="Invite Guest" />
+</menu>

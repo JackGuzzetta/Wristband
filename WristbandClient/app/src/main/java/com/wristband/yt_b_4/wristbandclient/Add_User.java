@@ -220,7 +220,7 @@ public class Add_User extends AppCompatActivity {
                 finish();
                 break;
             case 3://cohost
-                intent = new Intent(this, GuestScreen.class);
+                intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
                 startActivity(intent);
@@ -251,7 +251,7 @@ public class Add_User extends AppCompatActivity {
             } else {
                 coHost = "2";
             }
-            checkAllUsers(user_id);
+            checkAllUsers(party_id, user_id);
             if(inParty) {
                 inParty = false;
                 Toast pass = Toast.makeText(getApplicationContext(), "User is already in party", Toast.LENGTH_LONG);
@@ -395,7 +395,7 @@ public class Add_User extends AppCompatActivity {
         }).start();
     }
 
-    private void checkAllUsers(final String id) {
+    private void checkAllUsers(final String id, final String uid) {
         JsonArrayRequest req = new JsonArrayRequest(Const.URL_JOIN_Party + id,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -403,7 +403,7 @@ public class Add_User extends AppCompatActivity {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 String user_id = response.getJSONObject(i).getString("user_id");
-                                if(user_id == id)
+                                if(user_id == uid)
                                     inParty = true;
                             }
                         } catch (JSONException e) {
