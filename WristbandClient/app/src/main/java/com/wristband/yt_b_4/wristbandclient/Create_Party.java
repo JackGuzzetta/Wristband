@@ -80,7 +80,6 @@ public class Create_Party extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private PlaceAutocompleteFragment autocompleteFragment;
-    ImageButton pic;
     String name;
     String location;
     String date;
@@ -117,7 +116,6 @@ public class Create_Party extends AppCompatActivity {
         setContentView(R.layout.activity_create_party);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.pic = (ImageButton) findViewById(R.id.pict);
         this.create = (Button) findViewById(R.id.create);
         EditText eventname = (EditText) findViewById(R.id.eventName);
         autocompleteFragment = (PlaceAutocompleteFragment)
@@ -270,15 +268,6 @@ public class Create_Party extends AppCompatActivity {
             }
         });
 
-        pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GaleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(GaleryIntent, RESULT_LOAD_IMAGE);
-            }
-
-
-        });
     }
 
     @Override
@@ -298,8 +287,6 @@ public class Create_Party extends AppCompatActivity {
             String picturePath = SelectedCursor.getString(columnIndex);
             SelectedCursor.close();
 
-
-            pic.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             Toast.makeText(getApplicationContext(), picturePath, Toast.LENGTH_LONG).show();
         }
     }

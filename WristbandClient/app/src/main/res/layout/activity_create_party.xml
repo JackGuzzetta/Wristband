@@ -8,19 +8,7 @@
 
 
 
-    <ImageButton
-        android:id="@+id/pict"
-        android:layout_width="150dp"
-        android:layout_height="149dp"
-        android:layout_marginLeft="115dp"
-        android:text="Add Party Picture"
-        android:clickable="true"
-        android:onClick="buttonClickParty"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@android:drawable/ic_menu_search"
-        android:layout_marginStart="115dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp" />
+
 
 
     <LinearLayout
