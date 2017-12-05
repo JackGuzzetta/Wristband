@@ -784,7 +784,7 @@ public class HostScreen extends AppCompatActivity {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("New Date (xx-xx-xxxx)");
+        alert.setTitle("New Date (yyyy-mm-dd)");
         alert.setMessage("Message");
 
 // Set an EditText view to get user input
