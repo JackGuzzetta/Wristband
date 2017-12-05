@@ -163,46 +163,6 @@ public class User_Info extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    /**
-//     * Method searches
-//     */
-//    private void getDataFromServer() {
-//        new Thread(new Runnable() {
-//            public void run() {
-//                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user_name,
-//                        new Response.Listener<JSONArray>() {
-//                            @Override
-//                            public void onResponse(JSONArray response) {
-//                                try {
-//                                    String firstName;
-//                                    String lastName;
-//                                    String userId;
-//                                    String username;
-//
-//                                    firstName = response.getJSONObject(0).getString("f_name");
-//                                    lastName = response.getJSONObject(0).getString("l_name");
-//                                    userId = response.getJSONObject(0).getString("id");
-//                                    username = response.getJSONObject(0).getString("username");
-//                                    fullName = user_name;
-//                                    user_id = userId;
-//                                    user_name = username;
-//
-//
-//                                } catch (JSONException e) {
-//                                }
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                    }
-//                });
-//                AppController.getInstance().addToRequestQueue(req,
-//                        tag_json_arry);
-//            }
-//        }).start();
-//    }
-
-
     /**
      * When method is called the user currently selected will be removed from the party
      * relation table in the database using the current user_id, and party_id

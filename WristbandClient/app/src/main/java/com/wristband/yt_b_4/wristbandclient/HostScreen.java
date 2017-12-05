@@ -261,7 +261,7 @@ public class HostScreen extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(),
             scanContent, Toast.LENGTH_SHORT);
             toast.show();
-            party_id
+            //party_id
             //get user id by full name
             //party i
             String user_id;
