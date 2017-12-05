@@ -213,6 +213,16 @@ module.exports = function(app) {
         Relation.deleteRelation(req.headers.user_id, req.headers.party_id, res);
     });
     /**
+     * @function delete: /scan
+     * Scans in a user
+     * @param {String} user_id
+     * @param {String} party_id
+     * @return {json} success/fail
+     */
+    app.post('/scan', function(req, res) {
+        Relation.scanUser(req.headers.user_id, req.headers.party_id, res);
+    });
+    /**
      * @function get: /join_user/:id
      * Gets a list of all relations associated with a user and the party name
      * @param {String} id
