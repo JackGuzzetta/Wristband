@@ -59,7 +59,7 @@ module.exports = function(app) {
      * @return {json} a list of users
      */
     app.post('/users_by_full_name', function(req, res) {
-        User.findUserByID(req.params.f_name, req.params.l_name, res);
+        User.findUserByID(req.headers.f_name, req.headers.l_name, res);
     });
     /**
      * @function get: /user_name/:username
