@@ -74,6 +74,7 @@ public class GuestScreen extends AppCompatActivity {
         dateText = (TextView) findViewById(R.id.dateTxt);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
+
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
@@ -193,7 +194,10 @@ public class GuestScreen extends AppCompatActivity {
                 startActivity(new Intent(this, Login.class));
                 return true;
             case R.id.join:
-                VolleyHandler.inviteUser(party_id, user_id, "3");
+                VolleyHandler.inviteUser(party_id, user_id, "2");
+                finish();
+                startActivity(getIntent());
+                getDataFromServer();
                 return true;
             case R.id.delete:
                 deleteUser();

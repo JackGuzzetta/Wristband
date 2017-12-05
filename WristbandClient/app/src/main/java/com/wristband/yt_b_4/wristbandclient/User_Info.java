@@ -59,6 +59,7 @@ public class User_Info extends AppCompatActivity {
         screen = Integer.parseInt(relation);
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
+
         if(prev_class.equals("guest")||relation.equals("1") )
             btnRemove.setVisibility(View.INVISIBLE);
         else {
