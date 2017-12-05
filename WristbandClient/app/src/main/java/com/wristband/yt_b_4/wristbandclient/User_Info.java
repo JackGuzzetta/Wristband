@@ -60,7 +60,7 @@ public class User_Info extends AppCompatActivity {
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
 
-        if(prev_class.equals("guest")||relation.equals("1") )
+        if(prev_class.equals("guest")||relation.equals("1")||user_rel.equals("3"))
             btnRemove.setVisibility(View.INVISIBLE);
         else {
             btnRemove.setVisibility(View.VISIBLE);

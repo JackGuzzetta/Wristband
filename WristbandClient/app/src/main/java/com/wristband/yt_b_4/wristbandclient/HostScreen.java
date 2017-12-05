@@ -208,7 +208,6 @@ public class HostScreen extends AppCompatActivity {
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("username", uname);
-
                 intent.putExtra("relation", relation);
                 startActivity(intent);
             }
