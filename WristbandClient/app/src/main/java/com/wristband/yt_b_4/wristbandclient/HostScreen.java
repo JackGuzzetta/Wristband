@@ -208,6 +208,7 @@ public class HostScreen extends AppCompatActivity {
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("username", uname);
+
                 intent.putExtra("relation", relation);
                 startActivity(intent);
             }
@@ -260,7 +261,6 @@ public class HostScreen extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(),
             scanContent, Toast.LENGTH_SHORT);
             toast.show();
-            party_id
             //get user id by full name
             //party i
             String user_id;
