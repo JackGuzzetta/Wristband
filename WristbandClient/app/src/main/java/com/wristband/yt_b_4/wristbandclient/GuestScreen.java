@@ -93,13 +93,7 @@ public class GuestScreen extends AppCompatActivity {
 
         });
 
-        btnPhotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create a new user with values from the EditTexts
-                goPhotos(view);
-            }
-        });
+        
 
         btnComments.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,21 +456,7 @@ public class GuestScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * User will be taken to the photos screen when the photos button is pressed.
-     *
-     * @param view
-     */
-    private void goPhotos(View view) {
-        Intent intent = new Intent(GuestScreen.this, Photos.class);
-        intent.putExtra("party_name", party_id);
-        intent.putExtra("relation", relation);
-        intent.putExtra("user_id", user_id);
-        intent.putExtra("party_name", party_name);
-        intent.putExtra("menu", mnus);
-        intent.putExtra("prev", "guest");
-        startActivity(intent);
-    }
+
 
     /**
      * User will be taken to the Comments screen when the comments button is pressed.
