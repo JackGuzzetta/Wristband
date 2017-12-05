@@ -789,40 +789,64 @@ public class HostScreen extends AppCompatActivity {
      */
     private void editdate() {
 
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+        alert.setTitle("New Date (xx-xx-xxxx)");
+        alert.setMessage("Message");
 
-        DatePickerDialog dialog = new DatePickerDialog(
-                HostScreen.this,
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener,
-                year, month, day);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
 
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
 
+                dat = input.getText().toString();
+
+                editParty(party_id);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+        dateText.setText(dat);
+        alert.show();
     }
+
 
 
     /**
      * A time selector (clock) is displayed.  When a new time is selected it will be sent to the server.
      */
-    private void edittime() {
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR);
-        int minute = cal.get(Calendar.MINUTE);
+    private void edittime(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        TimePickerDialog dialog = new TimePickerDialog(
-                HostScreen.this,
-                mTimeSetListener,
-                hour, minute, true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-        String t = hour + ":" + minute + ":00";
-        time = t;
+        alert.setTitle("New Time (xx:xx:00)");
+        alert.setMessage("Message");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                time = input.getText().toString();
+
+                editParty(party_id);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
 
     }
 
