@@ -78,60 +78,34 @@ module.exports = function(app) {
             password: password,
             email: email,
         });
-        user.query("SELECT * FROM users WHERE f_name=\"" + f_name + "\" AND l_name=\"" + l_name + "\" AND username=\"" + username + "\";",  function(err, rows, fields) {
+        console.log("Created new user: ", username);
+        var user = new User();
+        user.find('all', {
+            where: 'username=' + '\'' + username + '\''
+        }, function(err, rows, fields) {
             if (err) {
                 console.log("error");
-                res.json([{
+                res.json({
                     users: "Error"
-                }])
+                })
             } else {
                 if (rows.length == 0) {
-                    user.save(function(err) {
-                        if (err) {
-                            console.log("Unable to create user");
-                            res.json({
-                                users: "Error"
-                            })
-                        } else {
-                            console.log("Created new user: ", username);
-                            var user = new User();
-                            user.find('all', {
-                                where: 'username=' + '\'' + username + '\''
-                            }, function(err, rows, fields) {
-                                if (err) {
-                                    console.log("error");
-                                    res.json({
-                                        users: "Error"
-                                    })
-                                } else {
-                                    if (rows.length == 0) {
-                                        console.log("User not found.");
-                                        res.json({
-                                            users: "Error"
-                                        })
-                                    } else {
-                                        id = rows[0].id;
-                                        token = createToken(username, expires);
-                                        console.log(token);
-                                        res.json({
-                                            token: token,
-                                            id: id,
-                                            user: username
-                                        })
-                                    }
-                                }
-                            });
-                        }
-                    });
+                    console.log("User not found.");
+                    res.json({
+                        users: "Error"
+                    })
                 } else {
-                    console.log("Already exist", rows[0].id);
-                    res.json([{
-                        users: "Already exists",
-                        id: rows[0].id
-                    }])
+                    id = rows[0].id;
+                    token = createToken(username, expires);
+                    console.log(token);
+                    res.json({
+                        token: token,
+                        id: id,
+                        user: username
+                    })
                 }
             }
-        });   
+        });
     }
     module.exports.findAllUsers = function(res) {
         var user = new User();
@@ -233,14 +207,14 @@ module.exports = function(app) {
                     token = createToken(username, expires);
                     res.contentType('application/json');
                     res.json([{
-                                users: "exists",
-                                token: token,
-                                id: id,
-                                f_name: f_name,
-                                l_name: l_name,
-                                username: uname,
-                                email: email
-                            }])
+                        users: "exists",
+                        token: token,
+                        id: id,
+                        f_name: f_name,
+                        l_name: l_name,
+                        username: uname,
+                        email: email
+                    }])
                 }
             }
         });
@@ -286,32 +260,35 @@ module.exports = function(app) {
     }
     module.exports.email = function(email, username, id, res) {
         var send = require('gmail-send')({
-          user: 'wristbandparties@gmail.com',
-          pass: 'wristband1',
-          to:   email,
-          subject: 'Wristband Party Invite',
-          text:    "Here is your invite: ", username,         // Plain text 
+            user: 'wristbandparties@gmail.com',
+            pass: 'wristband1',
+            to: email,
+            subject: 'Wristband Party Invite',
+            text: "Here is your invite: ",
+            username, // Plain text 
         });
         var retVal = "success";
 
         var QRCode = require('qrcode')
-        QRCode.toFile("images/" + username + ".png", username + "_" + id, {type:'png'}, function (err, string) {
+        QRCode.toFile("images/" + username + ".png", username + "_" + id, {
+            type: 'png'
+        }, function(err, string) {
             if (err) {
                 retVal = "error"
             }
         })
 
         send({
-            files: [                                    // Array of files to attach 
+            files: [ // Array of files to attach 
                 {
-                  path: "images/" + username + ".png",
+                    path: "images/" + username + ".png",
                 }
-              ]
-        }, function (err) {
-          if (err) {
-            retVal = "error";
-            console.log(err);
-          }
+            ]
+        }, function(err) {
+            if (err) {
+                retVal = "error";
+                console.log(err);
+            }
 
         });
         console.log("Sending email to: ", email)
@@ -319,19 +296,21 @@ module.exports = function(app) {
             email: retVal
         })
     }
-        module.exports.text = function(number, username, id, res) {
+    module.exports.text = function(number, username, id, res) {
         var retVal = "success";
         var QRCode = require('qrcode')
         var file_path = "images/" + number + ".png";
         var img_path = "http://proj-309-yt-b-4.cs.iastate.edu:3000/images/" + number + ".png";
-        QRCode.toFile("images/" + number + ".png", username, {type:'png'}, function (err, string) {
+        QRCode.toFile("images/" + number + ".png", username, {
+            type: 'png'
+        }, function(err, string) {
             if (err) {
                 retVal = "error"
             }
         })
 
         for (a = 0; a < 4; a++) {
-            switch(a) {
+            switch (a) {
                 case 0:
                     sendText(number + "@mms.att.net", file_path, img_path)
                     break;
@@ -345,49 +324,50 @@ module.exports = function(app) {
                     sendText(number + "@mms.uscc.net", file_path, img_path)
                     break;
                 default:
-                break;
+                    break;
             }
         }
         res.json({
             text: retVal
         })
-       console.log("Sending text to: ", number)
+        console.log("Sending text to: ", number)
     }
+
     function sendText(number, file_path, img_path) {
-       console.log("Sending text to: ", number)
+        console.log("Sending text to: ", number)
         var send = require('gmail-send')({
-          to: number,
-          user: 'wristbandparties@gmail.com',
-          pass: 'mdnzohgoucduzmjh',
-          subject: 'Wristband Party Invite',
-          files: file_path                           // Array of files to attach 
+            to: number,
+            user: 'wristbandparties@gmail.com',
+            pass: 'mdnzohgoucduzmjh',
+            subject: 'Wristband Party Invite',
+            files: file_path // Array of files to attach 
         });
-        send({}, function (err) {
-              if (err) {
+        send({}, function(err) {
+            if (err) {
                 console.log(err);
                 retVal = "error";
-              }
+            }
         });
     }
 }
-    module.exports.joinByUserId = function(id, res) {
-        var user = new User();
-        user.query("SELECT users.id, party_relation.party_id, party_relation.user_id, party_relation.party_user_relation, parties.party_name FROM users join party_relation ON users.id=party_relation.user_id join parties ON parties.id=party_relation.party_id WHERE party_relation.user_id=\"" + id  + "\";", function(err, rows, fields) {
-            if (err) {
-                console.log("error");
+module.exports.joinByUserId = function(id, res) {
+    var user = new User();
+    user.query("SELECT users.id, party_relation.party_id, party_relation.user_id, party_relation.party_user_relation, parties.party_name FROM users join party_relation ON users.id=party_relation.user_id join parties ON parties.id=party_relation.party_id WHERE party_relation.user_id=\"" + id + "\";", function(err, rows, fields) {
+        if (err) {
+            console.log("error");
+            res.json({
+                users: "Error"
+            })
+        } else {
+            if (rows.length == 0) {
+                console.log("User not found.");
                 res.json({
                     users: "Error"
                 })
             } else {
-                if (rows.length == 0) {
-                    console.log("User not found.");
-                    res.json({
-                        users: "Error"
-                    })
-                } else {
-                    res.contentType('application/json');
-                    res.send(JSON.stringify(rows));
-                }
+                res.contentType('application/json');
+                res.send(JSON.stringify(rows));
             }
-        });
-    }
+        }
+    });
+}

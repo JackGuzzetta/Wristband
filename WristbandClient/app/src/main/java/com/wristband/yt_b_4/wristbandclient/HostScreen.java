@@ -885,7 +885,6 @@ public class HostScreen extends AppCompatActivity {
                                 scannedList.add(response.getJSONObject(i).getString("scanned_in"));
                                 //unames.add(response.getJSONObject(i).getString("username"));
                                 adapter.notifyDataSetChanged();
-
                             }
                         } catch (JSONException e) {
                         }

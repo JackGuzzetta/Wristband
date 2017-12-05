@@ -209,8 +209,8 @@ public class Add_User extends AppCompatActivity {
                 intent = new Intent(this, HostScreen.class);
                 intent.putExtra("party_name", party_name);
                 intent.putExtra("relation", relation);
-                startActivity(intent);
                 finish();
+                startActivity(intent);
                 break;
             case 2://guest
                 intent = new Intent(this, GuestScreen.class);
