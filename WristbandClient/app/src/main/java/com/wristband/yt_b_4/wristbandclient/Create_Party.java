@@ -92,6 +92,7 @@ public class Create_Party extends AppCompatActivity {
     String created;
     String loc;
     LatLng fromadd;
+    int m, d, y;
     double lat;
     double lng;
     Intent finalIntent;
@@ -167,7 +168,6 @@ public class Create_Party extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-
                 DatePickerDialog dialog = new DatePickerDialog(
                         Create_Party.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -182,6 +182,10 @@ public class Create_Party extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
+                m = month;
+                y = year;
+                d = day;
+
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = year + "-" + month + "-" + day;
@@ -219,6 +223,11 @@ public class Create_Party extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                month += 1;
                 EditText eventname = (EditText) findViewById(R.id.eventName);
                 TextView Date = (TextView) findViewById(R.id.date);
                 TextView Time = (TextView) findViewById(R.id.time);
@@ -233,7 +242,14 @@ public class Create_Party extends AppCompatActivity {
                     Toast blank = Toast.makeText(getApplicationContext(), "Invalid! One or more fields has been left blank", Toast.LENGTH_LONG);
                     blank.show();
 
-                } else {
+                }
+
+                else if ((y<year) || (y==year && m < month) || (y==year && m == month && d<day)) {
+                    Toast blank = Toast.makeText(getApplicationContext(), "Invalid! Can't create party in the past!", Toast.LENGTH_LONG);
+                    blank.show();
+                }
+
+                else {
                     SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
                     String host = settings.getString("username", "default");
                     Party p = new Party(name, date, time, 0, 200, 0, host, location);
