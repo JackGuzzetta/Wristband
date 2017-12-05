@@ -326,7 +326,11 @@ public class HostScreen extends AppCompatActivity {
                     intent.putExtra("relation", relation);
                     startActivity(intent);
                     return true;
-
+                case R.id.leave:
+                    goRemove();
+                    intent = new Intent(HostScreen.this, HomeScreen.class);
+                    startActivity(intent);
+                    return true;
                 default:
                     return super.onOptionsItemSelected(item);
             }
@@ -909,6 +913,45 @@ public class HostScreen extends AppCompatActivity {
                 };
                 AppController.getInstance().addToRequestQueue(jsonObjReq,
                         tag_json_obj);
+            }
+        }).start();
+    }
+
+    private void goRemove(){
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
+                        Const.URL_RELATION, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        //msgStatus.setText("Error creating account: " + error);
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("user_id", user_id);
+                        headers.put("party_id", party_id);
+                        return headers;
+                    }
+                };
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+                // Cancelling request
+                // ApplicationController.getInstance().getRequestQueue().cancelAll(tag_json_obj);
             }
         }).start();
     }
