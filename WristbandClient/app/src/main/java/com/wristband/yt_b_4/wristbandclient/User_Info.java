@@ -33,7 +33,7 @@ import java.util.Map;
 public class User_Info extends AppCompatActivity {
     private Button btnRemove;
     private TextView txtuser, txtfirst, usern, txtid;
-    private String user_id, mnus, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
+    private String user_id, current_id, mnus, user_name, flname, lname, party_name, prev_class, relation, user_rel, party_id;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     private ArrayList<String> names;
     private ArrayAdapter<String> adapter;
@@ -59,7 +59,8 @@ public class User_Info extends AppCompatActivity {
         screen = Integer.parseInt(relation);
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
-        if(prev_class.equals("guest")||relation.equals("1") )
+
+        if(prev_class.equals("guest")||relation.equals("1")||(user_rel.equals("3")&&(relation.equals("3"))))
             btnRemove.setVisibility(View.INVISIBLE);
         else {
             btnRemove.setVisibility(View.VISIBLE);
@@ -82,10 +83,10 @@ public class User_Info extends AppCompatActivity {
         usern.setText("");
         txtid.setText("User ID: " + user_id);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-        user_id = settings.getString("id", "default");
+        current_id = settings.getString("id", "default");
         String f_name = settings.getString("f_name", "default");
         String l_name = settings.getString("l_name", "default");
-        addqr(f_name, l_name, user_id);
+        addqr(f_name, l_name, current_id);
     }
 
     /**
@@ -161,46 +162,6 @@ public class User_Info extends AppCompatActivity {
         intent.putExtra("menu", mnus);
         startActivity(intent);
     }
-
-//    /**
-//     * Method searches
-//     */
-//    private void getDataFromServer() {
-//        new Thread(new Runnable() {
-//            public void run() {
-//                JsonArrayRequest req = new JsonArrayRequest(Const.URL_USER_BY_NAME + user_name,
-//                        new Response.Listener<JSONArray>() {
-//                            @Override
-//                            public void onResponse(JSONArray response) {
-//                                try {
-//                                    String firstName;
-//                                    String lastName;
-//                                    String userId;
-//                                    String username;
-//
-//                                    firstName = response.getJSONObject(0).getString("f_name");
-//                                    lastName = response.getJSONObject(0).getString("l_name");
-//                                    userId = response.getJSONObject(0).getString("id");
-//                                    username = response.getJSONObject(0).getString("username");
-//                                    fullName = user_name;
-//                                    user_id = userId;
-//                                    user_name = username;
-//
-//
-//                                } catch (JSONException e) {
-//                                }
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                    }
-//                });
-//                AppController.getInstance().addToRequestQueue(req,
-//                        tag_json_arry);
-//            }
-//        }).start();
-//    }
-
 
     /**
      * When method is called the user currently selected will be removed from the party

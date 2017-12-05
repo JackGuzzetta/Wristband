@@ -195,6 +195,7 @@ public class HostScreen extends AppCompatActivity {
         };
         listView.setAdapter(adapter);
 
+
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
@@ -273,7 +274,13 @@ public class HostScreen extends AppCompatActivity {
                         "Invalid Barcode" , Toast.LENGTH_SHORT);
                 toast.show();
             }
-
+            Toast toast = Toast.makeText(getApplicationContext(),
+            scanContent, Toast.LENGTH_SHORT);
+            toast.show();
+            //get user id by full name
+            //party i
+            String user_id;
+            //scanUsers(party_id,)
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
