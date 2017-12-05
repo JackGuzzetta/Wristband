@@ -180,7 +180,9 @@ public class Comments extends AppCompatActivity {
      */
     private void initializeControls() {
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
-        username = settings.getString("username", "default");
+        String f_name = settings.getString("f_name", "default");
+        String l_name = settings.getString("l_name", "default");
+        username = f_name + " " + l_name;
         listView = (ListView) findViewById(R.id.list_view);
         //SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         //user_id = settings.getString("id", "default");
@@ -189,6 +191,7 @@ public class Comments extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the current item from ListView
+
                 View view = super.getView(position, convertView, parent);
 
                 return view;
@@ -336,36 +339,14 @@ public class Comments extends AppCompatActivity {
         CommentDialog.setContentView(R.layout.comment_dialog);
         CommentDialog.setTitle("What would you like to do?");
 
-        viewBtn = CommentDialog.findViewById(R.id.view_user);
         deleteBtn = CommentDialog.findViewById(R.id.delete_comment);
         cancelBtn = CommentDialog.findViewById(R.id.cancel);
 
         deleteBtn.setEnabled(true);
-        if (relation.equals("2")) {
-            deleteBtn.setEnabled(false);
+        if (relation.equals("2") || (relation.equals("3"))){
+            deleteBtn.setVisibility(View.INVISIBLE);
         }
         deleteBtn.setEnabled(true);
-
-        viewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String checker = list.get(selection).toString();
-                String[] seperated = checker.split(":");
-                username = seperated[0];
-                System.out.println(username);
-                Intent intent = new Intent(Comments.this, User_Info.class);
-
-                intent.putExtra("backscreen", comments);
-                intent.putExtra("user_rel", relation);
-                intent.putExtra("prev", "host");
-                intent.putExtra("user_id", user_id);
-                intent.putExtra("party_name", party_name);
-                intent.putExtra("user_name", username);
-                intent.putExtra("relation", relation);
-                intent.putExtra("menu", mnus);
-                startActivity(intent);
-            }
-        });
 
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
