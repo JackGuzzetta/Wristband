@@ -37,7 +37,7 @@ public class About extends AppCompatActivity {
         lname = settings.getString("l_name", "default");
         prev_class = getIntent().getStringExtra("prev");
         txtuser.setText("Username: " + user_name);
-        txtfull.setText(fname+" "+ lname);
+        txtfull.setText(fname + " " + lname);
         txtid.setText("User ID: " + user_id);
         addqr(fname, lname, user_id);
     }
@@ -53,6 +53,7 @@ public class About extends AppCompatActivity {
      * The first case is a home button that calls the onBackPressed() that
      * sends a user to the home screen.
      * The second case is a logout button that is designed to log a user out.
+     *
      * @param item
      * @return returns true if the user gets no errors
      */
@@ -75,7 +76,7 @@ public class About extends AppCompatActivity {
     }
 
     /**
-     *Starts a new intent that sends a user to the home screen
+     * Starts a new intent that sends a user to the home screen
      */
     @Override
     public void onBackPressed() {
@@ -87,11 +88,12 @@ public class About extends AppCompatActivity {
      * Uses the QRGenerator app to create a qr code based off of a users
      * first name, last name, and user id. The code is generated as a bitmap
      * that can then be used in an image view.
+     *
      * @param f_name
      * @param l_name
      * @param user_id
      */
-    private void addqr(String f_name, String l_name, String user_id){
+    private void addqr(String f_name, String l_name, String user_id) {
         QRGenerator x = new QRGenerator(f_name + "-" + l_name + "...");
         code.setImageBitmap(x.createQR());
     }

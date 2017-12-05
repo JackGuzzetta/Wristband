@@ -198,6 +198,7 @@ public class Login extends AppCompatActivity {
     /**
      * Shared Preferences will save user data for further use.  Method will return that username and
      * Access Token from logging in are not null.
+     *
      * @return
      */
     public boolean isLoggedIn() {
@@ -263,6 +264,7 @@ public class Login extends AppCompatActivity {
     /**
      * If user creates a new profile, that data will be sent to the server using a JsonObjectRequest.
      * The user will then be taken to the HomeScreen.
+     *
      * @param username
      * @param password
      */
@@ -337,6 +339,7 @@ public class Login extends AppCompatActivity {
     /**
      * Username is sent to server to check if it already exists.  If username is not found, it will be create a new profile.
      * If username is exists, user will be logged in and sent to home screen.
+     *
      * @param user
      */
     private void checkIfUserExists(final User user) {
@@ -383,6 +386,7 @@ public class Login extends AppCompatActivity {
     /**
      * After all fields are filled out and user creates profile, that information will be sent to server
      * to be stored in the database.
+     *
      * @param user
      */
     private void makeProfile(final User user) {

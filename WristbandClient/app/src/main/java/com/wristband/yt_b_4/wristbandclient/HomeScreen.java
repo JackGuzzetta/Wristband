@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.app.Dialog;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -27,12 +28,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.login.LoginManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +62,6 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen2);
 
 
-
         publicparty = (Button) findViewById(R.id.publicparties);
         NewPartyButton = (Button) findViewById(R.id.button3);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -67,7 +70,7 @@ public class HomeScreen extends AppCompatActivity {
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         initializeControls();
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getAllPartiesByUserId();
@@ -80,6 +83,7 @@ public class HomeScreen extends AppCompatActivity {
 
     /**
      * Creates a menu in the action bar that gives you options to logout, or delete your own profile.
+     *
      * @param menu
      * @return
      */
@@ -93,6 +97,7 @@ public class HomeScreen extends AppCompatActivity {
     /**
      * If logout is pressed, user will be logged out and taken to the login screen.  If delete is pressed, deletion dialog
      * will be displayed in order to delete your own profile.
+     *
      * @param item
      * @return
      */
@@ -132,7 +137,7 @@ public class HomeScreen extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
         user_id = settings.getString("id", "default");
-        user_name= settings.getString("username", "default");
+        user_name = settings.getString("username", "default");
         adapter = new ArrayAdapter(HomeScreen.this, android.R.layout.simple_list_item_1, list) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -163,32 +168,29 @@ public class HomeScreen extends AppCompatActivity {
         //listView.setBackgroundColor(Color.CYAN);
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the selected item text from ListView
-                String party_name = (String) parent.getItemAtPosition(position);
-                String relation = relationList.get(position).toString();
-                String party_id = party_ids.get(position).toString();
-                if (relation.equals("1")) {
-                    //Host
-                    hostScreen(1,party_name, relation, party_id);
-                }
-                else if (relation.equals("2")) {
-                    hostScreen(2,party_name, relation, party_id);
-                    //Guest
-                }
-                else if (relation.equals("3")) {
-                    hostScreen(3,party_name, relation, party_id);
-                    //CoHost
-                }
-                else {
-                    //Error
-                }
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // Get the selected item text from ListView
+                        String party_name = (String) parent.getItemAtPosition(position);
+                        String relation = relationList.get(position).toString();
+                        String party_id = party_ids.get(position).toString();
+                        if (relation.equals("1")) {
+                            //Host
+                            hostScreen(1, party_name, relation, party_id);
+                        } else if (relation.equals("2")) {
+                            hostScreen(2, party_name, relation, party_id);
+                            //Guest
+                        } else if (relation.equals("3")) {
+                            hostScreen(3, party_name, relation, party_id);
+                            //CoHost
+                        } else {
+                            //Error
+                        }
 
-                // Display the selected item text on TextView
+                        // Display the selected item text on TextView
 
-            }
-        });
+                    }
+                });
         publicparty = (Button) findViewById(R.id.publicparties);
         NewPartyButton = (Button) findViewById(R.id.button3);
         NewPartyButton.setOnClickListener(new View.OnClickListener() {
@@ -208,6 +210,7 @@ public class HomeScreen extends AppCompatActivity {
     /**
      * Depending on your relation to the party (which is given in relation param), user will intent to Host Screen
      * if host of party, or guest screen if guest or cohost of that party.
+     *
      * @param screen
      * @param party_name
      * @param relation
@@ -259,6 +262,7 @@ public class HomeScreen extends AppCompatActivity {
     /**
      * If user decides to delete their account, a JsonObjectRequest containing user id will be sent to
      * server to perform that.
+     *
      * @param user_id
      */
     private void deleteAccount(final String user_id) {
@@ -306,6 +310,7 @@ public class HomeScreen extends AppCompatActivity {
 
     /**
      * User will be logged out of application and taken to login screen.
+     *
      * @param view
      */
     public void logout(View view) {
@@ -321,9 +326,10 @@ public class HomeScreen extends AppCompatActivity {
 
     /**
      * User will go to User Info screen which displays user information.
+     *
      * @param User_Id
      */
-    public void User_Info(String User_Id){
+    public void User_Info(String User_Id) {
         Intent intent = new Intent(HomeScreen.this, User_Info.class);
         intent.putExtra("user_id", User_Id);
         intent.putExtra("user_name", user_name);
@@ -342,8 +348,8 @@ public class HomeScreen extends AppCompatActivity {
         DeleteDialog.setContentView(R.layout.delete_dialog);
         DeleteDialog.setTitle("Are you sure?");
 
-        yes = (Button)DeleteDialog.findViewById(R.id.yes);
-        no = (Button)DeleteDialog.findViewById(R.id.no);
+        yes = (Button) DeleteDialog.findViewById(R.id.yes);
+        no = (Button) DeleteDialog.findViewById(R.id.no);
 
         yes.setEnabled(true);
         no.setEnabled(true);

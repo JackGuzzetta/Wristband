@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,9 +24,11 @@ import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.app.QRGenerator;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +52,7 @@ public class User_Info extends AppCompatActivity {
         txtuser = (TextView) findViewById(R.id.usertxt);
         usern = (TextView) findViewById(R.id.usern);
         txtid = (TextView) findViewById(R.id.idtxt);
-        code= (ImageView) findViewById(R.id.qr);
+        code = (ImageView) findViewById(R.id.qr);
         mnus = getIntent().getStringExtra("menu");
         user_id = getIntent().getStringExtra("user_id");
         user_name = getIntent().getStringExtra("user_name");
@@ -60,7 +63,7 @@ public class User_Info extends AppCompatActivity {
         user_rel = getIntent().getStringExtra("user_rel");
         prev_class = getIntent().getStringExtra("prev");
 
-        if(prev_class.equals("guest")||relation.equals("1")||(user_rel.equals("3")&&(relation.equals("3"))))
+        if (prev_class.equals("guest") || relation.equals("1") || (user_rel.equals("3") && (relation.equals("3"))))
             btnRemove.setVisibility(View.INVISIBLE);
         else {
             btnRemove.setVisibility(View.VISIBLE);
@@ -79,7 +82,7 @@ public class User_Info extends AppCompatActivity {
 
         //user_id = getUserID(user_name);
         txtuser.setText(user_name);
-        lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
+        lname = user_name.substring(user_name.split(" ")[0].length() + 1, user_name.length());
         usern.setText("");
         txtid.setText("User ID: " + user_id);
         SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
@@ -95,13 +98,14 @@ public class User_Info extends AppCompatActivity {
      * that can then be used in an image view.
      */
 
-    private void addqr(String f_name, String l_name, String user_id){
+    private void addqr(String f_name, String l_name, String user_id) {
         QRGenerator x = new QRGenerator(f_name + "-" + l_name + "...");
         code.setImageBitmap(x.createQR());
     }
 
     /**
      * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     *
      * @param menu
      * @return
      */
@@ -116,7 +120,7 @@ public class User_Info extends AppCompatActivity {
      * case1 will call onBackPressed and switch the activity to the home screen. Case2 creates
      * a new intent that switches the activity to the About class. On case3 the user will be logged out
      * and returned to the login screen.
-
+     *
      * @param item
      * @return
      */
@@ -149,10 +153,9 @@ public class User_Info extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent;
-        if(prev_class.equals("host")) {
+        if (prev_class.equals("host")) {
             intent = new Intent(User_Info.this, HostScreen.class);
-        }
-        else{
+        } else {
             intent = new Intent(User_Info.this, GuestScreen.class);
         }
         prev_class = "user_info";
@@ -167,7 +170,7 @@ public class User_Info extends AppCompatActivity {
      * When method is called the user currently selected will be removed from the party
      * relation table in the database using the current user_id, and party_id
      */
-    private void goRemove(){
+    private void goRemove() {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
