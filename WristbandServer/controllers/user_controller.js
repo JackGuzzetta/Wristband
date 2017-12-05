@@ -86,13 +86,13 @@ module.exports = function(app) {
             if (err) {
                 console.log("error");
                 res.json({
-                    users: "Error"
+                    user: "Error"
                 })
             } else {
                 if (rows.length == 0) {
                     console.log("User not found.");
                     res.json({
-                        users: "Error"
+                        user: "Error"
                     })
                 } else {
                     id = rows[0].id;
