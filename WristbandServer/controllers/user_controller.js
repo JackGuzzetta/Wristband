@@ -78,9 +78,7 @@ module.exports = function(app) {
             password: password,
             email: email,
         });
-        user.find('all', {
-            where: 'username=' + '\'' + username + '\''
-        }, function(err, rows, fields) {
+        user.query("SELECT * FROM users WHERE f_name=\"" + f_name + "\" AND l_name=\"" + l_name + "\" AND username=\"" + username + "\";",  function(err, rows, fields) {
             if (err) {
                 console.log("error");
                 res.json([{

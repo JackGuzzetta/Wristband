@@ -319,8 +319,8 @@ public class Add_User extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 try {
                                     String db_username = response.getJSONObject(0).getString("users");
-                                    String db_f_name = response.getJSONObject(0).getString("users");
-                                    String db_l_name = response.getJSONObject(0).getString("users");
+                                    String db_f_name = response.getJSONObject(0).getString("f_name");
+                                    String db_l_name = response.getJSONObject(0).getString("l_name");
 
                                     if ("exists".equals(db_username)) {
                                         String user_id = response.getJSONObject(0).getString("id");
@@ -352,6 +352,7 @@ public class Add_User extends AppCompatActivity {
      * @param party_id party id
      */
     private void createAccount(final String phoneNumber, final String f_name, final String l_name, final String party_id) {
+        final Context context = getApplicationContext();
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -367,6 +368,8 @@ public class Add_User extends AppCompatActivity {
                                     VolleyHandler.inviteUser(party_id, user_id, "2");
 
                                 } catch (JSONException e) {
+                                    Toast pass = Toast.makeText(context, "Phone user has an account already", Toast.LENGTH_LONG);
+                                    pass.show();
                                     e.printStackTrace();
                                 }
                             }
