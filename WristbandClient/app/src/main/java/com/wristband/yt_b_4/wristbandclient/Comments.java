@@ -62,6 +62,7 @@ public class Comments extends AppCompatActivity {
     String name = "test test: ";
     EditText cmt;
     String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -95,6 +96,7 @@ public class Comments extends AppCompatActivity {
 
     /**
      * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     *
      * @param menu
      * @return
      */
@@ -108,6 +110,7 @@ public class Comments extends AppCompatActivity {
      * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
      * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
      * and returned to the login screen.
+     *
      * @param item
      * @return
      */
@@ -198,7 +201,7 @@ public class Comments extends AppCompatActivity {
         //listView.setBackgroundColor(Color.CYAN);
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> a, View v, int i, long l){
+            public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 commentingDialog(v, i);
             }
         });
@@ -210,6 +213,7 @@ public class Comments extends AppCompatActivity {
     /**
      * When the send button is pressed, the typed comment will be sent to the database and displayed
      * in the list view.
+     *
      * @param view
      * @param comment
      */
@@ -224,6 +228,7 @@ public class Comments extends AppCompatActivity {
     /**
      * Sends a Json request using volley to the database and returns all of the comments in this specific party
      * and only this party.  The comments are added to the listview on the screen.
+     *
      * @param party_id
      */
     private void getAllCommentsByPartyId(String party_id) {
@@ -254,6 +259,7 @@ public class Comments extends AppCompatActivity {
     /**
      * The comment created by a user is sent to the database using a JsonObject Request with volley.
      * The comment will already be displayed from the sendComment() method.
+     *
      * @param comment
      */
     private void sendDataToServer(final String username, final Comment comment) {
@@ -314,6 +320,7 @@ public class Comments extends AppCompatActivity {
      * closed.  If view is pressed, you are brought to the User Info screen of the user whose comment
      * you pressed.  If you are a host, there will be an option to delete comment, which, if pressed,
      * will bring up another dialog that asks you yes or no.
+     *
      * @param view
      * @param i
      */
@@ -331,7 +338,7 @@ public class Comments extends AppCompatActivity {
         cancelBtn = CommentDialog.findViewById(R.id.cancel);
 
         deleteBtn.setEnabled(true);
-        if (relation.equals("2")){
+        if (relation.equals("2")) {
             deleteBtn.setEnabled(false);
         }
         deleteBtn.setEnabled(true);
@@ -339,32 +346,32 @@ public class Comments extends AppCompatActivity {
         viewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        String checker = list.get(selection).toString();
-                        String[] seperated = checker.split(":");
-                        username = seperated[0];
+                String checker = list.get(selection).toString();
+                String[] seperated = checker.split(":");
+                username = seperated[0];
                 System.out.println(username);
-                        if (username.equals("Afro man")){
-                            user_id = "97";
-                        }
-                        if (username.equals("austin austin")){
-                            user_id = "96";
-                        }
-                        if(username.equals("test test")){
-                            user_id = "94";
-                        }
-                        Intent intent = new Intent(Comments.this, User_Info.class);
+                if (username.equals("Afro man")) {
+                    user_id = "97";
+                }
+                if (username.equals("austin austin")) {
+                    user_id = "96";
+                }
+                if (username.equals("test test")) {
+                    user_id = "94";
+                }
+                Intent intent = new Intent(Comments.this, User_Info.class);
 
-                        intent.putExtra("backscreen", comments);
-                        intent.putExtra("user_rel", relation);
-                        intent.putExtra("prev", "host");
-                        intent.putExtra("user_id", user_id);
-                        intent.putExtra("party_name", party_name);
-                        intent.putExtra("user_name", username);
-                        intent.putExtra("relation", relation);
-                        intent.putExtra("menu", mnus);
+                intent.putExtra("backscreen", comments);
+                intent.putExtra("user_rel", relation);
+                intent.putExtra("prev", "host");
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("party_name", party_name);
+                intent.putExtra("user_name", username);
+                intent.putExtra("relation", relation);
+                intent.putExtra("menu", mnus);
                 startActivity(intent);
-                    }
-                });
+            }
+        });
 
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -387,6 +394,7 @@ public class Comments extends AppCompatActivity {
     /**
      * A JsonObjectRequest is sent to the database and the selected comment will be deleted from the DB.
      * The comment will also be removed form the list view.
+     *
      * @param id
      */
     private void deleteComment(final String id) {
@@ -426,6 +434,7 @@ public class Comments extends AppCompatActivity {
     /**
      * A dialog that is brought up when trying to delete a comment.  If yes is pressed, deleteComment() will
      * be called and the window will close.  If no is pressed, the dialog will just close and nothing will happen.
+     *
      * @param i
      */
     public void deletionDialog(final int i) {
@@ -436,8 +445,8 @@ public class Comments extends AppCompatActivity {
         DeleteDialog.setContentView(R.layout.delete_dialog);
         DeleteDialog.setTitle("Are you sure?");
 
-        yes = (Button)DeleteDialog.findViewById(R.id.yes);
-        no = (Button)DeleteDialog.findViewById(R.id.no);
+        yes = (Button) DeleteDialog.findViewById(R.id.yes);
+        no = (Button) DeleteDialog.findViewById(R.id.no);
 
         yes.setEnabled(true);
         no.setEnabled(true);

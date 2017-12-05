@@ -16,6 +16,7 @@ import com.facebook.login.LoginManager;
 public class Blacklist extends AppCompatActivity {
     private Button btnBack;
     private String party_id, relation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class Blacklist extends AppCompatActivity {
      * The first case is a button that creates an intent that sends a
      * user to the About screen.
      * The second case is a logout button that is designed to log a user out.
+     *
      * @param item
      * @return returns true if the user gets no errors
      */
@@ -69,6 +71,7 @@ public class Blacklist extends AppCompatActivity {
 
     /**
      * creates an intent that sends a user back to the host screen
+     *
      * @param view
      */
     private void goBack(View view) {

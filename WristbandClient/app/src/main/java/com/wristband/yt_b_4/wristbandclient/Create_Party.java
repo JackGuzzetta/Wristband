@@ -62,7 +62,9 @@ import java.util.Calendar;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
 import com.google.android.gms.maps.model.LatLng;
+
 import android.telephony.SmsManager;
 
 
@@ -105,6 +107,7 @@ public class Create_Party extends AppCompatActivity {
      * a clock will be shown for you to simply select the time.  The time will be in military time.  A switch
      * will be available for the user to decide if it's a public party or a private party (invite only).  You are unable
      * to create a party before todays date and all fields must be filled out.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -130,7 +133,7 @@ public class Create_Party extends AppCompatActivity {
 
             @Override
             public void onError(Status status) {
-                Toast.makeText(getBaseContext(),"failure",Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "failure", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -224,7 +227,8 @@ public class Create_Party extends AppCompatActivity {
                 name = eventname.getText().toString();
                 date = Date.getText().toString();
                 time = Time.getText().toString();
-                location =loc+ "*"+lat +"/"+lng;;
+                location = loc + "*" + lat + "/" + lng;
+                ;
 
                 if (name.length() == 0 || name == null || date.length() == 0 ||
                         date == null || time.length() == 0 || time == null || location.length() == 0 || location == null) {
@@ -302,6 +306,7 @@ public class Create_Party extends AppCompatActivity {
 
     /**
      * Creates a menu in the action bar that gives you options to logout, and view your profile
+     *
      * @param menu
      * @return
      */
@@ -315,6 +320,7 @@ public class Create_Party extends AppCompatActivity {
      * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
      * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
      * and returned to the login screen.
+     *
      * @param item
      * @return
      */
@@ -373,10 +379,10 @@ public class Create_Party extends AppCompatActivity {
     }
 
 
-
     /**
      * A JsonArrayRequest with the party name is sent to the database to get the party id.  The party id is then sent back to the server
      * to set the host relation to the party when it is created.  This creates the user/party relation.
+     *
      * @param party_name
      */
     private void getDataFromServer(final String party_name) {
@@ -405,6 +411,7 @@ public class Create_Party extends AppCompatActivity {
 
     /**
      * The party information that is filled out is sent to the database using a JsonObjectRequest.
+     *
      * @param party
      */
     private void sendDataToServer(final Party party) {
@@ -450,6 +457,7 @@ public class Create_Party extends AppCompatActivity {
      * The parameters of the user id, party id, and the number relation is sent to the database.  It will send a
      * 1 since the user who creates the party is the host. A 2 would be sent if they are a cohost or a 3 if guest, but
      * those will not be used in this screen.
+     *
      * @param user
      * @param party_id
      * @param relation

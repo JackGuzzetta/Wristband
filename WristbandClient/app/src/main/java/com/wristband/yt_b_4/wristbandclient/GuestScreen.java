@@ -60,6 +60,7 @@ public class GuestScreen extends AppCompatActivity {
      * sets onClickListeners for all buttons.  Changes list view items' colors depending on their relation to the
      * party.  If a user is clicked in the list view, you will be taken to the user info screen of that user that displays
      * their information.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -136,7 +137,7 @@ public class GuestScreen extends AppCompatActivity {
         getDataFromServer();
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> a, View v, int i, long l){
+            public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 Intent intent = new Intent(GuestScreen.this, User_Info.class);
                 user_name = (listView.getItemAtPosition(i)).toString();
                 intent.putExtra("user_rel", relation);
@@ -153,9 +154,11 @@ public class GuestScreen extends AppCompatActivity {
         });
 
     }
+
     /**
      * Creates a menu in the action bar that gives you options to logout, delete the party or remove yourself
      * from party, and view your profile
+     *
      * @param menu
      * @return
      */
@@ -163,8 +166,7 @@ public class GuestScreen extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         if (mnus.equals("user_info")) {
             inflater.inflate(R.menu.user_info, menu);
-        }
-        else {
+        } else {
             inflater.inflate(R.menu.publicmenu, menu);
         }
         return true;
@@ -174,6 +176,7 @@ public class GuestScreen extends AppCompatActivity {
      * These are the cases in the menu when selected. If home is selected, it calls the function onBackPressed(),
      * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
      * and returned to the login screen.  If delete is selected you remove yourself from that party.
+     *
      * @param item
      * @return
      */
@@ -238,6 +241,7 @@ public class GuestScreen extends AppCompatActivity {
     /**
      * A JsonObjectRequest is sent to the server and will delete the relation between a user and
      * party.  This simply removes a user from a party.
+     *
      * @param user_id
      * @param party_id
      */
@@ -280,6 +284,7 @@ public class GuestScreen extends AppCompatActivity {
     /**
      * A JsonObjectRequest with the party id is sent to the server and deletes the current party.  This can only be done if
      * the host decides to delete party.
+     *
      * @param party_id
      */
     private void deleteParty(final String party_id) {
@@ -329,7 +334,7 @@ public class GuestScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String address="";
+                                    String address = "";
                                     String name = response.getJSONObject(0).getString("party_name");
                                     dat = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
@@ -343,40 +348,29 @@ public class GuestScreen extends AppCompatActivity {
                                     hosts = host;
                                     String[] dates = dat.split("-");
                                     String month = "";
-                                    if (dates[1].equals("1")){
+                                    if (dates[1].equals("1")) {
                                         month = "January";
-                                    }
-                                    else if (dates[1].equals("2")){
+                                    } else if (dates[1].equals("2")) {
                                         month = "Febuary";
-                                    }
-                                    else if (dates[1].equals("3")){
+                                    } else if (dates[1].equals("3")) {
                                         month = "March";
-                                    }
-                                    else if (dates[1].equals("4")){
+                                    } else if (dates[1].equals("4")) {
                                         month = "April";
-                                    }
-                                    else if (dates[1].equals("5")){
+                                    } else if (dates[1].equals("5")) {
                                         month = "May";
-                                    }
-                                    else if (dates[1].equals("6")){
+                                    } else if (dates[1].equals("6")) {
                                         month = "June";
-                                    }
-                                    else if (dates[1].equals("7")){
+                                    } else if (dates[1].equals("7")) {
                                         month = "July";
-                                    }
-                                    else if (dates[1].equals("8")){
+                                    } else if (dates[1].equals("8")) {
                                         month = "August";
-                                    }
-                                    else if (dates[1].equals("9")){
+                                    } else if (dates[1].equals("9")) {
                                         month = "September";
-                                    }
-                                    else if (dates[1].equals("10")){
+                                    } else if (dates[1].equals("10")) {
                                         month = "October";
-                                    }
-                                    else if (dates[1].equals("11")){
+                                    } else if (dates[1].equals("11")) {
                                         month = "November";
-                                    }
-                                    else if (dates[1].equals("12")){
+                                    } else if (dates[1].equals("12")) {
                                         month = "December";
                                     }
                                     String day = "am";
@@ -385,59 +379,46 @@ public class GuestScreen extends AppCompatActivity {
                                     if (times[0].equals("0")) {
                                         newTime = "12";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("12")){
+                                    } else if (times[0].equals("12")) {
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("13")){
+                                    } else if (times[0].equals("13")) {
                                         newTime = "1";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("14")){
+                                    } else if (times[0].equals("14")) {
                                         newTime = "2";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("15")){
+                                    } else if (times[0].equals("15")) {
                                         newTime = "3";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("16")){
+                                    } else if (times[0].equals("16")) {
                                         newTime = "4";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("17")){
+                                    } else if (times[0].equals("17")) {
                                         newTime = "5";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("18")){
+                                    } else if (times[0].equals("18")) {
                                         newTime = "6";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("19")){
+                                    } else if (times[0].equals("19")) {
                                         newTime = "7";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("20")){
+                                    } else if (times[0].equals("20")) {
                                         newTime = "8";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("21")){
+                                    } else if (times[0].equals("21")) {
                                         newTime = "9";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("22")){
+                                    } else if (times[0].equals("22")) {
                                         newTime = "10";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("23")){
+                                    } else if (times[0].equals("23")) {
                                         newTime = "11";
                                         day = "pm";
                                     }
-                                    for(char c : location.toCharArray()){
-                                        if (c !=  '*'){
-                                            address+= c;
-                                        }
-                                        else{
+                                    for (char c : location.toCharArray()) {
+                                        if (c != '*') {
+                                            address += c;
+                                        } else {
                                             break;
                                         }
 
@@ -466,6 +447,7 @@ public class GuestScreen extends AppCompatActivity {
     /**
      * When "View in maps" button is clicked, this will take you to the MapsActivity screen which
      * shows the party location in Google Maps.
+     *
      * @param view
      */
     private void goLocation(View view) {
@@ -483,6 +465,7 @@ public class GuestScreen extends AppCompatActivity {
 
     /**
      * User will be taken to the photos screen when the photos button is pressed.
+     *
      * @param view
      */
     private void goPhotos(View view) {
@@ -498,6 +481,7 @@ public class GuestScreen extends AppCompatActivity {
 
     /**
      * User will be taken to the Comments screen when the comments button is pressed.
+     *
      * @param view
      */
     private void goComments(View view) {
@@ -546,7 +530,7 @@ public class GuestScreen extends AppCompatActivity {
                 tag_json_arry);
     }
 
-    private void goRemove(){
+    private void goRemove() {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,

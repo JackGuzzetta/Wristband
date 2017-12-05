@@ -11,6 +11,7 @@ import com.facebook.login.LoginManager;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
+
 import android.view.MenuInflater;
 import android.view.Menu;
 
@@ -63,7 +64,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         mnus = getIntent().getStringExtra("menu");
-
         address = getIntent().getStringExtra("party_location");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -74,12 +74,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         relation = getIntent().getStringExtra("relation");
         party_name = getIntent().getStringExtra("party_name");
         screen = Integer.parseInt(relation);
-
     }
 
 
     /**
      * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     *
      * @param menu
      * @return
      */
@@ -92,6 +92,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      * opens a dropdown menu that is filled with buttons a user can click.
      * case1 will call onBackPressed and switch the activity to the home screen.
+     *
      * @param item
      * @return
      */
@@ -107,6 +108,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+
     /**
      * Depending on your status in the party, this will act as a back button.  If host, you will be taken to the host screen,
      * but if you are a guest or cohost you will be taken to the guest screen.  This is done through intent with the
@@ -146,13 +148,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
+     *
      * @param googleMap
      */
     @Override

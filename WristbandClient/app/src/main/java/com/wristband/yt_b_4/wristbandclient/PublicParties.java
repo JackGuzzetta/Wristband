@@ -58,9 +58,9 @@ public class PublicParties extends AppCompatActivity {
     }
 
 
-
     /**
      * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     *
      * @param menu
      * @return
      */
@@ -76,7 +76,7 @@ public class PublicParties extends AppCompatActivity {
      * case1 will call onBackPressed and switch the activity to the home screen. Case2 creates
      * a new intent that switches the activity to the About class. On case3 the user will be logged out
      * and returned to the login screen.
-
+     *
      * @param item
      * @return
      */
@@ -124,23 +124,22 @@ public class PublicParties extends AppCompatActivity {
         });
 
 
-
     }
 
     /**
      * Method sends the current user to either the Host screen or the guest screen.
      * The method checks the host for the given party. If the user is the host then
      * they will be given relation 1, otherwise they will be given relation 2.
+     *
      * @param party_name
      */
     public void guestScreen(String party_name) {
         Intent intent;
         getHost(party_name);
-        if(isHost) {
+        if (isHost) {
             intent = new Intent(this, HostScreen.class);
             intent.putExtra("relation", "1");
-        }
-        else {
+        } else {
             intent = new Intent(this, GuestScreen.class);
             intent.putExtra("relation", "2");
         }
@@ -156,6 +155,7 @@ public class PublicParties extends AppCompatActivity {
     /**
      * If the method is executed the current user will be logged out
      * and returned to the login screen.
+     *
      * @param view
      */
     public void logout(View view) {
@@ -174,12 +174,10 @@ public class PublicParties extends AppCompatActivity {
     }
 
 
-
-
     /**
      * Checks the data base for a list of party ids in the Relation table and adds them
      * to the party_ids array list.
-     *
+     * <p>
      * Method then calls the getDataFromServer(final String id)
      * method using ID as a parameter
      */
@@ -219,6 +217,7 @@ public class PublicParties extends AppCompatActivity {
      * Method checks the data base Party table for parties matching the id given in the
      * parameters. If the privacy of the party is marked with a 1 it will get added to
      * List provided it has not already been added.
+     *
      * @param id
      */
     private void getDataFromServer(final String id) {
@@ -258,9 +257,10 @@ public class PublicParties extends AppCompatActivity {
      * might have to come up with a way to get all people in the party
      * and check to see if current user is in the party
      * if not, intent to new screen with option to add self as guest to party!
+     *
      * @param pty_name
      */
-    private void getHost(final String pty_name){
+    private void getHost(final String pty_name) {
         new Thread(new Runnable() {
             public void run() {
                 JsonArrayRequest req = new JsonArrayRequest(Const.URL_PARTY_BY_NAME + pty_name,
@@ -274,13 +274,13 @@ public class PublicParties extends AppCompatActivity {
                                     else
                                         isHost = false;
                                 } catch (JSONException e) {
+                                }
                             }
-                        }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
                 AppController.getInstance().addToRequestQueue(req, tag_json_arry);
             }
         }).start();

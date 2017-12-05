@@ -35,6 +35,7 @@ public class Photos extends AppCompatActivity {
     public static int RESULT_LOAD_IMAGE = 1;
     ImageButton pic;
     private int screen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,7 @@ public class Photos extends AppCompatActivity {
 
     /**
      * Creates a menu in the action bar that gives you options to logout, delete party and view your profile
+     *
      * @param menu
      * @return
      */
@@ -108,7 +110,7 @@ public class Photos extends AppCompatActivity {
      * case1 will call onBackPressed and switch the activity to the home screen. Case2 creates
      * a new intent that switches the activity to the About class. On case3 the user will be logged out
      * and returned to the login screen.
-
+     *
      * @param item
      * @return
      */
@@ -176,7 +178,7 @@ public class Photos extends AppCompatActivity {
         takes the caption and picture path and adds them to the listview and adds the picture path
         to the database
      */
-    public void addPhoto(View v){
+    public void addPhoto(View v) {
         String pic_text = caption.getText().toString();
         captions.add(pic_text);
     }

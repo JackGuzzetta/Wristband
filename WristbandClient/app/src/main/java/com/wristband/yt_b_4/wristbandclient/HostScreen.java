@@ -10,6 +10,7 @@ import com.wristband.yt_b_4.wristbandclient.utils.Const;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.Result;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,8 +22,11 @@ import android.widget.TimePicker;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import java.util.Calendar;
+
 import android.widget.TextView;
+
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
@@ -104,6 +108,7 @@ public class HostScreen extends AppCompatActivity {
      * sets onClickListeners for all buttons.  Changes list view items' colors depending on their relation to the
      * party.  If a user is clicked in the list view, you will be taken to the user info screen of that user that displays
      * their information.  Time and date selectors are also introduced if the host decides to edit the party.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -129,7 +134,6 @@ public class HostScreen extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), unames.get(0), Toast.LENGTH_LONG).show();
 
 
-
 //                QRGenerator(party_id,user_id);
 
 
@@ -137,7 +141,7 @@ public class HostScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create a new user with values from the EditTexts
-               scanNow(view);
+                scanNow(view);
             }
 
         });
@@ -239,7 +243,7 @@ public class HostScreen extends AppCompatActivity {
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = year + "-" + month + "-" + day;
-                dat= date;
+                dat = date;
             }
         };
 
@@ -258,6 +262,7 @@ public class HostScreen extends AppCompatActivity {
 
     /**
      * If scan is pressed, the scanner screen will be brought up to scan the guests' QR code.
+     *
      * @param view
      */
     public void scanNow(View view) {
@@ -268,6 +273,7 @@ public class HostScreen extends AppCompatActivity {
     /**
      * After QR code is scanned, a toast will be printed that displays whether the user is in the party
      * or not, or if there was an error in the scan, in which "No scan data received!" will display.
+     *
      * @param requestCode
      * @param resultCode
      * @param intent
@@ -281,16 +287,15 @@ public class HostScreen extends AppCompatActivity {
             Log.v("die", scanContent);
             if (scanned.length == 2) {
                 String f_name = scanned[0];
-                String l_name = scanned[1].substring(0, scanned[1].length() -3);
+                String l_name = scanned[1].substring(0, scanned[1].length() - 3);
 
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Scanned: " + f_name + " " + l_name , Toast.LENGTH_SHORT);
+                        "Scanned: " + f_name + " " + l_name, Toast.LENGTH_SHORT);
                 toast.show();
                 getUserIDByFullName(f_name, l_name, party_id);
-            }
-            else {
+            } else {
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Invalid Barcode" , Toast.LENGTH_SHORT);
+                        "Invalid Barcode", Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else {
@@ -299,15 +304,17 @@ public class HostScreen extends AppCompatActivity {
             toast.show();
         }
     }
+
     /**
      * Creates a menu in the action bar that gives you options to logout, delete the party or remove yourself
      * from party, and view your profile
+     *
      * @param menu
      * @return
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if(relation.toString().equals("3"))
+        if (relation.toString().equals("3"))
             inflater.inflate(R.menu.cohost, menu);
         else
             inflater.inflate(R.menu.guestmenu, menu);
@@ -319,12 +326,13 @@ public class HostScreen extends AppCompatActivity {
      * if about is pressed, it will take you to the About activity, and if logout is pressed the user will be logged out
      * and returned to the login screen.  If delete is selected, depending on your relation to the party, either the party itself
      * will be deleted.  There are options to edit the name, date or time of the party also.
+     *
      * @param item
      * @return
      */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        if(relation.toString().equals("3")) {
+        if (relation.toString().equals("3")) {
             switch (item.getItemId()) {
                 case android.R.id.home:
                     onBackPressed();
@@ -359,8 +367,7 @@ public class HostScreen extends AppCompatActivity {
                 default:
                     return super.onOptionsItemSelected(item);
             }
-        }
-        else{
+        } else {
             switch (item.getItemId()) {
                 case android.R.id.home:
                     onBackPressed();
@@ -435,6 +442,7 @@ public class HostScreen extends AppCompatActivity {
     /**
      * A JsonObjectRequest is sent to the server and will delete the relation between a user and
      * party.  This simply removes a user from a party.
+     *
      * @param user_id
      * @param relation
      */
@@ -474,6 +482,7 @@ public class HostScreen extends AppCompatActivity {
     /**
      * A JsonObjectRequest with the party id is sent to the server and deletes the current party.  This can only be done if
      * the host decides to delete party.
+     *
      * @param party_id
      */
     private void deleteParty(final String party_id) {
@@ -510,6 +519,7 @@ public class HostScreen extends AppCompatActivity {
     /**
      * The edited party information will be sent to the server using a JsonObjectRequest.  The changed information
      * will then be displayed on the screen.
+     *
      * @param party_id
      */
     private void editParty(final String party_id) {
@@ -565,7 +575,7 @@ public class HostScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 try {
-                                    String address="";
+                                    String address = "";
                                     String name = response.getJSONObject(0).getString("party_name");
                                     dat = response.getJSONObject(0).getString("date");
                                     String host = response.getJSONObject(0).getString("host");
@@ -580,40 +590,29 @@ public class HostScreen extends AppCompatActivity {
 
                                     String[] dates = dat.split("-");
                                     String month = "";
-                                    if (dates[1].equals("1")){
+                                    if (dates[1].equals("1")) {
                                         month = "January";
-                                    }
-                                    else if (dates[1].equals("2")){
+                                    } else if (dates[1].equals("2")) {
                                         month = "Febuary";
-                                    }
-                                    else if (dates[1].equals("3")){
+                                    } else if (dates[1].equals("3")) {
                                         month = "March";
-                                    }
-                                    else if (dates[1].equals("4")){
+                                    } else if (dates[1].equals("4")) {
                                         month = "April";
-                                    }
-                                    else if (dates[1].equals("5")){
+                                    } else if (dates[1].equals("5")) {
                                         month = "May";
-                                    }
-                                    else if (dates[1].equals("6")){
+                                    } else if (dates[1].equals("6")) {
                                         month = "June";
-                                    }
-                                    else if (dates[1].equals("7")){
+                                    } else if (dates[1].equals("7")) {
                                         month = "July";
-                                    }
-                                    else if (dates[1].equals("8")){
+                                    } else if (dates[1].equals("8")) {
                                         month = "August";
-                                    }
-                                    else if (dates[1].equals("9")){
+                                    } else if (dates[1].equals("9")) {
                                         month = "September";
-                                    }
-                                    else if (dates[1].equals("10")){
+                                    } else if (dates[1].equals("10")) {
                                         month = "October";
-                                    }
-                                    else if (dates[1].equals("11")){
+                                    } else if (dates[1].equals("11")) {
                                         month = "November";
-                                    }
-                                    else if (dates[1].equals("12")){
+                                    } else if (dates[1].equals("12")) {
                                         month = "December";
                                     }
                                     String day = "am";
@@ -622,60 +621,47 @@ public class HostScreen extends AppCompatActivity {
                                     if (times[0].equals("0")) {
                                         newTime = "12";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("12")){
+                                    } else if (times[0].equals("12")) {
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("13")){
+                                    } else if (times[0].equals("13")) {
                                         newTime = "1";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("14")){
+                                    } else if (times[0].equals("14")) {
                                         newTime = "2";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("15")){
+                                    } else if (times[0].equals("15")) {
                                         newTime = "3";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("16")){
+                                    } else if (times[0].equals("16")) {
                                         newTime = "4";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("17")){
+                                    } else if (times[0].equals("17")) {
                                         newTime = "5";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("18")){
+                                    } else if (times[0].equals("18")) {
                                         newTime = "6";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("19")){
+                                    } else if (times[0].equals("19")) {
                                         newTime = "7";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("20")){
+                                    } else if (times[0].equals("20")) {
                                         newTime = "8";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("21")){
+                                    } else if (times[0].equals("21")) {
                                         newTime = "9";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("22")){
+                                    } else if (times[0].equals("22")) {
                                         newTime = "10";
                                         day = "pm";
-                                    }
-                                    else if (times[0].equals("23")){
+                                    } else if (times[0].equals("23")) {
                                         newTime = "11";
                                         day = "pm";
                                     }
 
-                                    for(char c : location.toCharArray()){
-                                        if (c !=  '*'){
-                                            address+= c;
-                                        }
-                                        else{
+                                    for (char c : location.toCharArray()) {
+                                        if (c != '*') {
+                                            address += c;
+                                        } else {
                                             break;
                                         }
 
@@ -721,6 +707,7 @@ public class HostScreen extends AppCompatActivity {
     /**
      * When "View in maps" button is clicked, this will take you to the MapsActivity screen which
      * shows the party location in Google Maps.
+     *
      * @param view
      */
     private void goLocation(View view) {
@@ -737,6 +724,7 @@ public class HostScreen extends AppCompatActivity {
 
     /**
      * User will be taken to the photos screen when the photos button is pressed.
+     *
      * @param view
      */
     private void goPhotos(View view) {
@@ -751,6 +739,7 @@ public class HostScreen extends AppCompatActivity {
 
     /**
      * User will be taken to the Comments screen when the comments button is pressed.
+     *
      * @param view
      */
     private void goComments(View view) {
@@ -818,11 +807,10 @@ public class HostScreen extends AppCompatActivity {
     }
 
 
-
     /**
      * A time selector (clock) is displayed.  When a new time is selected it will be sent to the server.
      */
-    private void edittime(){
+    private void edittime() {
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR);
         int minute = cal.get(Calendar.MINUTE);
@@ -843,7 +831,7 @@ public class HostScreen extends AppCompatActivity {
      * An alert dialog is displayed with and EditText box for the user to change the location.  If "Ok" is pressed,
      * the new location will be sent to the server, if "cancel" is pressed, the dialog box is closed.
      */
-    private void editlocation(){
+    private void editlocation() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("New Party Location");
@@ -943,6 +931,7 @@ public class HostScreen extends AppCompatActivity {
             }
         }).start();
     }
+
     public void getUserIDByFullName(final String f_name, final String l_name, final String party_id) {
         Log.d("test p", party_id);
         new Thread(new Runnable() {
@@ -986,7 +975,7 @@ public class HostScreen extends AppCompatActivity {
         }).start();
     }
 
-    private void goRemove(){
+    private void goRemove() {
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
