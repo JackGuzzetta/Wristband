@@ -195,6 +195,7 @@ public class HostScreen extends AppCompatActivity {
         };
         listView.setAdapter(adapter);
 
+
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
