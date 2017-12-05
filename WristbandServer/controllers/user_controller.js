@@ -196,8 +196,11 @@ module.exports = function(app) {
                         users: "Error"
                     })
                 } else {
-                    res.contentType('application/json');
-                    res.send(JSON.stringify(rows));
+                    res.json({
+                        id: rows[0].id,
+                        f_name: rows[0].f_name,
+                        l_name: rows[0].l_name,
+                    })
                 }
             }
         });
