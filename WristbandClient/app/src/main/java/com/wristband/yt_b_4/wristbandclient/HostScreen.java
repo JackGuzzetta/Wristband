@@ -261,10 +261,14 @@ public class HostScreen extends AppCompatActivity {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
             Toast toast = Toast.makeText(getApplicationContext(),
             scanContent, Toast.LENGTH_SHORT);
             toast.show();
+            party_id
+            //get user id by full name
+            //party i
+            String user_id;
+            //scanUsers(party_id,)
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
