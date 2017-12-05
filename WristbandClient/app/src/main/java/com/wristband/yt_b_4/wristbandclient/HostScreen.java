@@ -257,15 +257,23 @@ public class HostScreen extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
+            String scanned[] = new String[2];
             String scanContent = scanningResult.getContents();
-            Toast toast = Toast.makeText(getApplicationContext(),
-            scanContent, Toast.LENGTH_SHORT);
-            toast.show();
-            party_id
-            //get user id by full name
-            //party i
-            String user_id;
-            //scanUsers(party_id,)
+            scanned = scanContent.split("_");
+            String f_name = scanned[0];
+            String l_name = scanned[1].substring(0, scanned[1].length() -3);
+            if (scanned.length == 2) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Scanned: " + f_name + " " + l_name , Toast.LENGTH_SHORT);
+                toast.show();
+                getUserIDByFullName(f_name, l_name, party_id);
+            }
+            else {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Invalid Barcode" , Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -882,12 +890,13 @@ public class HostScreen extends AppCompatActivity {
     public void scanUsers(final String party_id, final String user_id) {
         new Thread(new Runnable() {
             public void run() {
-                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Const.URL_SCAN, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 //scanned in
+                                Log.d("FUCK", response.toString());
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -904,6 +913,48 @@ public class HostScreen extends AppCompatActivity {
                         headers.put("party_id", party_id);
                         headers.put("user_id", user_id);
                         headers.put("scanned_in", "1");
+                        return headers;
+                    }
+                };
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+            }
+        }).start();
+    }
+    public void getUserIDByFullName(final String f_name, final String l_name, final String party_id) {
+        Log.d("test p", party_id);
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        Const.URL_USERS_BY_FULL_NAME, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                String user_id;
+                                try {
+                                    user_id = response.getString("id");
+                                    scanUsers(party_id, user_id);
+                                    Log.d("test u", user_id);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d("test error", e.toString());
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("test error", error.toString());
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("f_name", f_name);
+                        headers.put("l_name", l_name);
                         return headers;
                     }
                 };

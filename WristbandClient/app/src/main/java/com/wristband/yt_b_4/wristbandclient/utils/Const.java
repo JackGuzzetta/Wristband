@@ -28,5 +28,6 @@ public class Const {
             url + "/comments";
     public static final String URL_SCAN =
             url + "/scan";
-
+    public static final String URL_USERS_BY_FULL_NAME =
+            url + "/users_by_full_name";
 }
