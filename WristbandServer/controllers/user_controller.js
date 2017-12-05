@@ -78,6 +78,7 @@ module.exports = function(app) {
             password: password,
             email: email,
         });
+        user.save();
         console.log("Created new user: ", username);
         var user = new User();
         user.find('all', {
