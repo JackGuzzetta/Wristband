@@ -64,6 +64,7 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.wristband.yt_b_4.wristbandclient.utils.VolleyHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -444,7 +445,6 @@ public class HostScreen extends AppCompatActivity {
      * @param party_id
      */
     private void editParty(final String party_id) {
-
         new Thread(new Runnable() {
             public void run() {
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
@@ -838,5 +838,39 @@ public class HostScreen extends AppCompatActivity {
         });
         AppController.getInstance().addToRequestQueue(req,
                 tag_json_arry);
+    }
+
+    public void scanUsers(final String party_id, final String user_id) {
+        new Thread(new Runnable() {
+            public void run() {
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
+                        Const.URL_SCAN, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                //scanned in
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    /**
+                     * Passing some request headers
+                     */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("party_id", party_id);
+                        headers.put("user_id", user_id);
+                        headers.put("scanned_in", "1");
+                        return headers;
+                    }
+                };
+                AppController.getInstance().addToRequestQueue(jsonObjReq,
+                        tag_json_obj);
+            }
+        }).start();
     }
 }
