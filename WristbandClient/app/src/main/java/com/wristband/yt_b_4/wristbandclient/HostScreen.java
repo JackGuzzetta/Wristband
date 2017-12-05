@@ -260,10 +260,12 @@ public class HostScreen extends AppCompatActivity {
         if (scanningResult != null) {
             String scanned[] = new String[2];
             String scanContent = scanningResult.getContents();
-            scanned = scanContent.split("_");
-            String f_name = scanned[0];
-            String l_name = scanned[1].substring(0, scanned[1].length() -3);
+            scanned = scanContent.split("-");
+            Log.v("die", scanContent);
             if (scanned.length == 2) {
+                String f_name = scanned[0];
+                String l_name = scanned[1].substring(0, scanned[1].length() -3);
+
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Scanned: " + f_name + " " + l_name , Toast.LENGTH_SHORT);
                 toast.show();
@@ -274,14 +276,6 @@ public class HostScreen extends AppCompatActivity {
                         "Invalid Barcode" , Toast.LENGTH_SHORT);
                 toast.show();
             }
-            Toast toast = Toast.makeText(getApplicationContext(),
-            scanContent, Toast.LENGTH_SHORT);
-            toast.show();
-            //get user id by full name
-            //party i
-            String user_id;
-            //scanUsers(party_id,)
-
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);

@@ -319,11 +319,14 @@ public class Add_User extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 try {
                                     String db_username = response.getJSONObject(0).getString("users");
+                                    String db_f_name = response.getJSONObject(0).getString("users");
+                                    String db_l_name = response.getJSONObject(0).getString("users");
+
                                     if ("exists".equals(db_username)) {
                                         String user_id = response.getJSONObject(0).getString("id");
                                         VolleyHandler.inviteUser(party_id, user_id, "2");
                                     } else {
-                                        createAccount(phoneNumber, f_name, l_name, party_id);
+                                        createAccount(phoneNumber, db_f_name, db_l_name, party_id);
                                         //sendDataToServer(user);
                                     }
                                 } catch (JSONException e) {
