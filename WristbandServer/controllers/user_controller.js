@@ -302,7 +302,7 @@ module.exports = function(app) {
         var QRCode = require('qrcode')
         var file_path = "images/" + number + ".png";
         var img_path = "http://proj-309-yt-b-4.cs.iastate.edu:3000/images/" + number + ".png";
-        QRCode.toFile("images/" + number + ".png", username + "_" + id, {type:'png'}, function (err, string) {
+        QRCode.toFile("images/" + number + ".png", username, {type:'png'}, function (err, string) {
             if (err) {
                 retVal = "error"
             }

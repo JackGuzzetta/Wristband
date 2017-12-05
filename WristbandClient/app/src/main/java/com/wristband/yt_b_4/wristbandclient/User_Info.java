@@ -80,7 +80,11 @@ public class User_Info extends AppCompatActivity {
         lname = user_name.substring(user_name.split(" ")[0].length()+1, user_name.length());
         usern.setText("");
         txtid.setText("User ID: " + user_id);
-        addqr(user_name);
+        SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
+        user_id = settings.getString("id", "default");
+        String f_name = settings.getString("f_name", "default");
+        String l_name = settings.getString("l_name", "default");
+        addqr(f_name, l_name, user_id);
     }
 
     /**
@@ -89,8 +93,8 @@ public class User_Info extends AppCompatActivity {
      * that can then be used in an image view.
      */
 
-    private void addqr(String name){
-        QRGenerator x = new QRGenerator(user_name);
+    private void addqr(String f_name, String l_name, String user_id){
+        QRGenerator x = new QRGenerator(f_name + "-" + l_name + "...");
         code.setImageBitmap(x.createQR());
     }
 

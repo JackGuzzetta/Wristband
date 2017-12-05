@@ -271,7 +271,7 @@ public class Add_User extends AppCompatActivity {
                 String id = settings.getString("id", "default");
                 Toast pass = Toast.makeText(getApplicationContext(), number + " added to party", Toast.LENGTH_LONG);
                 pass.show();
-                VolleyHandler.invitebyNumber(number, f_name + "-" + l_name, id);
+                VolleyHandler.invitebyNumber(number, f_name + "-" + l_name + "...", id);
                 checkIfPhoneExists(number,  f_name, l_name, party_id);
             }
         }

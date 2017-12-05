@@ -39,7 +39,7 @@ public class About extends AppCompatActivity {
         txtuser.setText("Username: " + user_name);
         txtfull.setText(fname+" "+ lname);
         txtid.setText("User ID: " + user_id);
-        addqr(fname,lname, user_id);
+        addqr(fname, lname, user_id);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +92,7 @@ public class About extends AppCompatActivity {
      * @param user_id
      */
     private void addqr(String f_name, String l_name, String user_id){
-        QRGenerator x = new QRGenerator(f_name + "-" + l_name + "_" + user_id);
+        QRGenerator x = new QRGenerator(f_name + "-" + l_name + "...");
         code.setImageBitmap(x.createQR());
     }
 }
