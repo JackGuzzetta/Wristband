@@ -3,7 +3,7 @@ package com.wristband.yt_b_4.wristbandclient;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.facebook.login.LoginManager;
+zimport com.facebook.login.LoginManager;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;

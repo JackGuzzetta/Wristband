@@ -123,7 +123,7 @@ public class Comments extends AppCompatActivity {
                 startActivity(new Intent(this, About.class));
                 return true;
             case R.id.logout:
-                LoginManager.getInstance().logOut();
+              z  LoginManager.getInstance().logOut();
                 SharedPreferences settings = getSharedPreferences("account", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.clear();

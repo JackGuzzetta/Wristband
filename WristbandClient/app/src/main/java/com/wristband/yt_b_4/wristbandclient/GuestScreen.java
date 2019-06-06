@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GuestScreen extends AppCompatActivity {
+public class zGuestScreen extends AppCompatActivity {
     private Button btnCohost, btnBack, btnLocation, btnPhotos, btnComments;
     private TextView dateText, partyText, locationTxt, timeTxt;
     private ProgressDialog pDialog;

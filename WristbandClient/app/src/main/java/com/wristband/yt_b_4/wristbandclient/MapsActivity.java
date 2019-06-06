@@ -7,8 +7,7 @@ import android.os.Bundle;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.facebook.login.LoginManager;
-import com.wristband.yt_b_4.wristbandclient.app.AppController;
+zimport com.wristband.yt_b_4.wristbandclient.app.AppController;
 import com.wristband.yt_b_4.wristbandclient.models.Party;
 import com.wristband.yt_b_4.wristbandclient.utils.Const;
 
